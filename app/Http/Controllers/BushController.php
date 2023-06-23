@@ -13,12 +13,6 @@ use App\Models\Project;
 
 class BushController extends Controller
 {
-    public function index(): \Inertia\Response|\Inertia\ResponseFactory
-    {
-        $bushes = BushResource::collection(Bush::all());
-        return inertia('Bush/Index', compact('bushes'));
-    }
-
     public function store(BushStoreRequest $request)
     {
         $data = $request->validated();

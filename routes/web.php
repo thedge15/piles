@@ -51,10 +51,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-
 Route::prefix('/admin')->middleware(['auth', 'isAdmin'])->group(function () {
     Route::prefix('/bushes')->group(function () {
-        Route::get('/', [\App\Http\Controllers\BushController::class, 'index'])->name('bush.index');
         Route::post('/', [\App\Http\Controllers\BushController::class, 'store'])->name('bush.store');
         Route::get('/{bush}', [\App\Http\Controllers\BushController::class, 'show'])->name('bush.show');
         Route::delete('/{bush}', [\App\Http\Controllers\BushController::class, 'destroy'])->name('bush.destroy');
