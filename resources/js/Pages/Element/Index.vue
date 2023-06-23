@@ -1,13 +1,12 @@
 <template>
-    <div class="flex flex-col h-screen ">
-        <p class="text-center">Конструктивные элементы</p>
+    <div class="flex flex-col h-screen py-5">
+        <p class="text-center italic">Конструктивные элементы</p>
         <button @click.prevent="this.hideElement = !hideElement" type="button"
                 class="mb-2 w-1/12 text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600
                         hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-teal-300
                         dark:focus:ring-teal-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
             Создать
         </button>
-        <div class="flex flex-col h-screen py-5">
             <!-- component -->
             <div class="flex-grow overflow-auto">
                 <table class="relative w-full border mb-3">
@@ -60,16 +59,15 @@
                     </tbody>
                 </table>
             </div>
-        </div>
         <div :class="['relative overflow-x-auto shadow-md sm:rounded-lg ', this.hideElement ? '' : 'hidden']">
-            <form class="p-4 bg-gradient-to-r from-violet-300 to-fuchsia-400">
+            <form class="p-4 bg-gray-200 mt-4">
                 <div>
                     <div class="flex w-full">
                         <div class="w-1/3">
-                            <label for="metal"
+                            <label for="project"
                                    class="block mb-2 mr-2 text-sm font-medium text-gray-900 dark:text-white">Выберите
                                 проект</label>
-                            <select v-model="project" id="metal"
+                            <select v-model="project" id="project"
                                     class="bg-gray-50 mb-3 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                 <option v-for="item in projects">{{ item.title }}</option>
                             </select>
@@ -108,7 +106,6 @@
                 </button>
             </form>
         </div>
-
         <div v-if="delElement"
              :class="['relative bg bg-red-200 overflow-x-auto shadow-md sm:rounded-lg m-4', this.hideDelete ? '' : 'hidden']">
             <p class="p-2">Вы вот прям точно хотите удалить "{{ delElement.title }}"?</p>
@@ -133,38 +130,19 @@ export default {
 
     name: "Index",
 
+    layout: AuthenticatedLayout,
 
     data() {
         return {
             project: '',
-            // metal: '',
             title: '',
-            // characteristic: '',
-            // sheetHeight: null,
-            // sheetWidth: null,
-            // metalLength: null,
-            // standard: '',
-            // steel: '',
-            // steel_standard: '',
             quantity: null,
-            // measure_units: '',
-            // tonLength: null,
-            // tonArea: null,
             hideElement: false,
-            // hideUpdate: false,
             hideDelete: false,
-            // updMaterial: null,
-            // updId: null,
-            // updTitle: '',
-            // updWeight: null,
-            // updLength: null,
-            // updArea: null,
             delElement: null,
-            // errors: Object,
         }
     },
 
-    layout: AuthenticatedLayout,
 
     components: {
         Link
@@ -173,27 +151,7 @@ export default {
     props: [
         'projects',
         'elements',
-        // 'metals',
-        // 'characteristics',
-        // 'standards',
-        // 'steels',
-        // 'units',
-        // 'materials',
-
     ],
-
-
-    computed: {
-        // computedArray() {
-        //     return this.characteristics.filter(item => item.metal === this.metal)
-        // },
-        //
-        // selectedStandards() {
-        //     return this.standards.filter(item => item.metal === this.metal)
-        // }
-
-    },
-
 
     methods: {
         addElement() {
@@ -213,57 +171,17 @@ export default {
             this.title = ''
             this.hideElement = !this.hideElement
         },
-        //
-        // showErrors() {
-        //
-        // },
-        //
+
         showDelete(element) {
             this.hideDelete = !this.hideDelete
             this.delElement = element
         },
-        //
-        // showUpdate(material) {
-        //     this.hideUpdate = !this.hideUpdate
-        //     this.updMaterial = material
-        //     this.updId = material.id
-        //     this.updTitle = material.title
-        //     this.updWeight = material.weight
-        //     this.updLength = material.length
-        //     this.updArea = material.area
-        // },
-        //
-        // closeUpdate() {
-        //     this.updMaterial = ''
-        //     this.updId = null
-        //     this.updTitle = ''
-        //     this.updWeight = null
-        //     this.updLength = null
-        //     this.updArea = null
-        //     this.hideUpdate = !this.hideUpdate
-        // },
 
         closeDelete() {
             this.delElement = ''
             this.hideDelete = !this.hideDelete
         },
 
-        // updateMaterial() {
-        //     this.$inertia.patch('/materials/' + this.updId, {
-        //         title: this.updTitle,
-        //         weight: this.updWeight,
-        //         length: this.updLength,
-        //         area: this.updArea
-        //     });
-        //     this.updMaterial = ''
-        //     this.updId = null
-        //     this.updTitle = ''
-        //     this.updWeight = null
-        //     this.updLength = null
-        //     this.updArea = null
-        //     this.hideUpdate = !this.hideUpdate
-        // },
-        //
         deleteElement() {
             this.$inertia.delete(route('destroy.element', this.delElement.id))
             this.delElement = ''

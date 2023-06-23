@@ -10,7 +10,9 @@
                     <ul class="space-y-1">
                         <li class="my-2">
                             <Link :href="route('dashboard')"
-                                  :class="['flex rounded-xl font-bold text-sm py-1 px-4', $page.component === 'Dashboard' ? 'items-center text-yellow-900 bg-yellow-200' : 'text-gray-900 bg-white hover:bg-yellow-50']">
+                                  :class="['flex rounded-xl font-bold text-sm py-1 px-4',
+                                  $page.component === 'Dashboard' || $page.component === 'User/Index' || $page.component === 'Material/Index' ?
+                                  'items-center text-yellow-900 bg-yellow-200' : 'text-gray-900 bg-white hover:bg-yellow-50']">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor"
                                      class="text-lg mr-4" viewBox="0 0 16 16">
                                     <path
@@ -30,26 +32,74 @@
                                 Элементы
                             </Link>
                         </li>
-                        <li v-if="$page.props.auth.user.is_admin === 1" class="my-2">
-                            <Link :href="route('bush.index')"
-                                  class='flex rounded-xl font-bold text-sm py-1 px-4 text-gray-900 bg-white hover:bg-yellow-50'>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor"
-                                     class="text-lg mr-4" viewBox="0 0 16 16">
-                                    <path
-                                        d="M4 .5a.5.5 0 0 0-1 0V1H2a2 2 0 0 0-2 2v1h16V3a2 2 0 0 0-2-2h-1V.5a.5.5 0 0 0-1 0V1H4V.5zM16 14V5H0v9a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2zm-3.5-7h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5z"/>
-                                </svg>
-                                Админпанель
-                            </Link>
-                        </li>
-                        <li v-if="$page.component === 'Material/Index'" class="py-10 text-center">
-
-                            <button @click="change()" type="button"
-                                    class="w-1/2 text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600
-                        hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-teal-300
-                        dark:focus:ring-teal-800 font-medium rounded-lg text-sm px-3 py-2 text-center mr-2 mb-2">
-                                Создать
-                            </button>
-                        </li>
+                        <div v-if="$page.props.auth.user.is_admin === 1">
+                            <li class="my-2">
+                                <Link :href="route('bush.index')"
+                                      :class="['flex rounded-xl font-bold text-sm py-1 px-4', $page.component === 'Bush/Index' ? 'items-center text-yellow-900 bg-yellow-200' : 'text-gray-900 bg-gray-200 hover:bg-yellow-50']">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor"
+                                         class="text-lg mr-4" viewBox="0 0 16 16">
+                                        <path
+                                            d="M4 .5a.5.5 0 0 0-1 0V1H2a2 2 0 0 0-2 2v1h16V3a2 2 0 0 0-2-2h-1V.5a.5.5 0 0 0-1 0V1H4V.5zM16 14V5H0v9a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2zm-3.5-7h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5z"/>
+                                    </svg>
+                                    Добавить куст
+                                </Link>
+                            </li>
+                            <li class="my-2">
+                                <Link :href="route('specification.metal')"
+                                      :class="['flex rounded-xl font-bold text-sm py-1 px-4', $page.component === 'Metal/Index' || $page.component === 'Metal/Show' ? 'items-center text-yellow-900 bg-yellow-200' : 'text-gray-900 bg-gray-200 hover:bg-yellow-50']">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor"
+                                         class="text-lg mr-4" viewBox="0 0 16 16">
+                                        <path
+                                            d="M9.828 3h3.982a2 2 0 0 1 1.992 2.181l-.637 7A2 2 0 0 1 13.174 14H2.825a2 2 0 0 1-1.991-1.819l-.637-7a1.99 1.99 0 0 1 .342-1.31L.5 3a2 2 0 0 1 2-2h3.672a2 2 0 0 1 1.414.586l.828.828A2 2 0 0 0 9.828 3zm-8.322.12C1.72 3.042 1.95 3 2.19 3h5.396l-.707-.707A1 1 0 0 0 6.172 2H2.5a1 1 0 0 0-1 .981l.006.139z"/>
+                                    </svg>
+                                    Добавить металл
+                                </Link>
+                            </li>
+                            <li class="my-2">
+                                <Link :href="route('specification.standard')"
+                                      :class="['flex rounded-xl font-bold text-sm py-1 px-4', $page.component === 'Standard/Index' ? 'items-center text-yellow-900 bg-yellow-200' : 'text-gray-900 bg-gray-200 hover:bg-yellow-50']">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor"
+                                         class="text-lg mr-4" viewBox="0 0 16 16">
+                                        <path
+                                            d="M9.828 3h3.982a2 2 0 0 1 1.992 2.181l-.637 7A2 2 0 0 1 13.174 14H2.825a2 2 0 0 1-1.991-1.819l-.637-7a1.99 1.99 0 0 1 .342-1.31L.5 3a2 2 0 0 1 2-2h3.672a2 2 0 0 1 1.414.586l.828.828A2 2 0 0 0 9.828 3zm-8.322.12C1.72 3.042 1.95 3 2.19 3h5.396l-.707-.707A1 1 0 0 0 6.172 2H2.5a1 1 0 0 0-1 .981l.006.139z"/>
+                                    </svg>
+                                    ГОСТы
+                                </Link>
+                            </li>
+                            <li class="my-2">
+                                <Link :href="route('specification.steel')"
+                                      :class="['flex rounded-xl font-bold text-sm py-1 px-4', $page.component === 'Steel/Index' ? 'items-center text-yellow-900 bg-yellow-200' : 'text-gray-900 bg-gray-200 hover:bg-yellow-50']">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor"
+                                         class="text-lg mr-4" viewBox="0 0 16 16">
+                                        <path
+                                            d="M9.828 3h3.982a2 2 0 0 1 1.992 2.181l-.637 7A2 2 0 0 1 13.174 14H2.825a2 2 0 0 1-1.991-1.819l-.637-7a1.99 1.99 0 0 1 .342-1.31L.5 3a2 2 0 0 1 2-2h3.672a2 2 0 0 1 1.414.586l.828.828A2 2 0 0 0 9.828 3zm-8.322.12C1.72 3.042 1.95 3 2.19 3h5.396l-.707-.707A1 1 0 0 0 6.172 2H2.5a1 1 0 0 0-1 .981l.006.139z"/>
+                                    </svg>
+                                    Сталь
+                                </Link>
+                            </li>
+                            <li class="my-2">
+                                <Link :href="route('specification.unit')"
+                                      :class="['flex rounded-xl font-bold text-sm py-1 px-4', $page.component === 'Unit/Index' ? 'items-center text-yellow-900 bg-yellow-200' : 'text-gray-900 bg-gray-200 hover:bg-yellow-50']">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor"
+                                         class="text-lg mr-4" viewBox="0 0 16 16">
+                                        <path
+                                            d="M9.828 3h3.982a2 2 0 0 1 1.992 2.181l-.637 7A2 2 0 0 1 13.174 14H2.825a2 2 0 0 1-1.991-1.819l-.637-7a1.99 1.99 0 0 1 .342-1.31L.5 3a2 2 0 0 1 2-2h3.672a2 2 0 0 1 1.414.586l.828.828A2 2 0 0 0 9.828 3zm-8.322.12C1.72 3.042 1.95 3 2.19 3h5.396l-.707-.707A1 1 0 0 0 6.172 2H2.5a1 1 0 0 0-1 .981l.006.139z"/>
+                                    </svg>
+                                    Единицы измерения
+                                </Link>
+                            </li>
+                            <li class="my-2">
+                                <Link :href="route('paint.index')"
+                                      :class="['flex rounded-xl font-bold text-sm py-1 px-4', $page.component === 'Paint/Index' ? 'items-center text-yellow-900 bg-yellow-200' : 'text-gray-900 bg-gray-200 hover:bg-yellow-50']">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor"
+                                         class="text-lg mr-4" viewBox="0 0 16 16">
+                                        <path
+                                            d="M9.828 3h3.982a2 2 0 0 1 1.992 2.181l-.637 7A2 2 0 0 1 13.174 14H2.825a2 2 0 0 1-1.991-1.819l-.637-7a1.99 1.99 0 0 1 .342-1.31L.5 3a2 2 0 0 1 2-2h3.672a2 2 0 0 1 1.414.586l.828.828A2 2 0 0 0 9.828 3zm-8.322.12C1.72 3.042 1.95 3 2.19 3h5.396l-.707-.707A1 1 0 0 0 6.172 2H2.5a1 1 0 0 0-1 .981l.006.139z"/>
+                                    </svg>
+                                    Краска
+                                </Link>
+                            </li>
+                        </div>
                     </ul>
                 </div>
             </div>
@@ -81,14 +131,11 @@ export default {
     },
 
     data() {
-        return {
-
-        }
+        return {}
     },
 
     methods: {
-        change()
-        {
+        change() {
 
         }
     }

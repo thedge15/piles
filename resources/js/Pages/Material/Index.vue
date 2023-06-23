@@ -92,7 +92,7 @@
         </div>
         <div :class="['shadow-md sm:rounded-lg ', this.hideMaterial ? '' : 'hidden']">
             <form class="p-4 bg-gray-200 mt-4">
-                <div>
+
                     <div class="flex w-full">
                         <div class="w-1/3">
                             <label for="metal"
@@ -225,7 +225,6 @@
                             </div>
                         </div>
                     </div>
-                </div>
                 <button @click.prevent="addMaterial" type="button"
                         class="text-gray-900 bg-gradient-to-r from-lime-200 via-lime-400 to-lime-500
                                             hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-lime-300
@@ -239,7 +238,7 @@
             </form>
         </div>
         <div v-if="updMaterial"
-             :class="['bg bg-gray-200 shadow-md sm:rounded-lg m-4 w-full', this.hideUpdate ? '' : 'hidden']">
+             :class="['bg bg-gray-300 shadow-md sm:rounded-lg w-full', this.hideUpdate ? '' : 'hidden']">
             <p class="p-2">Редактирование "{{ updMaterial.title }}"</p>
             <div class="w-2/5 px-2 mx-2">
                 <label for="updTitle"
@@ -327,8 +326,8 @@
             </button>
         </div>
         <div v-if="delMaterial"
-             :class="['relative bg bg-red-200 overflow-x-auto shadow-md sm:rounded-lg m-4', this.hideDelete ? '' : 'hidden']">
-            <p class="p-2">Вы вот прям точно хотите удалить "{{ delMaterial.title }}"?</p>
+             :class="['bg bg-gray-300 shadow-md sm:rounded-lg w-full', this.hideDelete ? '' : 'hidden']">
+            <p class="p-2 italic">Вы вот прям точно хотите удалить "{{ delMaterial.title }}"?</p>
             <button @click.prevent="deleteMaterial" type="button"
                     class="ml-2 text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
                 Удалить
@@ -343,7 +342,6 @@
     <!--                <Link :href="route('all')">-->
     <!--                    Набивка материала-->
     <!--                </Link>-->
-    {{ message }}
 </template>
 
 <script>
@@ -354,7 +352,6 @@ import {Link} from "@inertiajs/vue3";
 export default {
 
     name: "Index",
-
 
     data() {
         return {
@@ -409,7 +406,6 @@ export default {
         'paints',
         'message'
     ],
-
 
     computed: {
         computedArray() {
@@ -466,7 +462,6 @@ export default {
 
     },
 
-
     methods: {
         addMaterial() {
 
@@ -517,10 +512,6 @@ export default {
             this.steel = ''
             this.quantity = null
             this.unit = ''
-        },
-
-        showErrors() {
-
         },
 
         showDelete(material) {
@@ -589,8 +580,6 @@ export default {
             return ''
         }
     },
-
-
 }
 
 </script>

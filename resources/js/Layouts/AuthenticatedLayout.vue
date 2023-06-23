@@ -7,13 +7,12 @@ const showingNavigationDropdown = ref(false);
 
 </script>
 
-<template v-on:hide-create-button="">
+<template>
     <div class="ml-60">
         <div class="bg-gray-100">
             <guest-sidebar></guest-sidebar>
             <!-- Page Content -->
             <main>
-
                 <main class="max-h-screen overflow-auto bg-gray-100">
                     <div class="px-6">
                         <slot/>
@@ -32,7 +31,7 @@ export default {
 
     data() {
         return {
-            message: 'sssss'
+
         }
     },
 

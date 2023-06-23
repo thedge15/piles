@@ -1,5 +1,5 @@
 <template>
-    <main class="ml-60 pt-16 max-h-screen overflow-auto">
+    <main class="max-h-screen overflow-auto">
         <div class="px-6 py-8">
             <div v-if="bush" class="text-center font-bold">
                 <Link :href="route('bush.index')">
@@ -146,12 +146,13 @@
 import AdminLayout from "@/Layouts/AdminLayout.vue";
 import {Link} from "@inertiajs/vue3";
 import {data} from "autoprefixer";
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 
 export default {
 
     name: "Index",
 
-    layout: AdminLayout,
+    layout: AuthenticatedLayout,
 
     components: {
         Link

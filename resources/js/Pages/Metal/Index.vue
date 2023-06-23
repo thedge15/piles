@@ -1,5 +1,5 @@
 <template>
-    <main class="ml-60 pt-16 max-h-screen overflow-auto">
+    <main class="max-h-screen overflow-auto">
         <div class="px-6 py-8 bg-cover">
             <div class="text-center font-bold text-black">
                 Сортовой прокат
@@ -143,12 +143,13 @@
 
 import AdminLayout from "@/Layouts/AdminLayout.vue";
 import {Link} from "@inertiajs/vue3";
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 
 export default {
 
     name: "Index",
 
-    layout: AdminLayout,
+    layout: AuthenticatedLayout,
 
     components: {
         Link
