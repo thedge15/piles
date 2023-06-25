@@ -19,14 +19,7 @@ class BushController extends Controller
         Bush::query()->create($data);
     }
 
-    public function show(Bush $bush): \Inertia\Response|\Inertia\ResponseFactory
-    {
-        $projects = Project::query()->where('bush_id', $bush->id)->get();
 
-        $projects = ProjectResource::collection($projects);
-        $bush = new BushResource($bush);
-        return inertia('Bush/Show', compact('projects', 'bush'));
-    }
 
     public function projectStore(ProjectStoreRequest $request)
     {

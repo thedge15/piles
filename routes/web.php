@@ -54,7 +54,6 @@ Route::middleware('auth')->group(function () {
 Route::prefix('/admin')->middleware(['auth', 'isAdmin'])->group(function () {
     Route::prefix('/bushes')->group(function () {
         Route::post('/', [\App\Http\Controllers\BushController::class, 'store'])->name('bush.store');
-        Route::get('/{bush}', [\App\Http\Controllers\BushController::class, 'show'])->name('bush.show');
         Route::delete('/{bush}', [\App\Http\Controllers\BushController::class, 'destroy'])->name('bush.destroy');
         Route::prefix('/projects')->group(function () {
             Route::post('/', [\App\Http\Controllers\BushController::class, 'projectStore'])->name('project.store');
@@ -66,6 +65,32 @@ Route::prefix('/admin')->middleware(['auth', 'isAdmin'])->group(function () {
         Route::get('/', [\App\Http\Controllers\PaintController::class, 'index'])->name('paint.index');
         Route::post('/', [\App\Http\Controllers\PaintController::class, 'store'])->name('paint.store');
         Route::delete('/{paint}', [\App\Http\Controllers\PaintController::class, 'destroy'])->name('paint.destroy');
+    });
+    Route::prefix('/metal')->group(function () {
+        Route::get('/', [\App\Http\Controllers\SpecificationController::class, 'metal'])->name('metal.index');
+        Route::post('/', [\App\Http\Controllers\SpecificationController::class, 'storeMetal'])->name('metal.store');
+        Route::get('/{metal}', [\App\Http\Controllers\SpecificationController::class, 'showMetal'])->name('metal.show');
+        Route::delete('/{metal}', [\App\Http\Controllers\SpecificationController::class, 'destroyMetal'])->name('metal.destroy');
+    });
+    Route::prefix('/characteristic')->group(function () {
+        Route::post('/', [\App\Http\Controllers\SpecificationController::class, 'storeCharacteristic'])->name('characteristic.store');
+        Route::patch('/{characteristic}', [\App\Http\Controllers\SpecificationController::class, 'updateCharacteristic'])->name('characteristic.update');
+        Route::delete('/{characteristic}', [\App\Http\Controllers\SpecificationController::class, 'destroyCharacteristic'])->name('characteristic.destroy');
+    });
+    Route::prefix('/standard')->group(function () {
+        Route::get('/', [\App\Http\Controllers\SpecificationController::class, 'standard'])->name('standard.index');
+        Route::post('/', [\App\Http\Controllers\SpecificationController::class, 'storeStandard'])->name('standard.store');
+        Route::delete('/{standard}', [\App\Http\Controllers\SpecificationController::class, 'destroyStandard'])->name('standard.destroy');
+    });
+    Route::prefix('/steel')->group(function () {
+        Route::get('/', [\App\Http\Controllers\SpecificationController::class, 'steel'])->name('steel.index');
+        Route::post('/', [\App\Http\Controllers\SpecificationController::class, 'storeSteel'])->name('steel.store');
+        Route::delete('/{steel}', [\App\Http\Controllers\SpecificationController::class, 'destroySteel'])->name('steel.destroy');
+    });
+    Route::prefix('/units')->group(function () {
+        Route::get('/', [\App\Http\Controllers\SpecificationController::class, 'units'])->name('unit.index');
+        Route::post('/', [\App\Http\Controllers\SpecificationController::class, 'storeUnits'])->name('unit.store');
+        Route::delete('/{unit}', [\App\Http\Controllers\SpecificationController::class, 'destroyUnit'])->name('unit.destroy');
     });
     Route::prefix('/piles')->group(function () {
         Route::post('/', [\App\Http\Controllers\PileController::class, 'store'])->name('pile.store');
@@ -79,33 +104,6 @@ Route::prefix('/admin')->middleware(['auth', 'isAdmin'])->group(function () {
         Route::post('/', [\App\Http\Controllers\TubeController::class, 'store'])->name('tube.store');
         Route::get('/{tube}', [\App\Http\Controllers\TubeController::class, 'show'])->name('tube.show');
         Route::delete('/{tube}', [\App\Http\Controllers\TubeController::class, 'destroy'])->name('tube.destroy');
-    });
-    Route::prefix('/specification')->group(function () {
-        Route::get('/', [\App\Http\Controllers\SpecificationController::class, 'index'])->name('specification.index');
-        Route::prefix('/standard')->group(function () {
-            Route::get('/', [\App\Http\Controllers\SpecificationController::class, 'standard'])->name('specification.standard');
-            Route::post('/', [\App\Http\Controllers\SpecificationController::class, 'storeStandard'])->name('specification.store.standard');
-            Route::get('/{metal}', [\App\Http\Controllers\SpecificationController::class, 'showStandards'])->name('specification.show.standard');
-        });
-        Route::prefix('/steel')->group(function () {
-            Route::get('/', [\App\Http\Controllers\SpecificationController::class, 'steel'])->name('specification.steel');
-            Route::post('/', [\App\Http\Controllers\SpecificationController::class, 'storeSteel'])->name('specification.store.steel');
-        });
-        Route::prefix('/units')->group(function () {
-            Route::get('/', [\App\Http\Controllers\SpecificationController::class, 'units'])->name('specification.unit');
-            Route::post('/', [\App\Http\Controllers\SpecificationController::class, 'storeUnits'])->name('specification.store.unit');
-        });
-        Route::prefix('/metal')->group(function () {
-            Route::get('/', [\App\Http\Controllers\SpecificationController::class, 'metal'])->name('specification.metal');
-            Route::post('/', [\App\Http\Controllers\SpecificationController::class, 'storeMetal'])->name('specification.store.metal');
-            Route::get('/{metal}', [\App\Http\Controllers\SpecificationController::class, 'showMetal'])->name('specification.show.metal');
-            Route::delete('/{metal}', [\App\Http\Controllers\SpecificationController::class, 'destroyMetal'])->name('specification.metal.destroy');
-        });
-        Route::prefix('/characteristic')->group(function () {
-            Route::post('/', [\App\Http\Controllers\SpecificationController::class, 'storeCharacteristic'])->name('specification.store.characteristic');
-            Route::patch('/{characteristic}', [\App\Http\Controllers\SpecificationController::class, 'updateCharacteristic'])->name('specification.characteristic.update');
-            Route::delete('/{characteristic}', [\App\Http\Controllers\SpecificationController::class, 'destroyCharacteristic'])->name('specification.characteristic.destroy');
-        });
     });
 });
 

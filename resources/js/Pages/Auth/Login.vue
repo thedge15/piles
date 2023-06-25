@@ -30,23 +30,8 @@ const submit = () => {
         <Head title="Log in"/>
 
         <div v-if="status" class="mb-4 font-medium text-sm text-green-600">
-            {{ status }}11111
+            {{ status }}
         </div>
-
-    <!--
-  This example requires some changes to your config:
-
-  ```
-  // tailwind.config.js
-  module.exports = {
-    // ...
-    plugins: [
-      // ...
-      require('@tailwindcss/forms'),
-    ],
-  }
-  ```
--->
 
     <div class="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
 
@@ -102,8 +87,8 @@ const submit = () => {
             <p class="mt-10 text-center text-sm text-gray-500">
                 Not a member?
                 {{ ' ' }}
-                <a href="#" class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">Start a 14 day free
-                    trial</a>
+
+                <Link :href="route('register')" class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">Register</Link>
             </p>
         </div>
     </div>

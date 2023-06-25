@@ -11,31 +11,22 @@ use App\Http\Requests\Unit\UnitStoreRequest;
 use App\Http\Resources\Characteristic\CharacteristicResource;
 use App\Http\Resources\Metal\MetalResource;
 use App\Http\Resources\Standard\StandardResource;
-use App\Http\Resources\StandardType\StandardTypeResource;
 use App\Http\Resources\Steel\SteelResource;
 use App\Http\Resources\Unit\UnitResource;
 use App\Models\Characteristic;
 use App\Models\Metal;
 use App\Models\Standard;
-use App\Models\StandardType;
 use App\Models\Steel;
 use App\Models\Unit;
 use Illuminate\Support\Facades\DB;
 
 class SpecificationController extends Controller
 {
-    public function index(): \Inertia\Response|\Inertia\ResponseFactory
-    {
-        return inertia('Specification/Index');
-    }
-
     public function metal(): \Inertia\Response|\Inertia\ResponseFactory
     {
         $metals = MetalResource::collection(Metal::all());
         return inertia('Metal/Index', compact('metals'));
     }
-
-
     public function storeMetal(StoreMetalRequest $request)
     {
         $data = $request->validated();
@@ -44,13 +35,9 @@ class SpecificationController extends Controller
 
     public function showMetal(Metal $metal): \Inertia\Response|\Inertia\ResponseFactory
     {
-
         $metals = DB::table('characteristics')->where('metal_id', $metal->id)->orderBy('title')->get();
 
         $metals = CharacteristicResource::collection($metals);
-
-//        dd($metals);
-
         $metal = new MetalResource($metal);
 
         return inertia('Metal/Show', compact('metals', 'metal'));
@@ -59,10 +46,7 @@ class SpecificationController extends Controller
     public function storeCharacteristic(CharacteristicStoreRequest $request)
     {
         $data = $request->validated();
-
-
         $metal = Metal::query()->find($data['metal_id'])->title;
-
 
 //      для швеллера
         if ($metal === 'Швеллер' || $metal === 'Двутавр' || $metal === 'Лист просечно-вытяжной' || $metal === 'Профлист') {
@@ -96,21 +80,17 @@ class SpecificationController extends Controller
 
         unset($data['mark'], $data["diameter"], $data["size"], $data["second_size"], $data['wall'], $data['thickness'], $data['width'], $data['height']);
 
-//        dd($data);
         Characteristic::query()->create($data);
     }
-
     public function updateCharacteristic(CharacteristicUpdateRequest $request, Characteristic $characteristic)
     {
         $data = $request->validated();
         $characteristic->update($data);
     }
-
     public function destroyCharacteristic(Characteristic $characteristic)
     {
         $characteristic->delete();
     }
-
     public function destroyMetal(Metal $metal)
     {
         $metal->delete();
@@ -118,17 +98,27 @@ class SpecificationController extends Controller
 
     public function standard(): \Inertia\Response|\Inertia\ResponseFactory
     {
+        $metals = MetalResource::collection(Metal::all())->resolve();
         $standards = StandardResource::collection(Standard::all())->resolve();
-        return inertia('Standard/Index', compact('standards'));
+        return inertia('Standard/Index', compact('standards', 'metals'));
     }
 
     public function storeStandard(StandardStoreRequest $request)
     {
         $data = $request->validated();
 
+        $metal = new MetalResource(Metal::query()->where('title', $data['metal'])->get());
+        $metal_id = $metal[0]['id'];
+        $data['metal_id'] = $metal_id;
+
+        unset($data['metal']);
+
         Standard::query()->create($data);
     }
-
+    public function destroyStandard(Standard $standard)
+    {
+        $standard->delete();
+    }
     public function units(): \Inertia\Response|\Inertia\ResponseFactory
     {
         $units = UnitResource::collection(Unit::all())->resolve();
@@ -140,14 +130,9 @@ class SpecificationController extends Controller
         $data = $request->validated();
         Unit::query()->create($data);
     }
-
-    public function showStandards(Metal $metal): \Inertia\Response|\Inertia\ResponseFactory
+    public function destroyUnit(Unit $unit)
     {
-        $standards = StandardResource::collection($metal->standards);
-        $metal = new MetalResource($metal);
-        $standardTypes = StandardTypeResource::collection(StandardType::all())->resolve();
-
-        return inertia('Standard/Show', compact('standards', 'metal', 'standardTypes'));
+        $unit->delete();
     }
 
     public function steel(): \Inertia\Response|\Inertia\ResponseFactory
@@ -155,12 +140,15 @@ class SpecificationController extends Controller
         $steels = SteelResource::collection(Steel::all())->resolve();
         return inertia('Steel/Index', compact('steels'));
     }
-
     public function storeSteel(SteelStoreRequest $request)
     {
         $data = $request->validated();
         $data['title'] = $data['title'] . ' ГОСТ ' . $data['steel_standard'];
         unset($data['steel_standard']);
         Steel::query()->create($data);
+    }
+    public function destroySteel(Steel $steel)
+    {
+        $steel->delete();
     }
 }

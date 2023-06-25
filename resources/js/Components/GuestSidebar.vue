@@ -34,7 +34,7 @@
                         </li>
                         <div v-if="$page.props.auth.user.is_admin === 1">
                             <li class="my-2">
-                                <Link :href="route('specification.metal')"
+                                <Link :href="route('metal.index')"
                                       :class="['flex rounded-xl font-bold text-sm py-1 px-4', $page.component === 'Metal/Index' || $page.component === 'Metal/Show' ? 'items-center text-yellow-900 bg-yellow-200' : 'text-gray-900 bg-gray-200 hover:bg-yellow-50']">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor"
                                          class="text-lg mr-4" viewBox="0 0 16 16">
@@ -45,7 +45,7 @@
                                 </Link>
                             </li>
                             <li class="my-2">
-                                <Link :href="route('specification.standard')"
+                                <Link :href="route('standard.index')"
                                       :class="['flex rounded-xl font-bold text-sm py-1 px-4', $page.component === 'Standard/Index' ? 'items-center text-yellow-900 bg-yellow-200' : 'text-gray-900 bg-gray-200 hover:bg-yellow-50']">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor"
                                          class="text-lg mr-4" viewBox="0 0 16 16">
@@ -56,7 +56,7 @@
                                 </Link>
                             </li>
                             <li class="my-2">
-                                <Link :href="route('specification.steel')"
+                                <Link :href="route('steel.index')"
                                       :class="['flex rounded-xl font-bold text-sm py-1 px-4', $page.component === 'Steel/Index' ? 'items-center text-yellow-900 bg-yellow-200' : 'text-gray-900 bg-gray-200 hover:bg-yellow-50']">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor"
                                          class="text-lg mr-4" viewBox="0 0 16 16">
@@ -67,7 +67,7 @@
                                 </Link>
                             </li>
                             <li class="my-2">
-                                <Link :href="route('specification.unit')"
+                                <Link :href="route('unit.index')"
                                       :class="['flex rounded-xl font-bold text-sm py-1 px-4', $page.component === 'Unit/Index' ? 'items-center text-yellow-900 bg-yellow-200' : 'text-gray-900 bg-gray-200 hover:bg-yellow-50']">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor"
                                          class="text-lg mr-4" viewBox="0 0 16 16">

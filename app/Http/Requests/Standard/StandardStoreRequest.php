@@ -24,7 +24,7 @@ class StandardStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'metal_id' => 'required|integer',
+            'metal' => 'required|string',
             'title' => 'required|string'
         ];
     }
