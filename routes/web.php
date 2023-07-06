@@ -54,11 +54,11 @@ Route::middleware('auth')->group(function () {
 Route::prefix('/admin')->middleware(['auth', 'isAdmin'])->group(function () {
     Route::prefix('/bushes')->group(function () {
         Route::post('/', [\App\Http\Controllers\BushController::class, 'store'])->name('bush.store');
-        Route::delete('/{bush}', [\App\Http\Controllers\BushController::class, 'destroy'])->name('bush.destroy');
+        Route::delete('/{bush}', [\App\Http\Controllers\BushController::class, 'destroy'])->name('destroy.bush');
         Route::prefix('/projects')->group(function () {
             Route::post('/', [\App\Http\Controllers\BushController::class, 'projectStore'])->name('project.store');
             Route::patch('/{project}', [\App\Http\Controllers\BushController::class, 'projectChangeUpdate'])->name('project.update');
-            Route::delete('/{project}', [\App\Http\Controllers\BushController::class, 'projectDestroy'])->name('project.destroy');
+            Route::delete('/{project}', [\App\Http\Controllers\BushController::class, 'projectDestroy'])->name('destroy.project');
         });
     });
     Route::prefix('/paints')->group(function () {

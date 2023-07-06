@@ -351,10 +351,7 @@
                 </button>
             </form>
         </div>
-        <!--        <DeleteComponent :del-material="this.delMaterial" :hide-delete="this.hideDelete"></DeleteComponent>-->
-        <div>
-            <DeleteComponent v-for="(product, i) in products" :key="product.id"></DeleteComponent>
-        </div>
+        <DeleteComponent :del-element="this.delMaterial" :hide-delete="this.hideDelete" :del-title="'material'"  @closeDelete="close"></DeleteComponent>
     </div>
     <div v-if="selectedMaterialWeight" class="mt-2 ml-2">
         {{ selectedMaterialWeight }}
@@ -554,8 +551,6 @@ export default {
         showDelete(material) {
             this.hideDelete = !this.hideDelete
             this.delMaterial = material
-            console.log(this.delMaterial);
-            console.log(this.hideDelete);
         },
 
         showUpdate(material) {
@@ -578,10 +573,10 @@ export default {
             this.hideUpdate = !this.hideUpdate
         },
 
-        // closeDelete() {
-        //     this.delMaterial = ''
-        //     this.hideDelete = !this.hideDelete
-        // },
+        close() {
+            this.delMaterial = ''
+            this.hideDelete = !this.hideDelete
+        },
 
         updateMaterial() {
             this.$inertia.patch('/materials/' + this.updId, {
@@ -604,12 +599,6 @@ export default {
             this.numberOfLayers = null
             this.color = ''
         },
-
-        // deleteMaterial() {
-        //     this.$inertia.delete(route('destroy.material', this.delMaterial.id))
-        //     this.delMaterial = ''
-        //     this.hideDelete = !this.hideDelete
-        // },
 
         test(words) {
             if (words) {
