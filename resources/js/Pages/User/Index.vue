@@ -1,27 +1,31 @@
 <template>
     <div class="flex flex-col h-screen py-5">
-        <div v-if="bush" class="text-center italic">
-            <Link :href="route('dashboard')">
+        <div v-if="bush" class="text-center italic mb-4">
+            <Link :href="route('openPage')">
                 КГС {{ bush.data.title }}
             </Link>
         </div>
         <div class="flex flex-col h-screen">
             <div v-if="$page.props.auth.user.is_admin === 1">
                 <button @click.prevent="hideProject = !hideProject" type="button"
-                        class="w-1/12 mb-2 text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-teal-300 dark:focus:ring-teal-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2">
+                        class="w-1/12 mb-2 text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-teal-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2">
                     Создать
                 </button>
             </div>
             <!-- component -->
             <div class="flex-grow overflow-auto">
-                <table class="relative w-full border mb-3">
+                <table class="relative w-full border mb-3 text-xs">
                     <thead>
                     <tr>
                         <th class="sticky top-0 px-6 py-3 text-indigo-100 bg-indigo-500">№</th>
                         <th class="sticky top-0 px-6 py-3 text-indigo-100 bg-indigo-500">Наименование раздела РД</th>
                         <th class="sticky top-0 px-6 py-3 text-indigo-100 bg-indigo-500">Просмотр</th>
-                        <th  v-if="$page.props.auth.user.is_admin === 1" class="sticky top-0 px-6 py-3 text-indigo-100 bg-indigo-500">Редактирование</th>
-                        <th  v-if="$page.props.auth.user.is_admin === 1" class="sticky top-0 px-6 py-3 text-indigo-100 bg-indigo-500">Удаление</th>
+                        <th v-if="$page.props.auth.user.is_admin === 1"
+                            class="sticky top-0 px-6 py-3 text-indigo-100 bg-indigo-500">Редактирование
+                        </th>
+                        <th v-if="$page.props.auth.user.is_admin === 1"
+                            class="sticky top-0 px-6 py-3 text-indigo-100 bg-indigo-500">Удаление
+                        </th>
                     </tr>
                     </thead>
                     <tbody class="divide-y bg-gray-100">
@@ -42,15 +46,19 @@
                                 </svg>
                             </Link>
                         </td>
-                        <td  v-if="$page.props.auth.user.is_admin === 1" :class='["px-6 py-2 text-center", index%2 === 0 ? "" : "bg-gray-300"]'>
-                            <svg @click.prevent="showProject(project.id, project.change)" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        <td v-if="$page.props.auth.user.is_admin === 1"
+                            :class='["px-6 py-2 text-center", index%2 === 0 ? "" : "bg-gray-300"]'>
+                            <svg @click.prevent="showProject(project.id, project.change)"
+                                 xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                  stroke="currentColor" class="w-6 h-6 mx-auto cursor-pointer">
                                 <path stroke-linecap="round" stroke-linejoin="round"
                                       d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"/>
                             </svg>
                         </td>
-                        <td  v-if="$page.props.auth.user.is_admin === 1" :class='["px-6 py-2 text-center", index%2 === 0 ? "" : "bg-gray-300"]'>
-                            <svg @click.prevent="showDelete(project.id, project.title)" xmlns="http://www.w3.org/2000/svg"
+                        <td v-if="$page.props.auth.user.is_admin === 1"
+                            :class='["px-6 py-2 text-center", index%2 === 0 ? "" : "bg-gray-300"]'>
+                            <svg @click.prevent="showDelete(project.id, project.title)"
+                                 xmlns="http://www.w3.org/2000/svg"
                                  fill="none"
                                  viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
                                  class="w-6 h-6 mx-auto cursor-pointer">
@@ -61,51 +69,54 @@
                     </tr>
                     </tbody>
                 </table>
-                <div :class="['relative overflow-x-auto shadow-md sm:rounded-lg', this.hideProject ? '' : 'hidden']">
+                <div
+                    :class="['bg-gray-200 relative overflow-x-auto shadow-md sm:rounded-lg', this.hideProject ? '' : 'hidden']">
                     <form class="p-4">
                         <div class="grid gap-6 mb-6 md:grid-cols-2">
                             <div>
                                 <label for="company"
-                                       class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Раздел</label>
+                                       class="block mb-2 text-sm font-medium text-gray-900">Раздел</label>
                                 <input v-model="title" type="text"
-                                       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                                        placeholder="Наименование раздела" required>
                             </div>
                             <div>
-                                <label for="phone" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Изм.</label>
+                                <label for="phone" class="block mb-2 text-sm font-medium text-gray-900">Изм.</label>
                                 <input v-model="change" type="number"
-                                       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                                        placeholder="Изм." pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}" required>
                             </div>
                         </div>
                         <button @click.prevent="addProject" type="button"
-                                class="text-gray-900 bg-gradient-to-r from-lime-200 via-lime-400 to-lime-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-lime-300 dark:focus:ring-lime-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
+                                class="text-gray-900 bg-gradient-to-r from-lime-200 via-lime-400 to-lime-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-lime-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
                             Добавить
                         </button>
                     </form>
                 </div>
-                <div :class="['flex mt-4', hideUpdProject ? '' : 'hidden']">
-                    <input v-model="updChange" type="number"
-                           class="w-1/6 mr-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                           placeholder="Изм." pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}" required>
-                    <button @click.prevent="updateProject" type="button"
-                            class="text-gray-900 bg-gradient-to-r from-lime-200 via-lime-400 to-lime-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-lime-300 dark:focus:ring-lime-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
-                        Обновить
-                    </button>
-                    <button @click.prevent="this.hideUpdProject = !this.hideUpdProject" type="button"
-                            class="text-white bg-gradient-to-r from-pink-400 via-pink-500 to-pink-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-pink-300 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
-                        Отмена
-                    </button>
+                <div :class="['shadow-md sm:rounded-lg', hideUpdProject ? '' : 'hidden']">
+                    <form class="p-4 bg-gray-200 mt-4">
+                        <input v-model="updChange" type="number"
+                               class="w-1/6 mr-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2"
+                               placeholder="Изм." pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}" required>
+                        <button @click.prevent="updateProject" type="button"
+                                class="text-gray-900 bg-gradient-to-r from-lime-200 via-lime-400 to-lime-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-lime-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
+                            Обновить
+                        </button>
+                        <button @click.prevent="this.hideUpdProject = !this.hideUpdProject" type="button"
+                                class="text-white bg-gradient-to-r from-pink-400 via-pink-500 to-pink-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-pink-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
+                            Отмена
+                        </button>
+                    </form>
                 </div>
                 <div :class="['ml-6 mt-5', hideDelete ? '' : 'hidden']">
                     <h1 class="italic mb-3">Удалить раздел РД {{ this.delTitle }}?</h1>
                     <div class="flex">
                         <button @click.prevent="deleteProject" type="button"
-                                class="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 shadow-lg shadow-red-500/50 dark:shadow-lg dark:shadow-red-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
+                                class="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 shadow-lg shadow-red-500/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
                             Удалить
                         </button>
                         <button @click.prevent="this.hideDelete = !this.hideDelete" type="button"
-                                class="text-white bg-gradient-to-r from-pink-400 via-pink-500 to-pink-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-pink-300 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
+                                class="text-white bg-gradient-to-r from-pink-400 via-pink-500 to-pink-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-pink-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
                             Отмена
                         </button>
                     </div>
@@ -117,14 +128,14 @@
 
 <script>
 
-import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import {Link} from "@inertiajs/vue3";
+import UserLayout from "@/Layouts/UserLayout.vue";
 
 export default {
 
     name: "Index",
 
-    layout: AuthenticatedLayout,
+    layout: UserLayout,
 
     components: {
         Link

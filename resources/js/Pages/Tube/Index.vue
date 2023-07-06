@@ -6,7 +6,7 @@
             </div>
             <div class="relative overflow-x-auto shadow-md sm:rounded-lg p-4">
                 <button @click.prevent="hideTube = !hideTube" type="button"
-                        class="mb-4 text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-teal-300 dark:focus:ring-teal-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
+                        class="mb-4 text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-teal-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
                     Создать
                 </button>
                 <div :class="['relative overflow-x-auto shadow-md sm:rounded-lg', this.hideTube ? '' : 'hidden']">
@@ -14,23 +14,23 @@
                         <div class="grid gap-6 mb-6 md:grid-cols-2">
                             <div>
                                 <input v-model="diameter" type="number"
-                                       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                                        placeholder="Диаметр трубы" required>
                             </div>
                             <div>
                                 <input v-model="wall_thickness" type="number"
-                                       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                                        placeholder="Толщина стенки" pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}" required>
                             </div>
                         </div>
                         <button @click.prevent="addTube" type="button"
-                                class="text-gray-900 bg-gradient-to-r from-lime-200 via-lime-400 to-lime-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-lime-300 dark:focus:ring-lime-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
+                                class="text-gray-900 bg-gradient-to-r from-lime-200 via-lime-400 to-lime-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-lime-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
                             Добавить
                         </button>
                     </form>
                 </div>
-                <table v-if="tubes" class="w-full text-sm text-left text-blue-100 dark:text-blue-100">
-                    <thead class="text-xs text-white uppercase bg-blue-600 dark:text-white">
+                <table v-if="tubes" class="w-full text-sm text-left text-blue-100">
+                    <thead class="text-xs text-white uppercase bg-blue-600">
                     <tr>
                         <th scope="col" class="px-6 py-3">
                             №
@@ -55,7 +55,7 @@
                             {{ tube.id }}
                         </td>
                         <th scope="row"
-                            class="px-6 py-4 font-medium text-blue-50 whitespace-nowrap dark:text-blue-100 text-center">
+                            class="px-6 py-4 font-medium text-blue-50 whitespace-nowrap text-center">
                             {{ tube.title }}
                         </th>
                         <td class="px-6 py-4">

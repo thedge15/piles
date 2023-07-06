@@ -4,7 +4,7 @@
         <button @click.prevent="this.hideUnit = !hideUnit" type="button"
                 class="w-1/12 mb-2 text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600
                         hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-teal-300
-                        dark:focus:ring-teal-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
+                        font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
             Создать
         </button>
         <!-- component -->
@@ -43,7 +43,7 @@
                             <div>
                                 <label for="title" class="text-amber=200 mb-2">Единицы измерения</label>
                                 <input v-model="title" type="text" id="title"
-                                       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                                        placeholder="Единицы измерения" required>
                             </div>
                         </div>
@@ -51,7 +51,7 @@
                     <button @click.prevent="addUnit" type="button"
                             class="text-gray-900 bg-gradient-to-r from-lime-200 via-lime-400 to-lime-500
                                 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-lime-300
-                                dark:focus:ring-lime-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
+                                font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
                         Добавить
                     </button>
                 </form>
@@ -60,11 +60,11 @@
                 <h1 class="italic mb-3">Удалить {{ this.delTitle }}?</h1>
                 <div class="flex">
                     <button @click.prevent="deleteUnit" type="button"
-                            class="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 shadow-lg shadow-red-500/50 dark:shadow-lg dark:shadow-red-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
+                            class="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 shadow-lg shadow-red-500/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
                         Удалить
                     </button>
                     <button @click.prevent="this.hideDelete = !this.hideDelete" type="button"
-                            class="text-white bg-gradient-to-r from-pink-400 via-pink-500 to-pink-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-pink-300 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
+                            class="text-white bg-gradient-to-r from-pink-400 via-pink-500 to-pink-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-pink-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
                         Отмена
                     </button>
                 </div>
@@ -76,13 +76,13 @@
 <script>
 
 import {Link} from "@inertiajs/vue3";
-import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
+import UserLayout from "@/Layouts/UserLayout.vue";
 
 export default {
 
     name: "Index",
 
-    layout: AuthenticatedLayout,
+    layout: UserLayout,
 
     components: {
         Link

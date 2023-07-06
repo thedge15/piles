@@ -6,12 +6,12 @@
         <button @click.prevent="this.hideProduct = !hideProduct" type="button"
                 class="w-1/12 mb-2 text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600
                         hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-teal-300
-                        dark:focus:ring-teal-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
+                        font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
             Создать
         </button>
         <!-- component -->
         <div class="flex-grow overflow-auto">
-            <table v-if="metals" class="relative w-full border mb-3">
+            <table v-if="metals" class="relative w-full border mb-3 text-xs">
                 <thead>
                 <tr>
                     <th class="sticky top-0 px-6 py-3 text-indigo-100 bg-indigo-500">№</th>
@@ -75,50 +75,50 @@
                         >
                             <label for="mark" class="text-orange-600">Марка металлопроката</label>
                             <input v-model="mark" type="text" id="mark"
-                                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                                    placeholder="Марка металлопроката" required>
                         </div>
                         <div v-if="metal.data.title === 'Уголок'">
                             <label for="size" class="text-orange-600">Длина полки уголка</label>
                             <input v-model="size" type="number" id="size"
-                                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                                    placeholder="Длина полки уголка" required>
                         </div>
                         <div v-if="metal.data.title === 'Уголок'">
                             <label for="second_size" class="text-orange-600">Длина второй полки уголка</label>
                             <input v-model="second_size" type="number" id="second_size"
-                                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                                    placeholder="Длина второй полки уголка" required>
                         </div>
                         <div v-if="metal.data.title === 'Труба' || metal.data.title === 'Круг'">
                             <label for="diameter" class="text-orange-600">Диаметр</label>
                             <input v-model="diameter" type="number" id="diameter"
-                                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                                    placeholder="Диаметр" required>
                         </div>
                         <div v-if="metal.data.title === 'Труба квадратная'">
                             <label for="width" class="text-orange-600">Ширина квадратной трубы</label>
                             <input v-model="width" type="number" id="width"
-                                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                                    placeholder="Ширина квадратной трубы" required>
                         </div>
                         <div v-if="metal.data.title === 'Труба квадратная'">
                             <label for="height" class="text-orange-600">Высота квадратной трубы</label>
                             <input v-model="height" type="number" id="height"
-                                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                                    placeholder="Высота квадратной трубы" required>
                         </div>
                         <div
                             v-if="metal.data.title === 'Уголок' || metal.data.title === 'Труба' || metal.data.title === 'Труба квадратная'">
                             <label for="wall" class="text-orange-600">Толщина стенки</label>
                             <input v-model="wall" type="number" id="wall"
-                                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                                    placeholder="Толщина стенки" required>
                         </div>
                         <div v-if="metal.data.title === 'Лист' || metal.data.title === 'Лист рулонный'">
                             <label for="thickness" class="text-orange-600">Толщина листа</label>
                             <input v-model="thickness" type="number" id="thickness"
-                                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                                    placeholder="Толщина листа" required>
                         </div>
                         <div v-if="metal.data.title !== 'Лист'
@@ -128,7 +128,7 @@
                         >
                             <label for="tonLength" class="text-orange-600">Длина тонны металлопроката</label>
                             <input v-model="tonLength" type="number" step="0.01" id="tonLength"
-                                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                                    placeholder="Длина тонны металлопроката" pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"
                                    required>
                         </div>
@@ -136,7 +136,7 @@
                             v-if="metal.data.title !== 'Труба' && metal.data.title !== 'Труба квадратная' && metal.data.title !== 'Круг'">
                             <label for="tonArea" class="text-orange-600">Площадь тонны металлопроката</label>
                             <input v-model="tonArea" type="number" step="0.01" id="tonArea"
-                                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                                    placeholder="Площадь тонны металлопроката" pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"
                                    required>
                         </div>
@@ -144,7 +144,7 @@
                     <button @click.prevent="addCharacteristic" type="button"
                             class="text-gray-900 bg-gradient-to-r from-lime-200 via-lime-400 to-lime-500
                                             hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-lime-300
-                                            dark:focus:ring-lime-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
+                                            font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
                         Создать
                     </button>
                 </form>
@@ -154,19 +154,19 @@
                 <p class="p-2">Редактирование "{{ updProduct.title }}"</p>
                 <div class="w-2/5 px-2 mx-2">
                     <label for="updTitle"
-                           class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Наименование</label>
+                           class="block mb-2 text-sm font-medium text-gray-900">Наименование</label>
                     <input v-model="updTitle" id="updTitle"
                            class="bg-gray-50 h-9 mb-3 border border-gray-300 text-gray-900 text-sm rounded-lg
-                                focus:ring-blue-500 focus:border-blue-500 block w-full dark:bg-gray-700
-                                dark:border-gray-600 dark:placeholder-gray-400 dark:text-white
-                                dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                focus:ring-blue-500 focus:border-blue-500 block w-full
+
+                               ">
                 </div>
                 <button @click.prevent="updateCharacteristic" type="button"
-                        class="ml-2 text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
+                        class="ml-2 text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
                     Отправить
                 </button>
                 <button @click.prevent="closeUpdate" type="button"
-                        class="text-white bg-gradient-to-r from-pink-400 via-pink-500 to-pink-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-pink-300 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
+                        class="text-white bg-gradient-to-r from-pink-400 via-pink-500 to-pink-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-pink-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
                     Отмена
                 </button>
             </div>
@@ -176,14 +176,14 @@
                     <button @click.prevent="deleteProduct" type="button"
                             class="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600
                             hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300
-                            dark:focus:ring-red-800 shadow-lg shadow-red-500/50 dark:shadow-lg dark:shadow-red-800/80
+                            shadow-lg shadow-red-500/50
                             font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
                         Удалить
                     </button>
                     <button @click.prevent="closeDelete" type="button"
                             class="text-white bg-gradient-to-r from-pink-400 via-pink-500 to-pink-600
                             hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-pink-300
-                            dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
+                            font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
                         Отмена
                     </button>
                 </div>
@@ -195,13 +195,13 @@
 <script>
 
 import {Link} from "@inertiajs/vue3";
-import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
+import UserLayout from "@/Layouts/UserLayout.vue";
 
 export default {
 
     name: "Index",
 
-    layout: AuthenticatedLayout,
+    layout: UserLayout,
 
     components: {
         Link

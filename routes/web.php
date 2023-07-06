@@ -26,8 +26,8 @@ Route::get('/', function () {
 });
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::prefix('/dashboard')->group(function () {
-        Route::get('/', [\App\Http\Controllers\UserController::class, 'dashboard'])->name('dashboard');
+    Route::prefix('/openPage')->group(function () {
+        Route::get('/', [\App\Http\Controllers\UserController::class, 'openPage'])->name('openPage');
         Route::get('/{bush}', [\App\Http\Controllers\UserController::class, 'index'])->name('user.index');
     });
     Route::prefix('/materials')->group(function () {

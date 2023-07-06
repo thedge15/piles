@@ -4,25 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Exports\PilesExport;
 use App\Http\Resources\Bush\BushResource;
-use App\Http\Resources\Pile\PileResource;
 use App\Http\Resources\Project\ProjectResource;
-use App\Http\Resources\Tube\TubeResource;
 use App\Models\Bush;
-use App\Models\Material;
-use App\Models\Pile;
-use App\Models\Project;
-use App\Models\Tube;
-
 use Maatwebsite\Excel\Facades\Excel;
-use PhpOffice\PhpSpreadsheet\Exception;
 
 class UserController extends Controller
 {
-    public function dashboard(): \Inertia\Response|\Inertia\ResponseFactory
+    public function openPage(): \Inertia\Response|\Inertia\ResponseFactory
     {
         $bushes = BushResource::collection(Bush::all())->resolve();
 
-        return inertia('Dashboard', compact('bushes'));
+        return inertia('OpenPage', compact('bushes'));
     }
 
 //    public function piles(): \Inertia\Response|\Inertia\ResponseFactory

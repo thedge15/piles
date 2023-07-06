@@ -9,9 +9,22 @@
                 <div class="p-4">
                     <ul class="space-y-1">
                         <li class="my-2">
-                            <Link :href="route('dashboard')"
+                            <Link :href="route('profile.edit')"
                                   :class="['flex rounded-xl font-bold text-sm py-1 px-4',
-                                  $page.component === 'Dashboard' || $page.component === 'User/Index' || $page.component === 'Material/Index' ?
+                                  $page.component === 'Profile/Edit' ?
+                                  'items-center text-yellow-900 bg-yellow-200' : 'text-gray-900 bg-white hover:bg-yellow-50']">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor"
+                                     class="text-lg mr-4" viewBox="0 0 16 16">
+                                    <path
+                                        d="M4 .5a.5.5 0 0 0-1 0V1H2a2 2 0 0 0-2 2v1h16V3a2 2 0 0 0-2-2h-1V.5a.5.5 0 0 0-1 0V1H4V.5zM16 14V5H0v9a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2zm-3.5-7h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5z"/>
+                                </svg>
+                                {{ $page.props.auth.user.name }}
+                            </Link>
+                        </li>
+                        <li class="my-2">
+                            <Link :href="route('openPage')"
+                                  :class="['flex rounded-xl font-bold text-sm py-1 px-4',
+                                  $page.component === 'OpenPage' || $page.component === 'User/Index' || $page.component === 'Material/Index' ?
                                   'items-center text-yellow-900 bg-yellow-200' : 'text-gray-900 bg-white hover:bg-yellow-50']">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor"
                                      class="text-lg mr-4" viewBox="0 0 16 16">

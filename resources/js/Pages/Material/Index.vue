@@ -4,42 +4,62 @@
             <Link :href="route('user.index', project.data.bush_id)">
                 {{ project.data.title }}
             </Link>
-            <button @click.prevent="this.hideMaterial = !hideMaterial" type="button"
-                    class="mb-2 mx-6 w-1/12 text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600
-                        hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-teal-300
-                        dark:focus:ring-teal-800 font-medium rounded-lg text-sm px-3 py-2.5 text-center mr-2 mb-2">
-                Создать
-            </button>
         </div>
+
+        <button @click.prevent="this.hideMaterial = !hideMaterial" type="button"
+                class="mb-2 mx-6 w-1/12 text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600
+                        hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-teal-300
+                        font-medium rounded-lg text-sm px-3 py-2.5 text-center mr-2 mb-2">
+            Создать
+        </button>
         <!-- component -->
         <div class="flex-grow overflow-auto">
-            <table class="relative w-full border mb-3">
+            <table class="relative w-full border mb-3 text-xs">
                 <thead>
                 <tr>
-                    <th class="sticky top-0 px-6 py-3 text-indigo-100 bg-indigo-500"><input type="checkbox" v-model="selectAll"></th>
+                    <th class="sticky top-0 px-6 py-3 text-indigo-100 bg-indigo-500"><input type="checkbox"
+                                                                                            v-model="selectAll">
+                    </th>
                     <th class="sticky top-0 px-6 py-3 text-indigo-100 bg-indigo-500">Конструктивный элемент</th>
                     <th class="sticky top-0 px-6 py-3 text-indigo-100 bg-indigo-500">Наименование и техническая
                         характеристика
                     </th>
                     <th class="sticky top-0 px-6 py-3 text-indigo-100 bg-indigo-500">Количество</th>
-                    <th class="sticky top-0 px-6 py-3 text-indigo-100 bg-indigo-500">Краска</th>
+                    <th class="sticky top-0 px-6 py-3 bg-indigo-500">
+                        <select v-model="selectedPaint" id="selectedPaint" data-te-select-init
+                                class="bg-indigo-500 text-indigo-100 text-sm text-center focus:ring-blue-500 focus:border-blue-500
+                                block w-full
+                               ">
+
+                            <option class="text-sm" v-for="item in paints">{{ item.title }}</option>
+                        </select>
+                    </th>
                     <th class="sticky top-0 px-6 py-3 text-indigo-100 bg-indigo-500">Редактирование</th>
                     <th class="sticky top-0 px-6 py-3 text-indigo-100 bg-indigo-500">Удаление</th>
                 </tr>
                 </thead>
                 <tbody class="divide-y bg-gray-100">
                 <tr v-for="(material, index) in materials">
-                    <td :class='["px-6 py-2 text-center", index%2 === 0 ? "" : "bg-gray-300"]'><input type="checkbox"
-                                                                                                      :value="material.id"
-                                                                                                      v-model="checkedMaterials">
+                    <td :class='["px-6 py-2 text-center", index%2 === 0 ? "" : "bg-gray-300"]'><input
+                        type="checkbox"
+                        :value="material.id"
+                        v-model="checkedMaterials">
                         <span class="hidden">
                             {{ material.id }}
                         </span>
                     </td>
-                    <td :class='["px-6 py-2 text-center", index%2 === 0 ? "" : "bg-gray-300"]'>{{ material.element }}</td>
-                    <td :class='["px-6 py-2 text-center", index%2 === 0 ? "" : "bg-gray-300"]'>{{ material.title }}</td>
+                    <td :class='["px-6 py-2 text-center", index%2 === 0 ? "" : "bg-gray-300"]'>{{
+                            material.element
+                        }}
+                    </td>
+                    <td :class='["px-6 py-2 text-center", index%2 === 0 ? "" : "bg-gray-300"]'>{{
+                            material.title
+                        }}
+                    </td>
                     <td :class='["px-6 py-2 text-center", index%2 === 0 ? "" : "bg-gray-300"]'>
-                        {{ material.weight }} т <span v-if="material.quantity">({{ Math.floor(material.quantity) }} шт.)</span>
+                        {{ material.weight }} т <span v-if="material.quantity">({{
+                            Math.floor(material.quantity)
+                        }} шт.)</span>
                     </td>
                     <td :class='["px-6 py-2 text-center", index%2 === 0 ? "" : "bg-gray-300"]'>
                         <div v-if="material.paint_color === 'RAL 1021'" class="bg-yellow-400">
@@ -63,7 +83,8 @@
                         </svg>
                     </td>
                     <td :class='["px-6 py-2 text-center", index%2 === 0 ? "" : "bg-gray-300"]'>
-                        <svg @click.prevent="showDelete(material)" xmlns="http://www.w3.org/2000/svg"
+                        <svg @click.prevent="[this.delMaterial = material, this.hideDelete = !hideDelete]"
+                             xmlns="http://www.w3.org/2000/svg"
                              fill="none" viewBox="0 0 24 24"
                              stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mx-auto cursor-pointer">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788
@@ -80,265 +101,264 @@
                     <td class="text-center text-indigo-100 bg-indigo-500"></td>
                     <td class="text-center text-indigo-100 bg-indigo-500"></td>
                     <td class="text-indigo-100 bg-indigo-500">ИТОГО</td>
-                    <td class="text-center text-indigo-100 bg-indigo-500">{{ selectedMaterialWeight.toFixed(2) }} т</td>
-                    <td class="text-center text-indigo-100 bg-indigo-500">{{ selectedMaterialPaint.toFixed(2) }} кг</td>
+                    <td class="text-center text-indigo-100 bg-indigo-500">{{ selectedMaterialWeight.toFixed(2) }}
+                        т
+                    </td>
+                    <td class="text-center text-indigo-100 bg-indigo-500">{{ selectedMaterialPaint.toFixed(2) }}
+                        кг
+                    </td>
                     <td class="text-center text-indigo-100 bg-indigo-500"></td>
                     <td class="text-center text-indigo-100 bg-indigo-500"></td>
                 </tr>
             </table>
         </div>
-        <div v-if="selectedMaterialWeight" class="mt-2 ml-2">
-            {{ selectedMaterialWeight }}
-        </div>
         <div :class="['shadow-md sm:rounded-lg ', this.hideMaterial ? '' : 'hidden']">
             <form class="p-4 bg-gray-200 mt-4">
-
-                    <div class="flex w-full">
-                        <div class="w-1/3">
-                            <label for="metal"
-                                   class="block mb-2 mr-2 text-sm font-medium text-gray-900 dark:text-white">Выберите
-                                конструктивный элемент</label>
-                            <select v-model="element" id="element"
-                                    class="bg-gray-50 mb-3 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                <option v-for="item in elements">{{ item.title }}</option>
-                            </select>
-                            <!--                    {{ this.computedElement.quantity }}-->
-                        </div>
-                        <div class="w-1/3 ml-2">
-                            <label for="metal"
-                                   class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Выберите
-                                металлопрокат</label>
-                            <select v-model="metal" id="metal"
-                                    class="bg-gray-50 mb-3 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                <option v-for="item in metals">{{ item.title }}</option>
-                            </select>
-                        </div>
-                        <div v-if="metal" class="flex ml-2 justify-items-center w-full">
-                            <div class="mr-2 w-1/3">
-                                <label for="characteristic"
-                                       class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Выберите
-                                    размеры</label>
-                                <select v-model="title" id="characteristic"
-                                        class="w-full bg-gray-50 mb-3 border border-gray-300 text-gray-900 text-sm rounded-lg
-                                focus:ring-blue-500 focus:border-blue-500 block dark:bg-gray-700
-                                dark:border-gray-600 dark:placeholder-gray-400 dark:text-white
-                                dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                    <option v-for="item in computedArray">
-                                        {{ item.title }}
-                                    </option>
-                                </select>
-                            </div>
-
-                            <div v-if="metal === 'Лист'" class="w-2/6 mr-2">
-                                <label for="sheetHeight"
-                                       class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Введите
-                                    ширину листа, мм (при наличии)</label>
-                                <input v-model="sheetHeight" id="sheetHeight" type="number"
-                                       class="w-full bg-gray-50 mb-3  border border-gray-300 text-gray-900 text-sm rounded-lg
-                                focus:ring-blue-500 focus:border-blue-500 block dark:bg-gray-700
-                                dark:border-gray-600 dark:placeholder-gray-400 dark:text-white
-                                dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                            </div>
-                            <div v-if="metal === 'Лист'" class="w-1/3">
-                                <label for="sheetWidth"
-                                       class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Введите
-                                    высоту листа, мм (при наличии)</label>
-                                <input v-model="sheetWidth" id="sheetWidth" type="number"
-                                       class="w-full bg-gray-50 mb-3 border border-gray-300 text-gray-900 text-sm rounded-lg
-                                focus:ring-blue-500 focus:border-blue-500 block dark:bg-gray-700
-                                dark:border-gray-600 dark:placeholder-gray-400 dark:text-white
-                                dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                            </div>
-                            <div
-                                v-if="metal === 'Труба' || metal === 'Швеллер' || metal === 'Уголок' || metal === 'Двутавр'"
-                                class="w-2/6">
-                                <label for="metalLength"
-                                       class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Введите
-                                    длину, мм (при наличии)</label>
-                                <input v-model="metalLength" id="metalLength" type="number"
-                                       class="w-full bg-gray-50 mb-3 border border-gray-300 text-gray-900 text-sm rounded-lg
-                                focus:ring-blue-500 focus:border-blue-500 block dark:bg-gray-700
-                                dark:border-gray-600 dark:placeholder-gray-400 dark:text-white
-                                dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                            </div>
-                        </div>
+                <div class="flex w-full">
+                    <div class="w-1/3">
+                        <label for="metal"
+                               class="block mb-2 mr-2 text-sm font-medium text-gray-900">Выберите
+                            конструктивный элемент</label>
+                        <select v-model="element" id="element"
+                                class="bg-gray-50 mb-3 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full">
+                            <option v-for="item in elements">{{ item.title }}</option>
+                        </select>
+                        <!--                    {{ this.computedElement.quantity }}-->
                     </div>
-                    <div class="flex w-full">
-                        <div v-if="metal" class="w-full">
-                            <label for="standard"
-                                   class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Выберите
-                                ГОСТ</label>
-                            <select v-model="standard" id="standard"
-                                    class="bg-gray-50 w-full mb-2 border border-gray-300 text-gray-900 text-sm rounded-lg
-                                focus:ring-blue-500 focus:border-blue-500 block dark:bg-gray-700
-                                dark:border-gray-600 dark:placeholder-gray-400 dark:text-white
-                                dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                <option v-for="item in selectedStandards">
+                    <div class="w-1/3 ml-2">
+                        <label for="metal"
+                               class="block mb-2 text-sm font-medium text-gray-900">Выберите
+                            металлопрокат</label>
+                        <select v-model="metal" id="metal"
+                                class="bg-gray-50 mb-3 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full">
+                            <option v-for="item in metals">{{ item.title }}</option>
+                        </select>
+                    </div>
+                    <div v-if="metal" class="flex ml-2 justify-items-center w-full">
+                        <div class="mr-2 w-1/3">
+                            <label for="characteristic"
+                                   class="block mb-2 text-sm font-medium text-gray-900">Выберите
+                                размеры</label>
+                            <select v-model="title" id="characteristic"
+                                    class="w-full bg-gray-50 mb-3 border border-gray-300 text-gray-900 text-sm rounded-lg
+                                focus:ring-blue-500 focus:border-blue-500 block
+
+                               ">
+                                <option v-for="item in computedArray">
                                     {{ item.title }}
                                 </option>
                             </select>
                         </div>
-                        <div :class="['w-full', metal ? 'ml-2' : '']">
-                            <label for="steel"
-                                   class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Выберите
-                                сталь</label>
-                            <select v-model="steel" id="steel"
-                                    class="bg-gray-50 mb-3 border border-gray-300 text-gray-900 text-sm rounded-lg
-                                focus:ring-blue-500 focus:border-blue-500 block w-full dark:bg-gray-700
-                                dark:border-gray-600 dark:placeholder-gray-400 dark:text-white
-                                dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                <option v-for="item in steels">
-                                    {{ item.title }} {{ item.steel_standard }}
-                                </option>
-                            </select>
+
+                        <div v-if="metal === 'Лист'" class="w-2/6 mr-2">
+                            <label for="sheetHeight"
+                                   class="block mb-2 text-sm font-medium text-gray-900">Введите
+                                ширину листа, мм (при наличии)</label>
+                            <input v-model="sheetHeight" id="sheetHeight" type="number"
+                                   class="w-full bg-gray-50 mb-3  border border-gray-300 text-gray-900 text-sm rounded-lg
+                                focus:ring-blue-500 focus:border-blue-500 block
+
+                               ">
                         </div>
-                        <div class="w-full px-2">
-                            <label for="quantity"
-                                   class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Введите
-                                количество</label>
-                            <input v-model="quantity" id="quantity" type="number" step="0.001"
-                                   class="bg-gray-50 h-9 mb-3 border border-gray-300 text-gray-900 text-sm rounded-lg
-                                focus:ring-blue-500 focus:border-blue-500 block w-full dark:bg-gray-700
-                                dark:border-gray-600 dark:placeholder-gray-400 dark:text-white
-                                dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <div v-if="metal === 'Лист'" class="w-1/3">
+                            <label for="sheetWidth"
+                                   class="block mb-2 text-sm font-medium text-gray-900">Введите
+                                высоту листа, мм (при наличии)</label>
+                            <input v-model="sheetWidth" id="sheetWidth" type="number"
+                                   class="w-full bg-gray-50 mb-3 border border-gray-300 text-gray-900 text-sm rounded-lg
+                                focus:ring-blue-500 focus:border-blue-500 block
+
+                               ">
                         </div>
-                        <div class="w-full">
-                            <label for="unit" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Выберите
-                                единицы измерения</label>
-                            <div v-if="!metalLength && !sheetHeight">
-                                <select v-model="unit" id="unit"
-                                        class="bg-gray-50 mb-3  border border-gray-300 text-gray-900 text-sm
-                                            rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full
-                                            dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400
-                                            dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                    <option v-for="item in units">{{ item.title }}</option>
-                                </select>
-                            </div>
-                            <div v-if="metalLength || sheetHeight">
-                                <select v-model="unit" id="unit"
-                                        class="bg-gray-50 mb-3 border border-gray-300 text-gray-900 text-sm
-                                            rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full
-                                            dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400
-                                            dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                    <option> {{ 'шт.' }}</option>
-                                </select>
-                            </div>
+                        <div
+                            v-if="metal === 'Труба' || metal === 'Швеллер' || metal === 'Уголок' || metal === 'Двутавр'"
+                            class="w-2/6">
+                            <label for="metalLength"
+                                   class="block mb-2 text-sm font-medium text-gray-900">Введите
+                                длину, мм (при наличии)</label>
+                            <input v-model="metalLength" id="metalLength" type="number"
+                                   class="w-full bg-gray-50 mb-3 border border-gray-300 text-gray-900 text-sm rounded-lg
+                                focus:ring-blue-500 focus:border-blue-500 block
+
+                               ">
                         </div>
                     </div>
+                </div>
+                <div class="flex w-full">
+                    <div v-if="metal" class="w-full">
+                        <label for="standard"
+                               class="block mb-2 text-sm font-medium text-gray-900">Выберите
+                            ГОСТ</label>
+                        <select v-model="standard" id="standard"
+                                class="bg-gray-50 w-full mb-2 border border-gray-300 text-gray-900 text-sm rounded-lg
+                                focus:ring-blue-500 focus:border-blue-500 block
+
+                               ">
+                            <option v-for="item in selectedStandards">
+                                {{ item.title }}
+                            </option>
+                        </select>
+                    </div>
+                    <div :class="['w-full', metal ? 'ml-2' : '']">
+                        <label for="steel"
+                               class="block mb-2 text-sm font-medium text-gray-900">Выберите
+                            сталь</label>
+                        <select v-model="steel" id="steel"
+                                class="bg-gray-50 mb-3 border border-gray-300 text-gray-900 text-sm rounded-lg
+                                focus:ring-blue-500 focus:border-blue-500 block w-full
+
+                               ">
+                            <option v-for="item in steels">
+                                {{ item.title }} {{ item.steel_standard }}
+                            </option>
+                        </select>
+                    </div>
+                    <div class="w-full px-2">
+                        <label for="quantity"
+                               class="block mb-2 text-sm font-medium text-gray-900">Введите
+                            количество</label>
+                        <input v-model="quantity" id="quantity" type="number" step="0.001"
+                               class="bg-gray-50 h-9 mb-3 border border-gray-300 text-gray-900 text-sm rounded-lg
+                                focus:ring-blue-500 focus:border-blue-500 block w-full
+
+                               ">
+                    </div>
+                    <div class="w-full">
+                        <label for="unit" class="block mb-2 text-sm font-medium text-gray-900">Выберите
+                            единицы измерения</label>
+                        <div v-if="!metalLength && !sheetHeight">
+                            <select v-model="unit" id="unit"
+                                    class="bg-gray-50 mb-3  border border-gray-300 text-gray-900 text-sm
+                                            rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full
+
+                                           ">
+                                <option v-for="item in units">{{ item.title }}</option>
+                            </select>
+                        </div>
+                        <div v-if="metalLength || sheetHeight">
+                            <select v-model="unit" id="unit"
+                                    class="bg-gray-50 mb-3 border border-gray-300 text-gray-900 text-sm
+                                            rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full
+
+                                           ">
+                                <option> {{ 'шт.' }}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
                 <button @click.prevent="addMaterial" type="button"
                         class="text-gray-900 bg-gradient-to-r from-lime-200 via-lime-400 to-lime-500
                                             hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-lime-300
-                                            dark:focus:ring-lime-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2">
+                                            font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2">
                     Создать
                 </button>
                 <button @click.prevent="hideStore" type="button"
-                        class="text-white bg-gradient-to-r from-pink-400 via-pink-500 to-pink-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-pink-300 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
+                        class="text-white bg-gradient-to-r from-pink-400 via-pink-500 to-pink-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-pink-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
                     Отмена
                 </button>
             </form>
         </div>
         <div v-if="updMaterial"
-             :class="['bg bg-gray-300 shadow-md sm:rounded-lg w-full', this.hideUpdate ? '' : 'hidden']">
-            <p class="p-2">Редактирование "{{ updMaterial.title }}"</p>
-            <div class="w-2/5 px-2 mx-2">
-                <label for="updTitle"
-                       class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Наименование</label>
-                <input v-model="updTitle" id="updTitle"
-                       class="bg-gray-50 h-9 mb-3 border border-gray-300 text-gray-900 text-sm rounded-lg
-                                focus:ring-blue-500 focus:border-blue-500 block w-full dark:bg-gray-700
-                                dark:border-gray-600 dark:placeholder-gray-400 dark:text-white
-                                dark:focus:ring-blue-500 dark:focus:border-blue-500">
-            </div>
-            <div class="flex justify-between px-3 w-full">
-                <div class="w-2/6 pr-2">
-                    <label for="updWeight"
-                           class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Вес, т</label>
-                    <input v-model="updWeight" id="updWeight" type="number" step="0.001"
-                           class="w-full bg-gray-50 h-9 mb-3 border border-gray-300 text-gray-900 text-sm rounded-lg
-                                focus:ring-blue-500 focus:border-blue-500 block dark:bg-gray-700
-                                dark:border-gray-600 dark:placeholder-gray-400 dark:text-white
-                                dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                </div>
-                <div class="w-2/6 pr-2">
-                    <label for="updLength"
-                           class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Длина, м</label>
-                    <input v-model="updLength" id="updLength" type="number" step="0.001"
-                           class="w-full bg-gray-50 h-9 mb-3 border border-gray-300 text-gray-900 text-sm rounded-lg
-                                focus:ring-blue-500 focus:border-blue-500 block w-full dark:bg-gray-700
-                                dark:border-gray-600 dark:placeholder-gray-400 dark:text-white
-                                dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                </div>
-                <div class="w-2/6">
-                    <label for="updArea"
-                           class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Площадь, м2</label>
-                    <input v-model="updArea" id="updArea" type="number" step="0.001"
+             :class="['bg-gray-200sm:rounded-lg w-full', this.hideUpdate ? '' : 'hidden']">
+            <form class="p-4 bg-gray-200 mt-4">
+                <p class="p-2 italic">Редактирование "{{ updMaterial.title }}"</p>
+                <div class="w-2/5 mx-2">
+                    <label for="updTitle"
+                           class="block mb-1 text-sm font-medium text-gray-900">Наименование</label>
+                    <input v-model="updTitle" id="updTitle"
                            class="bg-gray-50 h-9 mb-3 border border-gray-300 text-gray-900 text-sm rounded-lg
-                                focus:ring-blue-500 focus:border-blue-500 block w-full dark:bg-gray-700
-                                dark:border-gray-600 dark:placeholder-gray-400 dark:text-white
-                                dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                </div>
+                                focus:ring-blue-500 focus:border-blue-500 block w-full
 
-            </div>
-            <div class="flex justify-between px-3 w-full">
-                <div class="w-1/3 pr-2">
-                    <label for="paint"
-                           class="block mb-2 mr-2 text-sm font-medium text-gray-900 dark:text-white">Выберите
-                        краску</label>
-                    <select v-model="paint" id="element"
-                            class="bg-gray-50 mb-3 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                        <option v-for="item in paints">{{ item.title }}</option>
-                    </select>
+                               ">
                 </div>
-                <div class="w-1/3 pr-2">
-                    <label for="metal" class="block mb-2 mr-2 text-sm font-medium text-gray-900 dark:text-white">Выберите
-                        количество слоёв</label>
-                    <select v-model="numberOfLayers" id="numberOfLayers"
-                            class="bg-gray-50 mb-3 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500
-                        focus:border-blue-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400
-                        dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                    </select>
+                <div class="flex justify-between px-3 w-full">
+                    <div class="w-2/6 pr-2">
+                        <label for="updWeight"
+                               class="block mb-1 text-sm font-medium text-gray-900">Вес, т</label>
+                        <input v-model="updWeight" id="updWeight" type="number" step="0.001"
+                               class="w-full bg-gray-50 h-9 mb-3 border border-gray-300 text-gray-900 text-sm rounded-lg
+                                focus:ring-blue-500 focus:border-blue-500 block
+
+                               ">
+                    </div>
+                    <div class="w-2/6 pr-2">
+                        <label for="updLength"
+                               class="block mb-1 text-sm font-medium text-gray-900">Длина, м</label>
+                        <input v-model="updLength" id="updLength" type="number" step="0.001"
+                               class="w-full bg-gray-50 h-9 mb-3 border border-gray-300 text-gray-900 text-sm rounded-lg
+                                focus:ring-blue-500 focus:border-blue-500 block w-full
+
+                               ">
+                    </div>
+                    <div class="w-2/6">
+                        <label for="updArea"
+                               class="block mb-1 text-sm font-medium text-gray-900">Площадь,
+                            м2</label>
+                        <input v-model="updArea" id="updArea" type="number" step="0.001"
+                               class="bg-gray-50 h-9 mb-3 border border-gray-300 text-gray-900 text-sm rounded-lg
+                                focus:ring-blue-500 focus:border-blue-500 block w-full
+
+                               ">
+                    </div>
+
                 </div>
-                <div class="w-1/3">
-                    <label for="color" class="block mb-2 mr-2 text-sm font-medium text-gray-900 dark:text-white">Выберите
-                        цвет</label>
-                    <select v-model="color" id="color"
-                            class="bg-gray-50 mb-3 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500
-                        focus:border-blue-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400
-                        dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                        <option class="bg-gray-400">RAL 7004</option>
-                        <option class="bg-yellow-400">RAL 1021</option>
-                        <option class="bg-sky-500">RAL 5015</option>
-                        <option class="bg-amber-900">RAL 8002</option>
-                        <option>RAL 3020</option>
-                    </select>
+                <div class="flex justify-between px-3 w-full">
+                    <div class="w-1/3 pr-2">
+                        <label for="paint"
+                               class="block mb-1 mr-2 text-sm font-medium text-gray-900">Выберите
+                            краску</label>
+                        <select v-model="paint" id="element"
+                                class="bg-gray-50 mb-3 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full">
+                            <option v-for="item in paints">{{ item.title }}</option>
+                        </select>
+                    </div>
+                    <div class="w-1/3 pr-2">
+                        <label for="metal"
+                               class="block mb-1 mr-2 text-sm font-medium text-gray-900">Выберите
+                            количество слоёв</label>
+                        <select v-model="numberOfLayers" id="numberOfLayers"
+                                class="bg-gray-50 mb-3 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500
+                        focus:border-blue-500 block w-full
+                       ">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                        </select>
+                    </div>
+                    <div class="w-1/3">
+                        <label for="color"
+                               class="block mb-1 mr-2 text-sm font-medium text-gray-900">Выберите
+                            цвет</label>
+                        <select v-model="color" id="color"
+                                class="bg-gray-50 mb-3 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500
+                        focus:border-blue-500 block w-full
+                       ">
+                            <option class="bg-gray-400">RAL 7004</option>
+                            <option class="bg-yellow-400">RAL 1021</option>
+                            <option class="bg-sky-500">RAL 5015</option>
+                            <option class="bg-amber-900">RAL 8002</option>
+                            <option>RAL 3020</option>
+                        </select>
+                    </div>
                 </div>
-            </div>
-            <button @click.prevent="updateMaterial" type="button"
-                    class="ml-2 text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
-                Отправить
-            </button>
-            <button @click.prevent="closeUpdate" type="button"
-                    class="text-white bg-gradient-to-r from-pink-400 via-pink-500 to-pink-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-pink-300 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
-                Отмена
-            </button>
+                <button @click.prevent="updateMaterial" type="button"
+                        class="ml-2 text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
+                    Отправить
+                </button>
+                <button @click.prevent="closeUpdate" type="button"
+                        class="text-white bg-gradient-to-r from-pink-400 via-pink-500 to-pink-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-pink-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
+                    Отмена
+                </button>
+            </form>
         </div>
-        <div v-if="delMaterial"
-             :class="['bg bg-gray-300 shadow-md sm:rounded-lg w-full', this.hideDelete ? '' : 'hidden']">
-            <p class="p-2 italic">Вы вот прям точно хотите удалить "{{ delMaterial.title }}"?</p>
-            <button @click.prevent="deleteMaterial" type="button"
-                    class="ml-2 text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
-                Удалить
-            </button>
-            <button @click.prevent="closeDelete" type="button"
-                    class="text-white bg-gradient-to-r from-pink-400 via-pink-500 to-pink-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-pink-300 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
-                Отмена
-            </button>
+        <!--        <DeleteComponent :del-material="this.delMaterial" :hide-delete="this.hideDelete"></DeleteComponent>-->
+        <div>
+            <DeleteComponent v-for="(product, i) in products" :key="product.id"></DeleteComponent>
         </div>
     </div>
-
+    <div v-if="selectedMaterialWeight" class="mt-2 ml-2">
+        {{ selectedMaterialWeight }}
+    </div>
     <!--                <Link :href="route('all')">-->
     <!--                    Набивка материала-->
     <!--                </Link>-->
@@ -346,8 +366,9 @@
 
 <script>
 
-import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
+import UserLayout from "@/Layouts/UserLayout.vue";
 import {Link} from "@inertiajs/vue3";
+import DeleteComponent from "@/Components/DeleteComponent.vue";
 
 export default {
 
@@ -384,13 +405,29 @@ export default {
             paint: '',
             numberOfLayers: null,
             color: '',
+            selectedPaint: '',
             checkedMaterials: [],
+            products: [
+                {
+                    id: 1,
+                    title: 'Product 1',
+                    price: 50,
+                    qt: 1000,
+                },
+                {
+                    id: 2,
+                    title: 'Product 2',
+                    price: 100,
+                    qt: 500,
+                },
+            ]
         }
     },
 
-    layout: AuthenticatedLayout,
+    layout: UserLayout,
 
     components: {
+        DeleteComponent,
         Link
     },
 
@@ -517,6 +554,8 @@ export default {
         showDelete(material) {
             this.hideDelete = !this.hideDelete
             this.delMaterial = material
+            console.log(this.delMaterial);
+            console.log(this.hideDelete);
         },
 
         showUpdate(material) {
@@ -539,10 +578,10 @@ export default {
             this.hideUpdate = !this.hideUpdate
         },
 
-        closeDelete() {
-            this.delMaterial = ''
-            this.hideDelete = !this.hideDelete
-        },
+        // closeDelete() {
+        //     this.delMaterial = ''
+        //     this.hideDelete = !this.hideDelete
+        // },
 
         updateMaterial() {
             this.$inertia.patch('/materials/' + this.updId, {
@@ -566,11 +605,11 @@ export default {
             this.color = ''
         },
 
-        deleteMaterial() {
-            this.$inertia.delete(route('destroy.material', this.delMaterial.id))
-            this.delMaterial = ''
-            this.hideDelete = !this.hideDelete
-        },
+        // deleteMaterial() {
+        //     this.$inertia.delete(route('destroy.material', this.delMaterial.id))
+        //     this.delMaterial = ''
+        //     this.hideDelete = !this.hideDelete
+        // },
 
         test(words) {
             if (words) {

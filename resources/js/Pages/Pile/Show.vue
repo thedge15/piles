@@ -8,7 +8,7 @@
             </div>
             <div class="relative overflow-x-auto shadow-md sm:rounded-lg p-4">
                 <button @click.prevent="hidePile = !hidePile" type="button"
-                        class="mb-12 text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-teal-300 dark:focus:ring-teal-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
+                        class="mb-12 text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-teal-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
                         value="создать">
                     Создать
                 </button>
@@ -17,54 +17,54 @@
                         <div class="grid gap-6 mb-6 md:grid-cols-2">
                             <div>
                                 <label for="pile_title"
-                                       class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Наименование
+                                       class="block mb-2 text-sm font-medium text-gray-900">Наименование
                                     сваи</label>
                                 <input v-model="title" type="text" id="pile_title"
-                                       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                                        placeholder="Свая" required>
                             </div>
                             <div>
                                 <label for="tube"
-                                       class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Выбор
+                                       class="block mb-2 text-sm font-medium text-gray-900">Выбор
                                     трубы</label>
                                 <select id="tube" v-model="tube"
-                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                                     <option v-for="item in tubes.data" :value="item.title">{{ item.title }}</option>
                                 </select>
                             </div>
                             <div>
                                 <label for="pile_length"
-                                       class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Длина
+                                       class="block mb-2 text-sm font-medium text-gray-900">Длина
                                     сваи</label>
                                 <input v-model="length" type="number" id="pile_length"
-                                       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                                        placeholder="" required>
                             </div>
                             <div>
                                 <label for="altitude_mark"
-                                       class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Высотная
+                                       class="block mb-2 text-sm font-medium text-gray-900">Высотная
                                     отметка</label>
                                 <input v-model="altitude_mark" type="number" id="altitude_mark"
-                                       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                                        placeholder="" required>
                             </div>
                             <div>
                                 <label for="quantity"
-                                       class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Количество</label>
+                                       class="block mb-2 text-sm font-medium text-gray-900">Количество</label>
                                 <input v-model="quantity" type="number" id="quantity"
-                                       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                                        placeholder="" required>
                             </div>
                         </div>
                         <button @click.prevent="addPile" type="button"
-                                class="text-gray-900 bg-gradient-to-r from-lime-200 via-lime-400 to-lime-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-lime-300 dark:focus:ring-lime-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
+                                class="text-gray-900 bg-gradient-to-r from-lime-200 via-lime-400 to-lime-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-lime-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
                             Добавить
                         </button>
                     </form>
                 </div>
                 <div class="table-wrp block max-h-96">
-                    <table v-if="piles" class="w-full text-sm text-left text-blue-100 dark:text-blue-100 my-2">
-                        <thead class="text-xs text-white uppercase bg-blue-600 dark:text-white sticky top-0">
+                    <table v-if="piles" class="w-full text-sm text-left text-blue-100 my-2">
+                        <thead class="text-xs text-white uppercase bg-blue-600 sticky top-0">
                         <tr>
                             <th scope="col" class="py-3 text-center">
                                 №
@@ -102,19 +102,19 @@
                                 <input type="checkbox" :value="pile.id" v-model="checkedMaterials">
                             </td>
                             <th scope="row"
-                                class="px-6 font-medium text-blue-50 whitespace-nowrap dark:text-blue-100 text-center">
+                                class="px-6 font-medium text-blue-50 whitespace-nowrap text-center">
                                 {{ pile.title }}
                             </th>
                             <th scope="row"
-                                class="px-6 font-medium text-blue-50 whitespace-nowrap dark:text-blue-100 text-center">
+                                class="px-6 font-medium text-blue-50 whitespace-nowrap text-center">
                                 {{ pile.tube }}
                             </th>
                             <th scope="row"
-                                class="px-6 font-medium text-blue-50 whitespace-nowrap dark:text-blue-100 text-center">
+                                class="px-6 font-medium text-blue-50 whitespace-nowrap text-center">
                                 {{ pile.length }}
                             </th>
                             <th scope="row"
-                                class="px-6 font-medium text-blue-50 whitespace-nowrap dark:text-blue-100 text-center">
+                                class="px-6 font-medium text-blue-50 whitespace-nowrap text-center">
                                 {{ pile.altitude_mark }}
                             </th>
                             <td class="px-6">
@@ -142,7 +142,7 @@
                 </div>
             </div>
             <button @click.prevent="calculateConcrete" type="button"
-                    class="ml-6 mt-3 text-white bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-3">
+                    class="ml-6 mt-3 text-white bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-3">
                 Рассчитать бетон
             </button>
         </div>
@@ -150,32 +150,32 @@
             <div class="grid gap-6 mb-6 md:grid-cols-4">
                 <div v-if="updTitle">
                     <input v-model="updTitle" type="text"
-                           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                            required>
                 </div>
                 <div>
                     <input v-model="updTube" type="text"
-                           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                            required>
                 </div>
                 <div>
                     <input v-model="updLength" type="number" id="pile_length"
-                           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                            required>
                 </div>
                 <div>
                     <input v-model="updAltitudeMark" type="number" id="altitude_mark"
-                           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                            placeholder="Высотная отметка" required>
                 </div>
             </div>
             <div class="flex">
                 <button @click.prevent="updatePile" type="button"
-                        class="text-gray-900 bg-gradient-to-r from-lime-200 via-lime-400 to-lime-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-lime-300 dark:focus:ring-lime-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
+                        class="text-gray-900 bg-gradient-to-r from-lime-200 via-lime-400 to-lime-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-lime-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
                     Обновить
                 </button>
                 <button @click.prevent="this.hideUpd = !this.hideUpd" type="button"
-                        class="text-white bg-gradient-to-r from-pink-400 via-pink-500 to-pink-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-pink-300 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
+                        class="text-white bg-gradient-to-r from-pink-400 via-pink-500 to-pink-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-pink-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
                     Отмена
                 </button>
             </div>
@@ -184,11 +184,11 @@
             <h1 class="italic mb-3">Удалить сваю № {{ this.delId }} {{ this.delTitle }}?</h1>
             <div class="flex">
                 <button @click.prevent="deletePile" type="button"
-                        class="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 shadow-lg shadow-red-500/50 dark:shadow-lg dark:shadow-red-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
+                        class="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 shadow-lg shadow-red-500/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
                     Удалить
                 </button>
                 <button @click.prevent="this.hideDelete = !this.hideDelete" type="button"
-                        class="text-white bg-gradient-to-r from-pink-400 via-pink-500 to-pink-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-pink-300 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
+                        class="text-white bg-gradient-to-r from-pink-400 via-pink-500 to-pink-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-pink-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
                     Отмена
                 </button>
             </div>
