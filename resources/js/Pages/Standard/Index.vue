@@ -76,7 +76,7 @@
                             <label for="title" class="text-amber=200 mb-2">Номер</label>
                             <input v-model="standardNumber" type="text" id="title"
                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                                   placeholder="Единицы измерения" required>
+                                   placeholder="Номер стандарта" required>
                         </div>
                     </div>
                 </div>

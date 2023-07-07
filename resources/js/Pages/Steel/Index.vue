@@ -60,34 +60,6 @@
                 </tr>
                 </tbody>
             </table>
-            <div :class="['relative', this.hideSteel ? '' : 'hidden']">
-                <form class="p-4">
-                    <div class="flex">
-                        <div class="grid gap-6 mb-6 md:grid-cols-2">
-                            <div>
-                                <label for="title" class="text-amber=200">Марка стали</label>
-                                <input v-model="title" type="text" id="title"
-                                       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                                       placeholder="Наименование стали" required>
-                            </div>
-                        </div>
-                        <div class="grid gap-6 mb-6 md:grid-cols-2">
-                            <div>
-                                <label for="title" class="text-amber=200">ГОСТ</label>
-                                <input v-model="steelStandard" type="text" id="title"
-                                       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                                       placeholder="ГОСТ стали" required>
-                            </div>
-                        </div>
-                    </div>
-                    <button @click.prevent="addSteel" type="button"
-                            class="text-gray-900 bg-gradient-to-r from-lime-200 via-lime-400 to-lime-500
-                                hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-lime-300
-                                font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
-                        Добавить
-                    </button>
-                </form>
-            </div>
             <StoreComponent :hide-material="this.hideSteel" :element="'steel'" :element-title="'марки стали'" @closeStore="closeStore"></StoreComponent>
             <DeleteComponent :del-element="this.delSteel" :hide-delete="this.hideDelete" :del-title="'steel'"  @closeDelete="closeDelete"></DeleteComponent>
         </div>
@@ -134,16 +106,6 @@ export default {
     ],
 
     methods: {
-
-        addSteel() {
-            this.$inertia.post('/admin/steel', {
-                title: this.title,
-                steel_standard: this.steelStandard,
-            })
-            this.title = ''
-            this.steelStandard = ''
-            this.hideSteel = !this.hideSteel
-        },
 
         closeStore() {
             this.hideSteel = !this.hideSteel
