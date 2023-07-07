@@ -351,7 +351,7 @@
                 </button>
             </form>
         </div>
-        <DeleteComponent :del-element="this.delMaterial" :hide-delete="this.hideDelete" :del-title="'material'"  @closeDelete="close"></DeleteComponent>
+        <DeleteComponent :del-element="this.delMaterial" :hide-delete="this.hideDelete" :del-title="'material'"  @closeDelete="closeDelete"></DeleteComponent>
     </div>
     <div v-if="selectedMaterialWeight" class="mt-2 ml-2">
         {{ selectedMaterialWeight }}
@@ -573,7 +573,7 @@ export default {
             this.hideUpdate = !this.hideUpdate
         },
 
-        close() {
+        closeDelete() {
             this.delMaterial = ''
             this.hideDelete = !this.hideDelete
         },

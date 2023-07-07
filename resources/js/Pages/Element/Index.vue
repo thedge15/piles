@@ -106,7 +106,7 @@
                 </button>
             </form>
         </div>
-        <DeleteComponent :del-element="this.delElement" :hide-delete="this.hideDelete" :del-title="'element'"  @closeDelete="close"></DeleteComponent>
+        <DeleteComponent :del-element="this.delElement" :hide-delete="this.hideDelete" :del-title="'element'"  @closeDelete="closeDelete"></DeleteComponent>
     </div>
 </template>
 
@@ -168,7 +168,7 @@ export default {
             this.delElement = element
         },
 
-        close() {
+        closeDelete() {
             this.delElement = ''
             this.hideDelete = !this.hideDelete
         },

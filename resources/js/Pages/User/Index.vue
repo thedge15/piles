@@ -108,7 +108,7 @@
                         </button>
                     </form>
                 </div>
-                <DeleteComponent :del-element="this.delProject" :hide-delete="this.hideDelete" :del-title="'project'"  @closeDelete="close"></DeleteComponent>
+                <DeleteComponent :del-element="this.delProject" :hide-delete="this.hideDelete" :del-title="'project'"  @closeDelete="closeDelete"></DeleteComponent>
             </div>
         </div>
     </div>
@@ -181,7 +181,7 @@ export default {
             this.delProject = project
         },
 
-        close() {
+        closeDelete() {
             this.delProject = ''
             this.hideDelete = !this.hideDelete
         },

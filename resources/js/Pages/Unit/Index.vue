@@ -1,7 +1,7 @@
 <template>
     <div class="flex flex-col h-screen py-5">
         <p class="text-center italic">Единицы измерения</p>
-        <button @click.prevent="this.hideUnit = !hideUnit" type="button"
+        <button @click.prevent="this.hideMaterial = !hideMaterial" type="button"
                 class="w-1/12 mb-2 text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600
                         hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-teal-300
                         font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
@@ -24,7 +24,7 @@
                         {{ unit.title }}
                     </td>
                     <td :class='["px-6 py-2 text-center", index%2 === 0 ? "" : "bg-gray-300"]'>
-                        <svg @click.prevent="showDelete(unit.id, unit.title)"
+                        <svg @click.prevent="showDelete(unit)"
                              xmlns="http://www.w3.org/2000/svg"
                              fill="none"
                              viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
@@ -36,39 +36,8 @@
                 </tr>
                 </tbody>
             </table>
-            <div :class="['relative', this.hideUnit ? '' : 'hidden']">
-                <form class="p-4">
-                    <div class="flex">
-                        <div class="grid gap-6 mb-6 md:grid-cols-3 w-full">
-                            <div>
-                                <label for="title" class="text-amber=200 mb-2">Единицы измерения</label>
-                                <input v-model="title" type="text" id="title"
-                                       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                                       placeholder="Единицы измерения" required>
-                            </div>
-                        </div>
-                    </div>
-                    <button @click.prevent="addUnit" type="button"
-                            class="text-gray-900 bg-gradient-to-r from-lime-200 via-lime-400 to-lime-500
-                                hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-lime-300
-                                font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
-                        Добавить
-                    </button>
-                </form>
-            </div>
-            <div :class="['ml-6 mt-3', hideDelete ? '' : 'hidden']">
-                <h1 class="italic mb-3">Удалить {{ this.delTitle }}?</h1>
-                <div class="flex">
-                    <button @click.prevent="deleteUnit" type="button"
-                            class="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 shadow-lg shadow-red-500/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
-                        Удалить
-                    </button>
-                    <button @click.prevent="this.hideDelete = !this.hideDelete" type="button"
-                            class="text-white bg-gradient-to-r from-pink-400 via-pink-500 to-pink-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-pink-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
-                        Отмена
-                    </button>
-                </div>
-            </div>
+            <StoreComponent :hide-material="this.hideMaterial" :element="'unit'" :element-title="'единиц измерения'" @closeStore="closeStore"></StoreComponent>
+            <DeleteComponent :del-element="this.delUnit" :hide-delete="this.hideDelete" :del-title="'unit'"  @closeDelete="closeDelete"></DeleteComponent>
         </div>
     </div>
 </template>
@@ -77,6 +46,8 @@
 
 import {Link} from "@inertiajs/vue3";
 import UserLayout from "@/Layouts/UserLayout.vue";
+import DeleteComponent from "@/Components/DeleteComponent.vue";
+import StoreComponent from "@/Components/StoreComponent.vue";
 
 export default {
 
@@ -85,17 +56,18 @@ export default {
     layout: UserLayout,
 
     components: {
+        StoreComponent,
+        DeleteComponent,
         Link
     },
 
     data() {
         return {
             hideDelete: false,
-            hideUnit: false,
+            hideMaterial: false,
             hideUpdate: false,
             title: '',
-            delId: null,
-            delTitle: '',
+            delUnit: '',
         }
     },
 
@@ -104,26 +76,20 @@ export default {
     ],
 
     methods: {
-        addUnit() {
-            this.$inertia.post('/admin/units', {
-                title: this.title,
-            })
-            this.title = ''
-            this.hideUnit = !this.hideUnit
+
+        closeStore() {
+            this.hideMaterial = !this.hideMaterial
         },
 
-        showDelete(id, title) {
+        showDelete(unit) {
             this.hideDelete = !this.hideDelete
-            this.delId = id
-            this.delTitle = title
+            this.delUnit = unit
         },
 
-        deleteUnit() {
-            this.$inertia.delete(route('unit.destroy', this.delId))
-            this.delId = null
-            this.delTitle = ''
+        closeDelete() {
+            this.delUnit = ''
             this.hideDelete = !this.hideDelete
-        }
+        },
     }
 }
 </script>

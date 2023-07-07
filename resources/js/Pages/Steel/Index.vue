@@ -47,7 +47,7 @@
                         </svg>
                     </td>
                     <td :class='["px-6 py-2 text-center", index%2 === 0 ? "" : "bg-gray-300"]'>
-                        <svg @click.prevent="showDelete(steel.id, steel.title)"
+                        <svg @click.prevent="showDelete(steel)"
                              xmlns="http://www.w3.org/2000/svg"
                              fill="none"
                              viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
@@ -88,19 +88,8 @@
                     </button>
                 </form>
             </div>
-            <div :class="['ml-6 mt-3', hideDelete ? '' : 'hidden']">
-                <h1 class="italic mb-3">Удалить {{ this.delTitle }}?</h1>
-                <div class="flex">
-                    <button @click.prevent="deleteSteel" type="button"
-                            class="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 shadow-lg shadow-red-500/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
-                        Удалить
-                    </button>
-                    <button @click.prevent="this.hideDelete = !this.hideDelete" type="button"
-                            class="text-white bg-gradient-to-r from-pink-400 via-pink-500 to-pink-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-pink-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
-                        Отмена
-                    </button>
-                </div>
-            </div>
+            <StoreComponent :hide-material="this.hideSteel" :element="'steel'" :element-title="'марки стали'" @closeStore="closeStore"></StoreComponent>
+            <DeleteComponent :del-element="this.delSteel" :hide-delete="this.hideDelete" :del-title="'steel'"  @closeDelete="closeDelete"></DeleteComponent>
         </div>
     </div>
     <main class="max-h-screen overflow-auto">
@@ -111,6 +100,8 @@
 
 import {Link} from "@inertiajs/vue3";
 import UserLayout from "@/Layouts/UserLayout.vue";
+import DeleteComponent from "@/Components/DeleteComponent.vue";
+import StoreComponent from "@/Components/StoreComponent.vue";
 
 export default {
 
@@ -119,6 +110,8 @@ export default {
     layout: UserLayout,
 
     components: {
+        StoreComponent,
+        DeleteComponent,
         Link
     },
 
@@ -129,8 +122,7 @@ export default {
             hideUpdate: false,
             title: '',
             steelStandard: '',
-            delId: null,
-            delTitle: '',
+            delSteel: '',
             updateId: null,
             updateTitle: '',
             updateSize: null,
@@ -144,12 +136,16 @@ export default {
     methods: {
 
         addSteel() {
-            this.$inertia.post('/admin/specification/steel', {
+            this.$inertia.post('/admin/steel', {
                 title: this.title,
                 steel_standard: this.steelStandard,
             })
             this.title = ''
             this.steelStandard = ''
+            this.hideSteel = !this.hideSteel
+        },
+
+        closeStore() {
             this.hideSteel = !this.hideSteel
         },
 
@@ -176,18 +172,15 @@ export default {
             this.updateTonArea = null
         },
 
-        showDelete(id, title) {
+        showDelete(steel) {
             this.hideDelete = !this.hideDelete
-            this.delId = id
-            this.delTitle = title
+            this.delSteel = steel
         },
 
-        deleteSteel() {
-            this.$inertia.delete(route('steel.destroy', this.delId))
-            this.delId = null
-            this.delTitle = ''
+        closeDelete() {
+            this.delSteel = ''
             this.hideDelete = !this.hideDelete
-        }
+        },
     }
 }
 </script>

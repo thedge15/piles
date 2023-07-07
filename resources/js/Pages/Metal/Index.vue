@@ -56,41 +56,10 @@
                                   d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"/>
                         </svg>
                     </td>
-
                 </tr>
                 </tbody>
             </table>
-            <div :class="['relative', this.hideMetal ? '' : 'hidden']">
-                <form class="p-4">
-                    <div class="grid gap-6 mb-6 md:grid-cols-3">
-                        <div>
-                            <label for="title" class="text-amber=200">Наименование металлопроката</label>
-                            <input v-model="title" type="text" id="title"
-                                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                                   placeholder="Наименование металлопроката" required>
-                        </div>
-                    </div>
-                    <button @click.prevent="addMetal" type="button"
-                            class="text-gray-900 bg-gradient-to-r from-lime-200 via-lime-400 to-lime-500
-                                hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-lime-300
-                                font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
-                        Добавить
-                    </button>
-                </form>
-            </div>
-            <div :class="['ml-6', hideDelete ? '' : 'hidden']">
-                <h1 class="italic mb-3">Удалить {{ this.delTitle }}?</h1>
-                <div class="flex">
-                    <button @click.prevent="deleteChannel" type="button"
-                            class="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 shadow-lg shadow-red-500/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
-                        Удалить
-                    </button>
-                    <button @click.prevent="this.hideDelete = !this.hideDelete" type="button"
-                            class="text-white bg-gradient-to-r from-pink-400 via-pink-500 to-pink-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-pink-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
-                        Отмена
-                    </button>
-                </div>
-            </div>
+            <DeleteComponent :del-element="this.delMetal" :hide-delete="this.hideDelete" :del-title="'metal'"  @closeDelete="closeDelete"></DeleteComponent>
             <div :class="['relative overflow-x-auto shadow-md sm:rounded-lg', this.hideStandard ? '' : 'hidden']">
                 <form class="p-4">
                     <p>{{ this.title }}</p>
@@ -115,6 +84,7 @@
                     </button>
                 </form>
             </div>
+            <StoreComponent :hide-material="this.hideMetal" :element="'metal'" :element-title="'металлопроката'" @closeStore="closeStore"></StoreComponent>
         </div>
     </div>
 </template>
@@ -123,6 +93,8 @@
 
 import {Link} from "@inertiajs/vue3";
 import UserLayout from "@/Layouts/UserLayout.vue";
+import DeleteComponent from "@/Components/DeleteComponent.vue";
+import StoreComponent from "@/Components/StoreComponent.vue";
 
 export default {
 
@@ -131,6 +103,8 @@ export default {
     layout: UserLayout,
 
     components: {
+        StoreComponent,
+        DeleteComponent,
         Link
     },
 
@@ -146,8 +120,7 @@ export default {
             wall: null,
             tonLength: null,
             tonArea: null,
-            delId: null,
-            delTitle: '',
+            delMetal: '',
             updateId: null,
             updateTitle: '',
             updateMark: '',
@@ -163,12 +136,7 @@ export default {
     ],
 
     methods: {
-
-        addMetal() {
-            this.$inertia.post('/admin/specification/metal', {
-                title: this.title,
-            })
-            this.title = ''
+        closeStore() {
             this.hideMetal = !this.hideMetal
         },
 
@@ -217,16 +185,13 @@ export default {
 
         showDelete(metal) {
             this.hideDelete = !this.hideDelete
-            this.delId = metal.id
-            this.delTitle = metal.title
+            this.delMetal = metal
         },
 
-        deleteChannel() {
-            this.$inertia.delete(route('specification.metal.destroy', this.delId))
-            this.delId = null
-            this.delTitle = ''
+        closeDelete() {
+            this.delElement = ''
             this.hideDelete = !this.hideDelete
-        }
+        },
     }
 }
 </script>

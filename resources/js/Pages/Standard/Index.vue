@@ -35,7 +35,7 @@
                         </svg>
                     </td>
                     <td :class='["px-6 py-2 text-center", index%2 === 0 ? "" : "bg-gray-300"]'>
-                        <svg @click.prevent="showDelete(standard.id, standard.title)"
+                        <svg @click.prevent="showDelete(standard)"
                              xmlns="http://www.w3.org/2000/svg"
                              fill="none"
                              viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
@@ -88,19 +88,7 @@
                 </button>
             </form>
         </div>
-        <div :class="['ml-6 mt-3', hideDelete ? '' : 'hidden']">
-            <h1 class="italic mb-3">Удалить {{ this.delTitle }}?</h1>
-            <div class="flex">
-                <button @click.prevent="deleteStandard" type="button"
-                        class="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 shadow-lg shadow-red-500/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
-                    Удалить
-                </button>
-                <button @click.prevent="this.hideDelete = !this.hideDelete" type="button"
-                        class="text-white bg-gradient-to-r from-pink-400 via-pink-500 to-pink-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-pink-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
-                    Отмена
-                </button>
-            </div>
-        </div>
+        <DeleteComponent :del-element="this.delStandard" :hide-delete="this.hideDelete" :del-title="'standard'"  @closeDelete="closeDelete"></DeleteComponent>
     </div>
 </template>
 
@@ -108,6 +96,7 @@
 
 import {Link} from "@inertiajs/vue3";
 import UserLayout from "@/Layouts/UserLayout.vue";
+import DeleteComponent from "@/Components/DeleteComponent.vue";
 
 export default {
 
@@ -116,6 +105,7 @@ export default {
     layout: UserLayout,
 
     components: {
+        DeleteComponent,
         Link
     },
 
@@ -131,8 +121,7 @@ export default {
             size: null,
             tonLength: null,
             tonArea: null,
-            delId: null,
-            delTitle: '',
+            delStandard: '',
             updateId: null,
             updateTitle: '',
             updateSize: null,
@@ -178,18 +167,15 @@ export default {
             this.updateTonArea = null
         },
 
-        showDelete(id, title) {
+        showDelete(standard) {
             this.hideDelete = !this.hideDelete
-            this.delId = id
-            this.delTitle = title
+            this.delStandard = standard
         },
 
-        deleteStandard() {
-            this.$inertia.delete(route('standard.destroy', this.delId))
-            this.delId = null
-            this.delTitle = ''
+        closeDelete() {
+            this.delElement = ''
             this.hideDelete = !this.hideDelete
-        }
+        },
     }
 }
 </script>

@@ -119,13 +119,13 @@ class SpecificationController extends Controller
     {
         $standard->delete();
     }
-    public function units(): \Inertia\Response|\Inertia\ResponseFactory
+    public function unit(): \Inertia\Response|\Inertia\ResponseFactory
     {
         $units = UnitResource::collection(Unit::all())->resolve();
         return inertia('Unit/Index', compact('units'));
     }
 
-    public function storeUnits(UnitStoreRequest $request)
+    public function storeUnit(UnitStoreRequest $request)
     {
         $data = $request->validated();
         Unit::query()->create($data);
