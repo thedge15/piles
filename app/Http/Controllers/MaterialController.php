@@ -22,7 +22,6 @@ use App\Models\Metal;
 use App\Models\Paint;
 use App\Models\Project;
 use App\Models\Standard;
-use App\Models\StandardType;
 use App\Models\Steel;
 use App\Models\Unit;
 use Illuminate\Support\Facades\DB;
@@ -70,7 +69,6 @@ class MaterialController extends Controller
         /** @var TYPE_NAME $thickness */
 
         $data = $request->validated();
-
 
         $data['metal_id'] = DB::table('metals')->where('title', $data['metal'])->first()->id;
 
@@ -168,7 +166,6 @@ class MaterialController extends Controller
         $projects = Project::all();
         $metals = Metal::all();
         $standards = Standard::all();
-        $standardTypes = StandardType::all();
         $steels = Steel::all();
         $units = Unit::all();
         $elements = Element::all();
@@ -183,7 +180,6 @@ class MaterialController extends Controller
                     'metals',
                     'projects',
                     'standards',
-                    'standardTypes',
                     'steels',
                     'units',
                     'elements',

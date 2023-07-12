@@ -25,7 +25,7 @@ class StandardStoreRequest extends FormRequest
     {
         return [
             'metal' => 'required|string',
-            'title' => 'required|string'
+            'title' => 'required|string',
         ];
     }
 }

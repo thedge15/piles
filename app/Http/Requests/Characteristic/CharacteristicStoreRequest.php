@@ -25,7 +25,7 @@ class CharacteristicStoreRequest extends FormRequest
     {
         return [
             'metal_id' => 'required|integer',
-            'mark' => 'nullable|string',
+            'title' => 'nullable|string',
             'diameter' => 'nullable|numeric',
             'size' => 'nullable|integer',
             'second_size' => 'nullable|integer',
@@ -36,7 +36,7 @@ class CharacteristicStoreRequest extends FormRequest
             'sheet_width' => 'nullable|integer',
             'sheet_height' => 'nullable|integer',
             'ton_length' => 'nullable|numeric',
-            'ton_area' => 'required|numeric'
+            'ton_area' => 'required|numeric',
         ];
     }
 }

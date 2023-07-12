@@ -57,23 +57,9 @@
                     </tr>
                     </tbody>
                 </table>
-                <div :class="['relative overflow-x-auto shadow-md sm:rounded-lg', this.hideBush ? '' : 'hidden']">
-                    <form class="p-4">
-                        <div class="grid gap-6 mb-6 md:grid-cols-2">
-                            <div>
-                                <input v-model="title" type="text"
-                                       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                       placeholder="Наименование куста" required>
-                            </div>
-                        </div>
-                        <button @click.prevent="addBush" type="button"
-                                class="text-gray-900 bg-gradient-to-r from-lime-200 via-lime-400 to-lime-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-lime-300 dark:focus:ring-lime-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
-                            Добавить
-                        </button>
-                    </form>
-                </div>
-            </div>
+            <StoreComponent :hide-material="this.hideBush" :element="'bush'" :element-title="'куста'" @closeStore="closeStore"></StoreComponent>
             <DeleteComponent :del-element="this.delBush" :hide-delete="this.hideDelete" :del-title="'bush'"  @closeDelete="closeDelete"></DeleteComponent>
+            </div>
         </div>
     </div>
 </template>
@@ -82,6 +68,8 @@
 import {Link} from "@inertiajs/vue3";
 import UserLayout from "@/Layouts/UserLayout.vue";
 import DeleteComponent from "@/Components/DeleteComponent.vue";
+import StoreComponent from "@/Components/StoreComponent.vue";
+
 
 export default {
 
@@ -99,8 +87,8 @@ export default {
         }
     },
 
-
     components: {
+        StoreComponent,
         DeleteComponent,
         Link
     },
@@ -110,10 +98,8 @@ export default {
     ],
 
     methods: {
-        addBush() {
-            this.$inertia.post('/admin/bushes', {title: this.title})
+        closeStore() {
             this.hideBush = !this.hideBush
-            this.title = ''
         },
 
         showDelete(bush) {
@@ -126,6 +112,8 @@ export default {
             this.hideDelete = !this.hideDelete
         },
     },
+
+
 
 }
 </script>

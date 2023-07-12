@@ -18,7 +18,6 @@ class PaintController extends Controller
     public function store(PaintStoreRequest $request)
     {
         $data = $request->validated();
-
         Paint::query()->create($data);
     }
 

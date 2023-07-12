@@ -69,30 +69,9 @@
                     </tr>
                     </tbody>
                 </table>
-                <div
-                    :class="['bg-gray-200 relative overflow-x-auto shadow-md sm:rounded-lg', this.hideProject ? '' : 'hidden']">
-                    <form class="p-4">
-                        <div class="grid gap-6 mb-6 md:grid-cols-2">
-                            <div>
-                                <label for="company"
-                                       class="block mb-2 text-sm font-medium text-gray-900">Раздел</label>
-                                <input v-model="title" type="text"
-                                       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                                       placeholder="Наименование раздела" required>
-                            </div>
-                            <div>
-                                <label for="phone" class="block mb-2 text-sm font-medium text-gray-900">Изм.</label>
-                                <input v-model="change" type="number"
-                                       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                                       placeholder="Изм." pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}" required>
-                            </div>
-                        </div>
-                        <button @click.prevent="addProject" type="button"
-                                class="text-gray-900 bg-gradient-to-r from-lime-200 via-lime-400 to-lime-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-lime-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
-                            Добавить
-                        </button>
-                    </form>
-                </div>
+                <StoreComponent :hide-material="this.hideProject" :element="'project'" :element-title="'раздела'" :bush_id="this.bush.data.id"
+                                @closeStore="closeStore"></StoreComponent>
+                <DeleteComponent :del-element="this.delProject" :hide-delete="this.hideDelete" :del-title="'project'"  @closeDelete="closeDelete"></DeleteComponent>
                 <div :class="['shadow-md sm:rounded-lg', hideUpdProject ? '' : 'hidden']">
                     <form class="p-4 bg-gray-200 mt-4">
                         <input v-model="updChange" type="number"
@@ -108,7 +87,6 @@
                         </button>
                     </form>
                 </div>
-                <DeleteComponent :del-element="this.delProject" :hide-delete="this.hideDelete" :del-title="'project'"  @closeDelete="closeDelete"></DeleteComponent>
             </div>
         </div>
     </div>
@@ -119,6 +97,7 @@
 import {Link} from "@inertiajs/vue3";
 import UserLayout from "@/Layouts/UserLayout.vue";
 import DeleteComponent from "@/Components/DeleteComponent.vue";
+import StoreComponent from "@/Components/StoreComponent.vue";
 
 export default {
 
@@ -127,6 +106,7 @@ export default {
     layout: UserLayout,
 
     components: {
+        StoreComponent,
         DeleteComponent,
         Link
     },
@@ -159,6 +139,10 @@ export default {
             })
             this.title = ''
             this.change = null
+            this.hideProject = !this.hideProject
+        },
+
+        closeStore() {
             this.hideProject = !this.hideProject
         },
 

@@ -5,11 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @property mixed $materials
+ * @property mixed $elements
+ */
 class Project extends Model
 {
     use HasFactory;
 
-//    public mixed $piles;
     protected $guarded = false;
     protected $table = 'projects';
     protected $with = 'bush';
@@ -18,11 +21,11 @@ class Project extends Model
     {
         return $this->belongsTo(Bush::class, 'bush_id', 'id');
     }
-
-    public function piles(): \Illuminate\Database\Eloquent\Relations\HasMany
-    {
-        return $this->hasMany(Pile::class, 'project_id', 'id');
-    }
+//
+//    public function piles(): \Illuminate\Database\Eloquent\Relations\HasMany
+//    {
+//        return $this->hasMany(Pile::class, 'project_id', 'id');
+//    }
 
     public function materials(): \Illuminate\Database\Eloquent\Relations\HasMany
     {

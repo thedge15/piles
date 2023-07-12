@@ -18,10 +18,9 @@ class ElementController extends Controller
         return inertia('Element/Index', compact('elements', 'projects'));
     }
 
-    public function create(ElementRequest $request)
+    public function storeElement(ElementRequest $request)
     {
         $data = $request->validated();
-
 
         $project = Project::query()->where('title', $data['project'])->get();
         $data['project_id'] = $project[0]->id;

@@ -39,7 +39,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     });
     Route::prefix('/elements')->group(function () {
         Route::get('/', [\App\Http\Controllers\ElementController::class, 'index'])->name('index.elements');
-        Route::post('/', [\App\Http\Controllers\ElementController::class, 'create'])->name('create.elements');
+        Route::post('/', [\App\Http\Controllers\ElementController::class, 'storeElement'])->name('store.element');
         Route::delete('/{element}', [\App\Http\Controllers\ElementController::class, 'deleteElement'])->name('destroy.element');
     });
 });
@@ -53,10 +53,10 @@ Route::middleware('auth')->group(function () {
 
 Route::prefix('/admin')->middleware(['auth', 'isAdmin'])->group(function () {
     Route::prefix('/bushes')->group(function () {
-        Route::post('/', [\App\Http\Controllers\BushController::class, 'store'])->name('bush.store');
+        Route::post('/', [\App\Http\Controllers\BushController::class, 'storeBush'])->name('store.bush');
         Route::delete('/{bush}', [\App\Http\Controllers\BushController::class, 'destroy'])->name('destroy.bush');
         Route::prefix('/projects')->group(function () {
-            Route::post('/', [\App\Http\Controllers\BushController::class, 'projectStore'])->name('project.store');
+            Route::post('/', [\App\Http\Controllers\BushController::class, 'projectStore'])->name('store.project');
             Route::patch('/{project}', [\App\Http\Controllers\BushController::class, 'projectChangeUpdate'])->name('project.update');
             Route::delete('/{project}', [\App\Http\Controllers\BushController::class, 'projectDestroy'])->name('destroy.project');
         });
@@ -79,7 +79,7 @@ Route::prefix('/admin')->middleware(['auth', 'isAdmin'])->group(function () {
     });
     Route::prefix('/standard')->group(function () {
         Route::get('/', [\App\Http\Controllers\SpecificationController::class, 'standard'])->name('standard.index');
-        Route::post('/', [\App\Http\Controllers\SpecificationController::class, 'storeStandard'])->name('standard.store');
+        Route::post('/', [\App\Http\Controllers\SpecificationController::class, 'storeStandard'])->name('store.standard');
         Route::delete('/{standard}', [\App\Http\Controllers\SpecificationController::class, 'destroyStandard'])->name('destroy.standard');
     });
     Route::prefix('/steel')->group(function () {

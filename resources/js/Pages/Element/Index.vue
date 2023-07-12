@@ -59,53 +59,7 @@
                     </tbody>
                 </table>
             </div>
-        <div :class="['shadow-md sm:rounded-lg ', this.hideElement ? '' : 'hidden']">
-            <form class="p-4 bg-gray-200 mt-4">
-                <div>
-                    <div class="flex w-full">
-                        <div class="w-1/3">
-                            <label for="project"
-                                   class="block mb-2 mr-2 text-sm font-medium text-gray-900">Выберите
-                                проект</label>
-                            <select v-model="project" id="project"
-                                    class="bg-gray-50 mb-3 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full">
-                                <option v-for="item in projects">{{ item.title }}</option>
-                            </select>
-                        </div>
-                        <div class="w-1/3 px-2 mx-1">
-                            <label for="title"
-                                   class="block mb-2 text-sm font-medium text-gray-900">Введите
-                                наименование</label>
-                            <input v-model="title" id="title"
-                                   class="bg-gray-50 h-9 mb-3 border border-gray-300 text-gray-900 text-sm rounded-lg
-                                focus:ring-blue-500 focus:border-blue-500 block w-full
-
-                               ">
-                        </div>
-                        <div class="w-1/3">
-                            <label for="quantity"
-                                   class="block mb-2 text-sm font-medium text-gray-900">Введите
-                                количество, шт.</label>
-                            <input v-model="quantity" id="quantity" type="number"
-                                   class="bg-gray-50 h-9 mb-3 border border-gray-300 text-gray-900 text-sm rounded-lg
-                                focus:ring-blue-500 focus:border-blue-500 block w-full
-
-                               ">
-                        </div>
-                    </div>
-                </div>
-                <button @click.prevent="addElement" type="button"
-                        class="text-gray-900 bg-gradient-to-r from-lime-200 via-lime-400 to-lime-500
-                                            hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-lime-300
-                                            font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2">
-                    Создать
-                </button>
-                <button @click.prevent="hideStore" type="button"
-                        class="text-white bg-gradient-to-r from-pink-400 via-pink-500 to-pink-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-pink-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
-                    Отмена
-                </button>
-            </form>
-        </div>
+        <StoreComponent :hide-material="hideElement" :projects="projects" :element-title="'элемента'" :element="'element'" @closeStore="closeStore"></StoreComponent>
         <DeleteComponent :del-element="this.delElement" :hide-delete="this.hideDelete" :del-title="'element'"  @closeDelete="closeDelete"></DeleteComponent>
     </div>
 </template>
@@ -115,6 +69,7 @@
 import UserLayout from "@/Layouts/UserLayout.vue";
 import {Link} from "@inertiajs/vue3";
 import DeleteComponent from "@/Components/DeleteComponent.vue";
+import StoreComponent from "@/Components/StoreComponent.vue";
 
 export default {
 
@@ -135,6 +90,7 @@ export default {
 
 
     components: {
+        StoreComponent,
         DeleteComponent,
         Link
     },
@@ -145,21 +101,8 @@ export default {
     ],
 
     methods: {
-        addElement() {
-            this.$inertia.post('/elements', {
-                project: this.project,
-                title: this.title,
-                quantity: this.quantity,
-            })
-            this.hideElement = !this.hideElement
-            this.project = ''
-            this.title = ''
-            this.quantity = null
-        },
 
-        hideStore() {
-            this.project = ''
-            this.title = ''
+        closeStore() {
             this.hideElement = !this.hideElement
         },
 

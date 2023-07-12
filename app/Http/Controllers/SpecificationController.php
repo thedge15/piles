@@ -49,9 +49,9 @@ class SpecificationController extends Controller
         $metal = Metal::query()->find($data['metal_id'])->title;
 
 //      для швеллера
-        if ($metal === 'Швеллер' || $metal === 'Двутавр' || $metal === 'Лист просечно-вытяжной' || $metal === 'Профлист') {
-            $data['title'] = $data['mark'];
-        };
+//        if ($metal === 'Швеллер' || $metal === 'Двутавр' || $metal === 'Лист просечно-вытяжной' || $metal === 'Профлист') {
+//            $data['title'] = $data['mark'];
+//        };
 
 //      для уголка
         if ($metal === 'Уголок') {

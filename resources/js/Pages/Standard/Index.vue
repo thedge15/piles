@@ -48,46 +48,12 @@
                 </tbody>
             </table>
         </div>
-        <div :class="['relative', this.hideStandard ? '' : 'hidden']">
-            <form class="p-4">
-                <div class="flex">
-                    <div class="grid gap-2 mb-6 md:grid-cols-3 w-full">
-                        <div>
-                            <label for="metal" class="text-amber=200 mb-2">Металл</label>
-                            <select v-model="metal" id="metal"
-                                    class="bg-gray-50 mb-3 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full">
-                                <option v-for="item in metals">{{ item.title }}</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="grid gap-2 mb-6 md:grid-cols-3 w-full">
-                        <div>
-                            <label for="standardType" class="text-amber=200 mb-2">Тип стандарта</label>
-                            <select v-model="standardType" id="standardType"
-                                    class="bg-gray-50 mb-3 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full">
-                                <option>ГОСТ</option>
-                                <option>ТУ</option>
-                                <option>СТО</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="grid gap-2 mb-6 md:grid-cols-3 w-full">
-                        <div>
-                            <label for="title" class="text-amber=200 mb-2">Номер</label>
-                            <input v-model="standardNumber" type="text" id="title"
-                                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                                   placeholder="Номер стандарта" required>
-                        </div>
-                    </div>
-                </div>
-                <button @click.prevent="addStandard" type="button"
-                        class="text-gray-900 bg-gradient-to-r from-lime-200 via-lime-400 to-lime-500
-                                hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-lime-300
-                                font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
-                    Добавить
-                </button>
-            </form>
-        </div>
+        <StoreComponent
+            :hide-material="this.hideStandard"
+            :element="'standard'"
+            :element-title="'ГОСТА'"
+            :metals="metals"
+            @closeStore="closeStore"></StoreComponent>
         <DeleteComponent :del-element="this.delStandard" :hide-delete="this.hideDelete" :del-title="'standard'"  @closeDelete="closeDelete"></DeleteComponent>
     </div>
 </template>
@@ -97,6 +63,7 @@
 import {Link} from "@inertiajs/vue3";
 import UserLayout from "@/Layouts/UserLayout.vue";
 import DeleteComponent from "@/Components/DeleteComponent.vue";
+import StoreComponent from "@/Components/StoreComponent.vue";
 
 export default {
 
@@ -105,8 +72,9 @@ export default {
     layout: UserLayout,
 
     components: {
+        StoreComponent,
         DeleteComponent,
-        Link
+        Link,
     },
 
     data() {
@@ -114,19 +82,9 @@ export default {
             hideDelete: false,
             hideStandard: false,
             hideUpdate: false,
-            title: '',
-            metal: '',
-            standardType: '',
-            standardNumber: '',
-            size: null,
-            tonLength: null,
-            tonArea: null,
             delStandard: '',
             updateId: null,
             updateTitle: '',
-            updateSize: null,
-            updateTonLength: null,
-            updateTonArea: null,
         }
     },
 
@@ -136,14 +94,8 @@ export default {
     ],
 
     methods: {
-                addStandard() {
-            this.$inertia.post('/admin/standard', {
-                metal: this.metal,
-                title: this.standardType + ' ' + this.standardNumber
-            })
-            this.metal = ''
-            this.standardType = ''
-            this.standardNumber = ''
+
+        closeStore() {
             this.hideStandard = !this.hideStandard
         },
 
@@ -161,10 +113,7 @@ export default {
                 ton_area: this.updateTonArea,
             })
             this.hideUpdate = !this.hideUpdate
-            this.updateSize = null
             this.updateTitle = ''
-            this.updateTonLength = null
-            this.updateTonArea = null
         },
 
         showDelete(standard) {

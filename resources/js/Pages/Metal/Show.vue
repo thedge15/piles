@@ -245,9 +245,11 @@ export default {
                 this.computedTonArea = this.tonArea
             }
 
+
+
             this.$inertia.post('/admin/characteristic', {
                 metal_id: this.metal.data.id,
-                mark: this.mark,
+                title: this.mark,
                 width: this.width,
                 height: this.height,
                 wall: this.wall,

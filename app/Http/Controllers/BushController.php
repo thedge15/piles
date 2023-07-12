@@ -3,17 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Bush\BushStoreRequest;
-use App\Http\Requests\Bush\ImageStoreRequest;
 use App\Http\Requests\Bush\ProjectStoreRequest;
 use App\Http\Requests\Bush\ProjectUpdateRequest;
-use App\Http\Resources\Bush\BushResource;
-use App\Http\Resources\Project\ProjectResource;
 use App\Models\Bush;
 use App\Models\Project;
 
 class BushController extends Controller
 {
-    public function store(BushStoreRequest $request)
+
+    public function storeBush(BushStoreRequest $request)
     {
         $data = $request->validated();
         Bush::query()->create($data);
@@ -29,6 +27,10 @@ class BushController extends Controller
 
     public function destroy(Bush $bush)
     {
+        collect($bush->projects)->each(function ($item) {
+            $this->projectDestroy($item);
+        });
+
         $bush->delete();
     }
 
@@ -40,8 +42,8 @@ class BushController extends Controller
 
     public function projectDestroy(Project $project)
     {
-        $piles = $project->piles();
-        $piles->delete();
+        $project->materials()->delete();
+        $project->elements()->delete();
         $project->delete();
     }
 }
