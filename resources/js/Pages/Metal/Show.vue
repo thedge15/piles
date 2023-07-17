@@ -15,6 +15,7 @@
                 <thead>
                 <tr>
                     <th class="sticky top-0 px-6 py-3 text-indigo-100 bg-indigo-500">№</th>
+                    <th class="sticky top-0 px-6 py-3 text-indigo-100 bg-indigo-500">Наименование</th>
                     <th class="sticky top-0 px-6 py-3 text-indigo-100 bg-indigo-500">Размеры</th>
                     <th v-if="metal.data.title !== 'Лист' && metal.data.title !== 'Лист просечно-вытяжной' && metal.data.title !== 'Лист рулонный'"
                         class="sticky top-0 px-6 py-3 text-indigo-100 bg-indigo-500">Длина тонны, м
@@ -27,9 +28,8 @@
                 <tbody class="divide-y bg-gray-100">
                 <tr v-for="(product, index) in metals.data">
                     <td :class='["px-6 py-2 text-center", index%2 === 0 ? "" : "bg-gray-300"]'>{{ index + 1 }}</td>
-                    <td :class='["px-6 py-2 text-center", index%2 === 0 ? "" : "bg-gray-300"]'>
-                        {{ product.title }}
-                    </td>
+                    <td :class='["px-6 py-2 text-center", index%2 === 0 ? "" : "bg-gray-300"]'>{{ product.metal.title }}</td>
+                    <td :class='["px-6 py-2 text-center", index%2 === 0 ? "" : "bg-gray-300"]'>{{ product.title }}</td>
                     <td v-if="metal.data.title !== 'Лист' && metal.data.title !== 'Лист просечно-вытяжной' && metal.data.title !== 'Лист рулонный'"
                         :class='["px-6 py-2 text-center", index%2 === 0 ? "" : "bg-gray-300"]'>
                         {{ product.ton_length }}

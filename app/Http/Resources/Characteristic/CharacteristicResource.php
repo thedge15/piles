@@ -2,6 +2,8 @@
 
 namespace App\Http\Resources\Characteristic;
 
+use App\Http\Resources\Metal\MetalResource;
+use App\Models\Characteristic;
 use App\Models\Metal;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -17,7 +19,7 @@ class CharacteristicResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'metal' => Metal::query()->find($this->metal_id)->title,
+            'metal' => new MetalResource($this->metal),
             'title' => $this->title,
             'ton_length' => $this->ton_length,
             'ton_area' => $this->ton_area,

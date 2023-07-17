@@ -35,7 +35,7 @@ class SpecificationController extends Controller
 
     public function showMetal(Metal $metal): \Inertia\Response|\Inertia\ResponseFactory
     {
-        $metals = CharacteristicResource::collection($metal->characteristics);
+        $metals = CharacteristicResource::collection($metal->characteristics->sortBy('title', SORT_NATURAL));
         $metal = new MetalResource($metal);
 
         return inertia('Metal/Show', compact('metals', 'metal'));
