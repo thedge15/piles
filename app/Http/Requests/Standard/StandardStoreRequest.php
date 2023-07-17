@@ -4,6 +4,9 @@ namespace App\Http\Requests\Standard;
 
 use Illuminate\Foundation\Http\FormRequest;
 
+/**
+ * @method static class()
+ */
 class StandardStoreRequest extends FormRequest
 {
     /**

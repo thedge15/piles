@@ -13,15 +13,8 @@ class UserController extends Controller
     public function openPage(): \Inertia\Response|\Inertia\ResponseFactory
     {
         $bushes = BushResource::collection(Bush::all())->resolve();
-
         return inertia('OpenPage', compact('bushes'));
     }
-
-//    public function piles(): \Inertia\Response|\Inertia\ResponseFactory
-//    {
-//        $piles = PileResource::collection(Pile::all());
-//        return inertia('User/Piles', compact('piles'));
-//    }
 
     public function index(Bush $bush): \Inertia\Response|\Inertia\ResponseFactory
     {
@@ -39,8 +32,8 @@ class UserController extends Controller
 //        return inertia('User/Show', compact('piles', ['project', 'tubes', 'concreteQuantity']));
 //    }
 
-    public function export(): \Symfony\Component\HttpFoundation\BinaryFileResponse
-    {
-        return Excel::download(new PilesExport,  'piles.xlsx');
-    }
+//    public function export(): \Symfony\Component\HttpFoundation\BinaryFileResponse
+//    {
+//        return Excel::download(new PilesExport,  'piles.xlsx');
+//    }
 }

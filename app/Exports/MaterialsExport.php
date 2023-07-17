@@ -2,17 +2,24 @@
 
 namespace App\Exports;
 
-use App\Models\Material;
+use App\Models\Project;
 use Maatwebsite\Excel\Concerns\FromCollection;
 
 class MaterialsExport implements FromCollection
 {
-    /**
-    * @return \Illuminate\Support\Collection
-    */
-    public function collection()
+
+
+    public function __construct(Project $project)
     {
-        $materials = Material::all();
-        return $materials->where('project_id', 35);
+        $this->project = $project;
+    }
+
+    /**
+    * @return Project
+     */
+    public function collection(): Project
+    {
+
+        return $this->project;
     }
 }

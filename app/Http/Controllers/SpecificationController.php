@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Characteristic\CharacteristicStoreRequest;
+use App\Actions\StoreMetalAction;
+use App\Actions\StoreStandardAction;
+use App\Actions\StoreSteelAction;
 use App\Http\Requests\Characteristic\CharacteristicUpdateRequest;
 use App\Http\Requests\Metal\StoreMetalRequest;
-use App\Http\Requests\Standard\StandardStoreRequest;
 use App\Http\Requests\Steel\SteelStoreRequest;
 use App\Http\Requests\Unit\UnitStoreRequest;
 use App\Http\Resources\Characteristic\CharacteristicResource;
@@ -18,7 +19,6 @@ use App\Models\Metal;
 use App\Models\Standard;
 use App\Models\Steel;
 use App\Models\Unit;
-use Illuminate\Support\Facades\DB;
 
 class SpecificationController extends Controller
 {
@@ -35,52 +35,15 @@ class SpecificationController extends Controller
 
     public function showMetal(Metal $metal): \Inertia\Response|\Inertia\ResponseFactory
     {
-        $metals = DB::table('characteristics')->where('metal_id', $metal->id)->orderBy('title')->get();
-
-        $metals = CharacteristicResource::collection($metals);
+        $metals = CharacteristicResource::collection($metal->characteristics);
         $metal = new MetalResource($metal);
 
         return inertia('Metal/Show', compact('metals', 'metal'));
     }
 
-    public function storeCharacteristic(CharacteristicStoreRequest $request)
+    public function storeCharacteristic(StoreMetalAction $action)
     {
-        $data = $request->validated();
-        $metal = Metal::query()->find($data['metal_id'])->title;
-
-//      для швеллера
-//        if ($metal === 'Швеллер' || $metal === 'Двутавр' || $metal === 'Лист просечно-вытяжной' || $metal === 'Профлист') {
-//            $data['title'] = $data['mark'];
-//        };
-
-//      для уголка
-        if ($metal === 'Уголок') {
-            $data['title'] = is_null($data["second_size"]) ? $data["size"] . 'X' . $data['wall'] : $data["size"] . 'X' . $data["second_size"] . 'X' . $data['wall'];
-        };
-
-//      для трубы
-        if ($metal === 'Труба') {
-            $data['title'] = $data["diameter"] . 'X' . $data['wall'];
-        };
-
-//      для листа
-        if ($metal === 'Лист' || $metal === 'Лист рулонный') {
-            $data['title'] = $data['thickness'];
-        };
-
-//      для квадратной трубы
-        if ($metal === 'Труба квадратная') {
-            $data['title'] = $data['width'] . 'X' . $data['height'] . 'X' . $data['wall'];
-        };
-
-//      для круга
-        if ($metal === 'Круг') {
-            $data['title'] = $data["diameter"];
-        };
-
-        unset($data['mark'], $data["diameter"], $data["size"], $data["second_size"], $data['wall'], $data['thickness'], $data['width'], $data['height']);
-
-        Characteristic::query()->create($data);
+        Characteristic::query()->create($action->handle());
     }
     public function updateCharacteristic(CharacteristicUpdateRequest $request, Characteristic $characteristic)
     {
@@ -103,22 +66,15 @@ class SpecificationController extends Controller
         return inertia('Standard/Index', compact('standards', 'metals'));
     }
 
-    public function storeStandard(StandardStoreRequest $request)
+    public function storeStandard(StoreStandardAction $action)
     {
-        $data = $request->validated();
-
-        $metal = new MetalResource(Metal::query()->where('title', $data['metal'])->get());
-        $metal_id = $metal[0]['id'];
-        $data['metal_id'] = $metal_id;
-
-        unset($data['metal']);
-
-        Standard::query()->create($data);
+        Standard::query()->create($action->handle());
     }
     public function destroyStandard(Standard $standard)
     {
         $standard->delete();
     }
+
     public function unit(): \Inertia\Response|\Inertia\ResponseFactory
     {
         $units = UnitResource::collection(Unit::all())->resolve();
@@ -140,12 +96,9 @@ class SpecificationController extends Controller
         $steels = SteelResource::collection(Steel::all())->resolve();
         return inertia('Steel/Index', compact('steels'));
     }
-    public function storeSteel(SteelStoreRequest $request)
+    public function storeSteel(StoreSteelAction $action)
     {
-        $data = $request->validated();
-        $data['title'] = $data['title'] . ' ГОСТ ' . $data['steel_standard'];
-        unset($data['steel_standard']);
-        Steel::query()->create($data);
+        Steel::query()->create($action->handle());
     }
     public function destroySteel(Steel $steel)
     {

@@ -39,6 +39,6 @@ class ElementController extends Controller
 
     public function export(): \Symfony\Component\HttpFoundation\BinaryFileResponse
     {
-        return Excel::download(new MaterialsExport, 'materials.xlsx');
+        return (new MaterialsExport())->download('materials.xlsx');
     }
 }
