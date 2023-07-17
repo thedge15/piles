@@ -41,6 +41,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/', [\App\Http\Controllers\ElementController::class, 'index'])->name('index.elements');
         Route::post('/', [\App\Http\Controllers\ElementController::class, 'storeElement'])->name('store.element');
         Route::delete('/{element}', [\App\Http\Controllers\ElementController::class, 'deleteElement'])->name('destroy.element');
+        Route::get('/export', [\App\Http\Controllers\ElementController::class, 'export'])->name('export');
     });
 });
 

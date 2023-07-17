@@ -20,6 +20,7 @@
                     <th class="sticky top-0 px-6 py-3 text-indigo-100 bg-indigo-500"><input type="checkbox"
                                                                                             v-model="selectAll">
                     </th>
+                    <th class="sticky top-0 px-6 py-3 text-indigo-100 bg-indigo-500">Номер по РФ</th>
                     <th class="sticky top-0 px-6 py-3 text-indigo-100 bg-indigo-500">Конструктивный элемент</th>
                     <th class="sticky top-0 px-6 py-3 text-indigo-100 bg-indigo-500">Наименование и техническая
                         характеристика
@@ -29,7 +30,7 @@
                         <select v-model="selectedPaint" id="selectedPaint" data-te-select-init
                                 class="bg-indigo-500 text-indigo-100 text-sm text-center focus:ring-blue-500 focus:border-blue-500
                                 block w-full">
-                            <option class="text-sm" v-for="item in paints">{{ item.title }}</option>
+                            <option :value="'Краска'" class="text-sm" v-for="item in paints">{{ item.title }}</option>
                         </select>
                     </th>
                     <th class="sticky top-0 px-6 py-3 text-indigo-100 bg-indigo-500">Редактирование</th>
@@ -42,25 +43,23 @@
                         <input type="checkbox" :value="material.id" v-model="checkedMaterials">
                         <span class="hidden">{{ material.id }}</span>
                     </td>
-                    <td :class='["px-6 py-2 text-center", index%2 === 0 ? "" : "bg-gray-300"]'>{{
-                            material.element
-                        }}
-                    </td>
-                    <td :class='["px-6 py-2 text-center", index%2 === 0 ? "" : "bg-gray-300"]'>{{
-                            material.title
-                        }}
-                    </td>
+                    <td :class='["px-6 py-2 text-center", index%2 === 0 ? "" : "bg-gray-300"]'>{{ material.numb }}</td>
+                    <td :class='["px-6 py-2 text-center", index%2 === 0 ? "" : "bg-gray-300"]'>{{ material.element }}</td>
+                    <td :class='["px-6 py-2 text-center", index%2 === 0 ? "" : "bg-gray-300"]'>{{ material.title }}</td>
                     <td :class='["px-6 py-2 text-center", index%2 === 0 ? "" : "bg-gray-300"]'>
-                        {{ material.weight }} т <span v-if="material.quantity">({{
-                            Math.floor(material.quantity)
-                        }} шт.)</span>
-                    </td>
+                        {{ material.weight }} т <span v-if="material.quantity">({{ Math.floor(material.quantity) }} шт.)</span></td>
                     <td :class='["px-6 py-2 text-center", index%2 === 0 ? "" : "bg-gray-300"]'>
                         <div v-if="material.paint_color === 'RAL 1021'" class="bg-yellow-400">
+                            {{ material.paint }} - {{ material.paint_quantity }} кг
+                        </div>
+                        <div v-if="material.paint_color === 'RAL 8002'" class="bg-amber-900 text-indigo-100">
+                            {{ material.paint }} - {{ material.paint_quantity }} кг
+                        </div>
+                        <div v-if="material.paint_color === 'RAL 5015'" class="bg-sky-500 text-indigo-100">
                             {{ material.paint }} -
                             {{ material.paint_quantity }} кг
                         </div>
-                        <div v-if="material.paint_color === 'RAL 8002'" class="bg-amber-900 text-indigo-100">
+                        <div v-if="material.paint_color === 'RAL 7004'" class="bg-gray-500 text-indigo-100">
                             {{ material.paint }} -
                             {{ material.paint_quantity }} кг
                         </div>
@@ -94,6 +93,7 @@
                 <tr class="relative sticky bottom-0">
                     <td class="text-center text-indigo-100 bg-indigo-500"></td>
                     <td class="text-center text-indigo-100 bg-indigo-500"></td>
+                    <td class="text-center text-indigo-100 bg-indigo-500"></td>
                     <td class="text-indigo-100 bg-indigo-500">ИТОГО</td>
                     <td class="text-center text-indigo-100 bg-indigo-500">{{ selectedMaterialWeight.toFixed(2) }}
                         т
@@ -105,13 +105,13 @@
                     <td class="text-center text-indigo-100 bg-indigo-500"></td>
                 </tr>
             </table>
+        </div>
         <MaterialStoreComponent
             :hide-material="this.hideMaterial" :project_id="this.project.data.id" :elements="this.elements" :metals="this.metals"
             :characteristics="this.characteristics" :standards="this.standards" :steels="this.steels" :units="this.units"
             @closeStore="closeStore"></MaterialStoreComponent>
         <DeleteComponent :del-element="this.delMaterial" :hide-delete="this.hideDelete" :del-title="'material'"
                          @closeDelete="closeDelete"></DeleteComponent>
-        </div>
         <div v-if="updMaterial"
              :class="['bg-gray-200sm:rounded-lg w-full', this.hideUpdate ? '' : 'hidden']">
             <form class="p-4 bg-gray-200 mt-4">
@@ -122,6 +122,16 @@
                     <input v-model="updTitle" id="updTitle"
                            class="bg-gray-50 h-9 mb-3 border border-gray-300 text-gray-900 text-sm rounded-lg
                                 focus:ring-blue-500 focus:border-blue-500 block w-full">
+                </div>
+                <div class="w-2/5 mx-2">
+                    <label for="updTitle"
+                           class="block mb-1 text-sm font-medium text-gray-900">Элемент</label>
+                    <select v-model="updElement" id="updTitle" :value="this.updElement"
+                           class="bg-gray-50 h-9 mb-3 border border-gray-300 text-gray-900 text-sm rounded-lg
+                                focus:ring-blue-500 focus:border-blue-500 block w-full">
+                        <option v-for="item in elements">{{ item.title }}</option>
+                    </select>
+
                 </div>
                 <div class="flex justify-between px-3 w-full">
                     <div class="w-2/6 pr-2">
@@ -199,9 +209,12 @@
     <div v-if="selectedMaterialWeight" class="mt-2 ml-2">
         {{ selectedMaterialWeight }}
     </div>
+    <Link :href="route('export')" class="font-bold text-sm ml-2">Экспорт</Link>
     <!--                <Link :href="route('all')">-->
     <!--                    Набивка материала-->
     <!--                </Link>-->
+
+
 </template>
 
 <script>
@@ -226,6 +239,7 @@ export default {
             updMaterial: null,
             updId: null,
             updTitle: '',
+            updElement: '',
             updWeight: null,
             updLength: null,
             updArea: null,
@@ -318,6 +332,7 @@ export default {
             this.hideUpdate = !this.hideUpdate
             this.updMaterial = material
             this.updId = material.id
+            this.updElement = material.element
             this.updTitle = material.title
             this.updWeight = material.weight
             this.updLength = material.length
@@ -341,6 +356,7 @@ export default {
 
         updateMaterial() {
             this.$inertia.patch('/materials/' + this.updId, {
+                element: this.updElement,
                 title: this.updTitle,
                 weight: this.updWeight,
                 length: this.updLength,
@@ -349,6 +365,7 @@ export default {
                 numberOfLayers: this.numberOfLayers,
                 paint_color: this.color,
             });
+            this.updElement = ''
             this.updMaterial = ''
             this.updId = null
             this.updTitle = ''

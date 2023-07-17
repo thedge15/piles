@@ -24,6 +24,7 @@ class MaterialUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'element' => 'nullable|string',
             'title' => 'required|string',
             'weight' => 'nullable|numeric',
             'length' => 'nullable|numeric',

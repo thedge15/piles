@@ -1,8 +1,8 @@
 <template>
     <div :class="['shadow-md sm:rounded-lg ', this.hideMaterial ? '' : 'hidden']">
-        <form class="p-4 bg-gray-200 mt-4">
+        <form class="p-4 bg-gray-200 mt-4 w-full">
             <div class="flex w-full">
-                <div v-if="element !== 'standard' && element !== 'element'" class="grid gap-6 mb-6 md:grid-cols-3">
+                <div v-if="element !== 'standard' && element !== 'element'" class="grid gap-3 mb-6 md:grid-cols-2">
                     <div>
                         <label for="title" class="text-amber=200">Наименование {{ this.elementTitle }}</label>
                         <input v-model="title" type="text" id="title"
@@ -34,7 +34,7 @@
                                placeholder="Изм. №" required>
                     </div>
                 </div>
-                <form v-if="element === 'standard'" class="p-4">
+                <div v-if="element === 'standard'" class="p-4">
                     <div class="flex">
                         <div class="grid gap-2 mb-6 md:grid-cols-3 w-full">
                             <div>
@@ -65,38 +65,35 @@
                             </div>
                         </div>
                     </div>
-                </form>
-                <form v-if="element === 'element'" class="p-4 bg-gray-200 mt-4">
-                    <div>
-                        <div class="flex w-full">
-                            <div class="w-1/3">
-                                <label for="project"
-                                       class="block mb-2 mr-2 text-sm font-medium text-gray-900">Выберите
-                                    проект</label>
-                                <select v-model="project" id="project"
-                                        class="bg-gray-50 mb-3 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full">
-                                    <option v-for="item in projects">{{ item.title }}</option>
-                                </select>
-                            </div>
-                            <div class="w-1/3 px-2 mx-1">
-                                <label for="title"
-                                       class="block mb-2 text-sm font-medium text-gray-900">Введите
-                                    наименование</label>
-                                <input v-model="title" id="title"
-                                       class="bg-gray-50 h-9 mb-3 border border-gray-300 text-gray-900 text-sm rounded-lg
-                                focus:ring-blue-500 focus:border-blue-500 block w-full">
-                            </div>
-                            <div class="w-1/3">
-                                <label for="quantity"
-                                       class="block mb-2 text-sm font-medium text-gray-900">Введите
-                                    количество, шт.</label>
-                                <input v-model="quantity" id="quantity" type="number"
-                                       class="bg-gray-50 h-9 mb-3 border border-gray-300 text-gray-900 text-sm rounded-lg
-                                focus:ring-blue-500 focus:border-blue-500 block w-full">
-                            </div>
+                </div>
+                <div v-if="element === 'element'" class="p-4 bg-gray-200 mt-4">
+                    <div class="flex w-full">
+                        <div class="w-full">
+                            <label for="project"
+                                   class="block mb-2 mr-2 text-sm font-medium text-gray-900">Выберите
+                                проект</label>
+                            <select v-model="project" id="project"
+                                    class="bg-gray-50 mb-3 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full">
+                                <option v-for="item in projects">{{ item.title }}</option>
+                            </select>
                         </div>
+                        <div class="w-full px-2 mx-1">
+                            <label for="title"
+                                   class="block mb-2 text-sm font-medium text-gray-900">Введите наименование</label>
+                            <input v-model="title" id="title"
+                                   class="bg-gray-50 h-9 mb-3 border border-gray-300 text-gray-900 text-sm rounded-lg
+                                focus:ring-blue-500 focus:border-blue-500 block w-full">
+                        </div>
+                        <!--                            <div class="w-1/3">-->
+                        <!--                                <label for="quantity"-->
+                        <!--                                       class="block mb-2 text-sm font-medium text-gray-900">Введите количество,-->
+                        <!--                                    шт.</label>-->
+                        <!--                                <input v-model="quantity" id="quantity" type="number"-->
+                        <!--                                       class="bg-gray-50 h-9 mb-3 border border-gray-300 text-gray-900 text-sm rounded-lg-->
+                        <!--                                focus:ring-blue-500 focus:border-blue-500 block w-full">-->
+                        <!--                            </div>-->
                     </div>
-                </form>
+                </div>
             </div>
             <button @click.prevent="addElement" type="button"
                     class="text-gray-900 bg-gradient-to-r from-lime-200 via-lime-400 to-lime-500
@@ -110,10 +107,12 @@
             </button>
         </form>
     </div>
+
 </template>
 
 <script>
 import storeData from "@/storeData";
+// import
 
 export default {
     name: "StoreComponent",

@@ -25,6 +25,7 @@ class MaterialStoreRequest extends FormRequest
     {
         return [
             'project_id' => 'required|integer',
+            'numb' => 'nullable|integer',
             'element' => 'nullable|string',
             'metal' => 'required|string',
             'title' => 'required|string',

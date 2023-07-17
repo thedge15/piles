@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\MaterialsExport;
 use App\Http\Requests\Material\MaterialStoreRequest;
 use App\Http\Requests\Material\MaterialUpdateRequest;
 use App\Http\Resources\Bush\BushResource;
@@ -25,6 +26,7 @@ use App\Models\Standard;
 use App\Models\Steel;
 use App\Models\Unit;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
 
 
 class MaterialController extends Controller
@@ -137,6 +139,7 @@ class MaterialController extends Controller
     {
         $data = $request->validated();
 
+
         $paint = Paint::query()->where('title', $data['paint'])->get()->toArray();
 
         if ($data['paint'] && $data['numberOfLayers']) {
@@ -148,6 +151,7 @@ class MaterialController extends Controller
 
 
         unset($data['numberOfLayers']);
+
         $material->update($data);
     }
 
