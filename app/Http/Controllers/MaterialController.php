@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\StoreMaterialAction;
 use App\Exports\MaterialsExport;
 use App\Http\Requests\Material\MaterialStoreRequest;
 use App\Http\Requests\Material\MaterialUpdateRequest;
@@ -40,15 +41,15 @@ class MaterialController extends Controller
 
     public function materials(Project $project): \Inertia\Response|\Inertia\ResponseFactory
     {
-        $paints = PaintResource::collection(Paint::all())->resolve();
+        $elements = ElementResource::collection(resource: $project->elements->sortBy('title'))->resolve();
         $materials = MaterialResource::collection($project->materials)->resolve();
         $project = new ProjectResource($project);
-        $metals = MetalResource::collection(Metal::all())->resolve();
-        $characteristics = CharacteristicResource::collection(Characteristic::all())->resolve();
-        $standards = StandardResource::collection(Standard::all())->resolve();
-        $steels = SteelResource::collection(Steel::all())->resolve();
-        $units = UnitResource::collection(Unit::all())->resolve();
-        $elements = ElementResource::collection($project->elements)->resolve();
+        $metals = MetalResource::collection(Metal::all()->sortBy('title'))->resolve();
+        $characteristics = CharacteristicResource::collection(Characteristic::all()->sortBy('title', SORT_NATURAL))->resolve();
+        $standards = StandardResource::collection(Standard::all()->sortBy('title'))->resolve();
+        $steels = SteelResource::collection(Steel::all()->sortBy('title'))->resolve();
+        $units = UnitResource::collection(Unit::all()->sortBy('title'))->resolve();
+        $paints = PaintResource::collection(Paint::all())->resolve();
 
         return inertia('Material/Index', compact('materials', [
             'materials',
@@ -63,76 +64,9 @@ class MaterialController extends Controller
         ]));
     }
 
-    public function storeMaterials(MaterialStoreRequest $request)
+    public function storeMaterials(StoreMaterialAction $action)
     {
-
-        /** @var TYPE_NAME $weight */
-        /** @var TYPE_NAME $length */
-        /** @var TYPE_NAME $thickness */
-
-        $data = $request->validated();
-
-        $data['metal_id'] = DB::table('metals')->where('title', $data['metal'])->first()->id;
-
-
-        if ($data['sheetHeight'] && $data['sheetWidth']) {
-            $thickness = $data['title'];
-            $data['title'] = $data['title'] . 'X' . $data['sheetHeight'] . 'X' . $data['sheetWidth'];
-        }
-
-
-        if ($data['metal'] !== 'Лист') {
-
-            $tonLength = DB::table('characteristics')->where('title', $data['title'])->first()->ton_length;
-            $tonArea = DB::table('characteristics')->where('title', $data['title'])->first()->ton_area;
-
-            if ($data['measure_units'] === 'т') {
-                $data['weight'] = $data['quantity'];
-                $data['length'] = $data['weight'] * $tonLength;
-            } elseif ($data['measure_units'] === 'м') {
-                $data['length'] = $data['quantity'];
-                $data['weight'] = $data['length'] / (float)$tonLength;
-            } elseif ($data['measure_units'] === 'шт.' && $data['metalLength']) {
-                $data['length'] = $data['metalLength'] * $data['quantity'] / 1000;
-                $data['weight'] = $data['length'] / (float)$tonLength;
-            }
-
-            $data['area'] = $data['weight'] * $tonArea;
-
-        } else {
-            if ($data['measure_units'] === 'т') {
-                $tonArea = DB::table('characteristics')->where('title', $data['title'])->first()->ton_area;
-                $data['weight'] = $data['quantity'];
-                $data['area'] = $tonArea * $data['weight'];
-            } elseif ($data['measure_units'] === 'шт.') {
-                $tonArea = DB::table('characteristics')->where('title', $thickness)->first()->ton_area;
-                $data['area'] = 2 * ($data['sheetHeight'] / 1000) * ($data['sheetWidth'] / 1000) * $data['quantity'];
-                $data['weight'] = $data['area'] / $tonArea;
-            }
-        }
-
-
-        if ($data['metalLength']) {
-            $data['title'] = $data['title'] . ' L=' . $data['metalLength'];
-        }
-        $data['title'] = $data['metal'] . ' ' . $data['title'] . ' ' . $data['standard'] . ' ' . $data['steel'];
-
-        unset($data['metal']);
-        unset($data['standard']);
-
-        if ($data['measure_units'] !== 'шт.') {
-            unset($data['quantity']);
-        }
-
-        unset($data['measure_units']);
-        unset($data['steel']);
-        unset($data['sheetHeight']);
-        unset($data['sheetWidth']);
-        unset($data['metalLength']);
-
-//        dd($data);
-
-        Material::query()->create($data);
+        Material::query()->create($action->handle());
     }
 
     public function updateMaterial(MaterialUpdateRequest $request, Material $material)

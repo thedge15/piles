@@ -12,7 +12,7 @@ class UserController extends Controller
 {
     public function openPage(): \Inertia\Response|\Inertia\ResponseFactory
     {
-        $bushes = BushResource::collection(Bush::all())->resolve();
+        $bushes = BushResource::collection(Bush::all()->sortBy('title'))->resolve();
         return inertia('OpenPage', compact('bushes'));
     }
 

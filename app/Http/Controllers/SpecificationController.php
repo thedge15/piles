@@ -7,7 +7,6 @@ use App\Actions\StoreStandardAction;
 use App\Actions\StoreSteelAction;
 use App\Http\Requests\Characteristic\CharacteristicUpdateRequest;
 use App\Http\Requests\Metal\StoreMetalRequest;
-use App\Http\Requests\Steel\SteelStoreRequest;
 use App\Http\Requests\Unit\UnitStoreRequest;
 use App\Http\Resources\Characteristic\CharacteristicResource;
 use App\Http\Resources\Metal\MetalResource;
@@ -24,7 +23,7 @@ class SpecificationController extends Controller
 {
     public function metal(): \Inertia\Response|\Inertia\ResponseFactory
     {
-        $metals = MetalResource::collection(Metal::all());
+        $metals = MetalResource::collection(Metal::all()->sortBy('title'));
         return inertia('Metal/Index', compact('metals'));
     }
     public function storeMetal(StoreMetalRequest $request)

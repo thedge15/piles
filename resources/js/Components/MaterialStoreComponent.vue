@@ -30,9 +30,7 @@
                                 class="w-full bg-gray-50 mb-3 border border-gray-300 text-gray-900 text-sm rounded-lg
                                                 focus:ring-blue-500 focus:border-blue-500 block
                                                ">
-                            <option v-for="item in computedArray">
-                                {{ item.title }}
-                            </option>
+                            <option v-for="item in computedArray">{{ item.title }}</option>
                         </select>
                     </div>
                     <div v-if="metal === 'Лист'" class="w-2/6 mr-2">
@@ -163,7 +161,15 @@ export default {
 
     computed: {
         computedArray() {
-            return this.characteristics.filter(item => item.metal === this.metal)
+            return this.characteristics.filter(item => item.metal.data.title === this.metal);
+        },
+
+        computedMetalId() {
+            return this.metals.filter(item => item.title === this.metal)
+        },
+
+        computedCharacteristicId() {
+            return this.characteristics.filter(item => item.id === 1);
         },
 
         selectedStandards() {
@@ -181,27 +187,17 @@ export default {
 
     methods: {
 
-        showElement()
-        {
-            console.log(this.element);
+        showElement() {
+            console.log(typeof this.computedArray);
         },
 
         addMaterial() {
-
-            // let preCalculateQuantity = null
-            //
-            // let elementTitle = this.element
-            //
-            // if (this.computedElement.quantity) {
-            //     preCalculateQuantity = this.quantity
-            //     preCalculateQuantity = this.computedElement.quantity * this.quantity
-            //     elementTitle = this.element + ' - ' + this.computedElement.quantity + ' шт.'
-            // }
 
             this.$inertia.post('/materials', {
                 project_id: this.project_id,
                 element: this.element,
                 metal: this.metal,
+                metal_id: this.computedMetalId[0].id,
                 title: this.title,
                 sheetHeight: this.sheetHeight,
                 sheetWidth: this.sheetWidth,
