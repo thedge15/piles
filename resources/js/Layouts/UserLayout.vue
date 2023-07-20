@@ -2,20 +2,21 @@
 import {ref} from 'vue';
 
 
-
 const showingNavigationDropdown = ref(false);
 
 </script>
 
 <template>
-    <div class="ml-60">
+    <div class="ml-60 max-h-screen">
         <div class="bg-gray-100">
             <guest-sidebar></guest-sidebar>
             <!-- Page Content -->
             <main>
                 <main class="max-h-screen overflow-auto bg-gray-100">
                     <div class="px-6">
-                        <slot/>
+                        <div class="flex flex-col h-screen py-5">
+                            <slot/>
+                        </div>
                     </div>
                 </main>
             </main>
@@ -30,9 +31,7 @@ import GuestSidebar from "@/Components/GuestSidebar.vue";
 export default {
 
     data() {
-        return {
-
-        }
+        return {}
     },
 
     components: {

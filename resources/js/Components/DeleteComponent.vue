@@ -18,7 +18,6 @@
 
 <script>
 
-import methods from "@/methods"
 export default {
     name: "DeleteComponent",
 
@@ -28,11 +27,6 @@ export default {
         'delTitle',
     ],
 
-    ...methods,
-
-    mounted() {
-        methods.myMethod()
-    },
 
     methods: {
         deleteMaterial() {

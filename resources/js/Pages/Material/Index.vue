@@ -1,17 +1,10 @@
 <template>
-    <div class="flex flex-col h-screen py-5">
         <div v-if="project" class="text-center italic">
             <Link :href="route('user.index', project.data.bush_id)">
                 {{ project.data.title }}
             </Link>
         </div>
-
-        <button @click.prevent="this.hideMaterial = !hideMaterial" type="button"
-                class="mb-2 mx-6 w-1/12 text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600
-                        hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-teal-300
-                        font-medium rounded-lg text-sm px-3 py-2.5 text-center mr-2 mb-2">
-            Создать
-        </button>
+        <CreateButton @closeStore="closeStore"></CreateButton>
         <!-- component -->
         <div class="flex-grow overflow-auto">
             <table class="relative w-full border mb-3 text-xs">
@@ -26,13 +19,26 @@
                         характеристика
                     </th>
                     <th class="sticky top-0 px-6 py-3 text-indigo-100 bg-indigo-500">Количество</th>
-                    <th class="sticky top-0 px-6 py-3 bg-indigo-500">
+                    <th class="sticky top-0 px-6 py-1 bg-indigo-500">
                         <select v-model="selectedPaint" id="selectedPaint"
-                                class="bg-indigo-500 text-indigo-100 text-sm text-center focus:ring-blue-500 focus:border-blue-500
+                                class="bg-indigo-500 text-indigo-100 text-sm text-center focus:ring-blue-500 focus:border-indigo-100
                                 block w-full">
-                            <option :class="[this.selectedPaint === 'Краска' ? 'hidden' : '']">Краска</option>>
+                            <option :class="[this.selectedPaint === 'Краска' ? 'hidden' : '']">Краска</option>
+                            >
                             <option selected>{{ this.selectedPaint }}</option>
-                            <option class="text-sm" v-for="item in paints">{{ item.title }}</option>
+                            <option :class="['text-sm', this.selectedPaint === item.title ? 'hidden' : '']"
+                                    v-for="item in paints">{{ item.title }}
+                            </option>
+                        </select>
+                        <select v-model="selectedColor" id="selectedPaint"
+                                class="bg-indigo-500 text-indigo-100 text-sm text-center block w-full">
+                            <option :class="[this.selectedColor === 'Цвет' ? 'hidden' : '']">Цвет</option>
+                            >
+                            <option selected>{{ this.selectedColor }}</option>
+                            <option class="bg-gray-400">RAL 7004</option>
+                            <option class="bg-yellow-400">RAL 1021</option>
+                            <option class="bg-sky-500">RAL 5015</option>
+                            <option class="bg-amber-900">RAL 8002</option>
                         </select>
                     </th>
                     <th class="sticky top-0 px-6 py-3 text-indigo-100 bg-indigo-500">Редактирование</th>
@@ -121,22 +127,23 @@
              :class="['bg-gray-200sm:rounded-lg w-full', this.hideUpdate ? '' : 'hidden']">
             <form class="p-4 bg-gray-200 mt-4">
                 <p class="p-2 italic">Редактирование "{{ updMaterial.title }}"</p>
-                <div class="w-2/5 mx-2">
-                    <label for="updTitle"
-                           class="block mb-1 text-sm font-medium text-gray-900">Наименование</label>
-                    <input v-model="updTitle" id="updTitle"
-                           class="bg-gray-50 h-9 mb-3 border border-gray-300 text-gray-900 text-sm rounded-lg
+                <div class="flex w-full">
+                    <div class="w-2/5 mx-2">
+                        <label for="updTitle"
+                               class="block mb-1 text-sm font-medium text-gray-900">Наименование</label>
+                        <input v-model="updTitle" id="updTitle"
+                               class="bg-gray-50 h-9 mb-3 border border-gray-300 text-gray-900 text-sm rounded-lg
                                 focus:ring-blue-500 focus:border-blue-500 block w-full">
-                </div>
-                <div class="w-2/5 mx-2">
-                    <label for="updTitle"
-                           class="block mb-1 text-sm font-medium text-gray-900">Элемент</label>
-                    <select v-model="updElement" id="updTitle" :value="this.updElement"
-                            class="bg-gray-50 h-9 mb-3 border border-gray-300 text-gray-900 text-sm rounded-lg
+                    </div>
+                    <div class="w-2/5 mx-2">
+                        <label for="updTitle"
+                               class="block mb-1 text-sm font-medium text-gray-900">Элемент</label>
+                        <select v-model="updElement" id="updTitle" :value="this.updElement"
+                                class="bg-gray-50 h-9 mb-3 border border-gray-300 text-gray-900 text-sm rounded-lg
                                 focus:ring-blue-500 focus:border-blue-500 block w-full">
-                        <option v-for="item in elements">{{ item.title }}</option>
-                    </select>
-
+                            <option v-for="item in elements">{{ item.title }}</option>
+                        </select>
+                    </div>
                 </div>
                 <div class="flex justify-between px-3 w-full">
                     <div class="w-2/6 pr-2">
@@ -196,7 +203,6 @@
                             <option class="bg-yellow-400">RAL 1021</option>
                             <option class="bg-sky-500">RAL 5015</option>
                             <option class="bg-amber-900">RAL 8002</option>
-                            <option>RAL 3020</option>
                         </select>
                     </div>
                 </div>
@@ -210,19 +216,16 @@
                 </button>
             </form>
         </div>
-    </div>
     <!--    <div>-->
     <!--        {{ selPaint }}-->
     <!--    </div>-->
-    <div v-if="selectedMaterialWeight" class="mt-2 ml-2">
-        {{ selectedMaterialWeight }}
-    </div>
+<!--    <div v-if="selectedMaterialWeight" class="mt-2 ml-2">-->
+<!--        {{ selectedMaterialWeight }}-->
+<!--    </div>-->
     <!--    <Link :href="route('export')" class="font-bold text-sm ml-2">Экспорт</Link>-->
     <!--                <Link :href="route('all')">-->
     <!--                    Набивка материала-->
     <!--                </Link>-->
-
-
 </template>
 
 <script>
@@ -231,6 +234,7 @@ import UserLayout from "@/Layouts/UserLayout.vue";
 import {Link} from "@inertiajs/vue3";
 import DeleteComponent from "@/Components/DeleteComponent.vue";
 import MaterialStoreComponent from "@/Components/MaterialStoreComponent.vue";
+import CreateButton from "@/Components/CreateButton.vue";
 
 export default {
 
@@ -257,6 +261,7 @@ export default {
             numberOfLayers: null,
             color: '',
             selectedPaint: 'Краска',
+            selectedColor: 'Цвет',
             checkedMaterials: [],
         }
     },
@@ -264,6 +269,7 @@ export default {
     layout: UserLayout,
 
     components: {
+        CreateButton,
         MaterialStoreComponent,
         DeleteComponent,
         Link
@@ -284,8 +290,7 @@ export default {
 
     computed: {
         allSelectedMaterials() {
-            return this.materials.filter((material) =>
-                this.checkedMaterials.includes(material.id))
+            return this.materials.filter((material) => this.checkedMaterials.includes(material.id))
         },
 
         selectedMaterialWeight() {
@@ -304,13 +309,13 @@ export default {
 
         selectAll: {
             get: function () {
-                return this.materials ? this.checkedMaterials.length === this.materials.length : false;
+                return this.selectedPaintArray ? this.checkedMaterials.length === this.selectedPaintArray.length : false;
             },
             set: function (value) {
                 const selected = [];
 
                 if (value) {
-                    this.materials.forEach(function (material) {
+                    this.selectedPaintArray.forEach(function (material) {
                         selected.push(material.id);
                     });
                 }
@@ -324,12 +329,25 @@ export default {
         // }
 
         selectedPaintArray() {
-            return this.selectedPaint === "Краска" ? this.materials : this.materials.filter(item => item.paint === this.selectedPaint)
+            if (this.selectedPaint === "Краска" && this.selectedColor === "Цвет") {
+                return this.materials;
+            }
+
+            if (this.selectedPaint !== "Краска" && this.selectedColor === "Цвет") {
+                return this.materials.filter(item => item.paint === this.selectedPaint);
+            }
+
+            if (this.selectedPaint === "Краска" && this.selectedColor !== "Цвет") {
+                return this.materials.filter(item => item.paint_color === this.selectedColor);
+            }
+
+            if (this.selectedPaint !== "Краска" && this.selectedColor !== "Цвет") {
+                return this.materials.filter(item => item.paint === this.selectedPaint).filter(item => item.paint_color === this.selectedColor);
+            }
         }
     },
 
     methods: {
-
         closeStore() {
             this.hideMaterial = !this.hideMaterial
         },

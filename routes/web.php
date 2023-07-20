@@ -74,9 +74,9 @@ Route::prefix('/admin')->middleware(['auth', 'isAdmin'])->group(function () {
         Route::delete('/{metal}', [\App\Http\Controllers\SpecificationController::class, 'destroyMetal'])->name('destroy.metal');
     });
     Route::prefix('/characteristic')->group(function () {
-        Route::post('/', [\App\Http\Controllers\SpecificationController::class, 'storeCharacteristic'])->name('characteristic.store');
+        Route::post('/', [\App\Http\Controllers\SpecificationController::class, 'storeCharacteristic'])->name('store.characteristic');
         Route::patch('/{characteristic}', [\App\Http\Controllers\SpecificationController::class, 'updateCharacteristic'])->name('characteristic.update');
-        Route::delete('/{characteristic}', [\App\Http\Controllers\SpecificationController::class, 'destroyCharacteristic'])->name('characteristic.destroy');
+        Route::delete('/{characteristic}', [\App\Http\Controllers\SpecificationController::class, 'destroyCharacteristic'])->name('destroy.characteristic');
     });
     Route::prefix('/standard')->group(function () {
         Route::get('/', [\App\Http\Controllers\SpecificationController::class, 'standard'])->name('standard.index');
