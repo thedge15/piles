@@ -1,7 +1,7 @@
 <template>
     <div v-if="delElement"
          :class="['bg bg-gray-200 shadow-md sm:rounded-lg w-full', hideDelete ? '' : 'hidden']">
-        <p class="p-2 italic">Вы вот прям точно хотите удалить "{{ delElement.title }}"?</p>
+        <p class="p-2 italic">Вы вот прям точно хотите удалить "{{ delElement.metal.title }} {{ delElement.title }}"?</p>
         <button @click.prevent="deleteMaterial" type="button"
                 class="ml-2 text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
             Удалить

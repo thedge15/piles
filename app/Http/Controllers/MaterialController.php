@@ -3,9 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Actions\StoreMaterialAction;
+use App\Actions\UpdateMaterialAction;
 use App\Exports\MaterialsExport;
-use App\Http\Requests\Material\MaterialStoreRequest;
-use App\Http\Requests\Material\MaterialUpdateRequest;
 use App\Http\Resources\Bush\BushResource;
 use App\Http\Resources\Characteristic\CharacteristicResource;
 use App\Http\Resources\Element\ElementResource;
@@ -26,7 +25,6 @@ use App\Models\Project;
 use App\Models\Standard;
 use App\Models\Steel;
 use App\Models\Unit;
-use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 
 
@@ -49,19 +47,10 @@ class MaterialController extends Controller
         $standards = StandardResource::collection(Standard::all()->sortBy('title'))->resolve();
         $steels = SteelResource::collection(Steel::all()->sortBy('title'))->resolve();
         $units = UnitResource::collection(Unit::all()->sortBy('title'))->resolve();
-        $paints = PaintResource::collection(Paint::all())->resolve();
+        $paints = PaintResource::collection(Paint::all()->sortBy('title'))->resolve();
 
         return inertia('Material/Index', compact('materials', [
-            'materials',
-            'project',
-            'metals',
-            'characteristics',
-            'standards',
-            'units',
-            'steels',
-            'elements',
-            'paints'
-        ]));
+            'materials', 'project', 'metals', 'characteristics', 'standards', 'units', 'steels', 'elements', 'paints']));
     }
 
     public function storeMaterials(StoreMaterialAction $action)
@@ -69,24 +58,9 @@ class MaterialController extends Controller
         Material::query()->create($action->handle());
     }
 
-    public function updateMaterial(MaterialUpdateRequest $request, Material $material)
+    public function updateMaterial(UpdateMaterialAction $action)
     {
-        $data = $request->validated();
-
-
-        $paint = Paint::query()->where('title', $data['paint'])->get()->toArray();
-
-        if ($data['paint'] && $data['numberOfLayers']) {
-            $data['paint_quantity'] = $paint[0]['consumption'] * $data['numberOfLayers'] * $data['area'];
-        } else if (!$data['paint'] && !$data['numberOfLayers']) {
-            unset($data['paint']);
-            unset($data['numberOfLayers']);
-        }
-
-
-        unset($data['numberOfLayers']);
-
-        $material->update($data);
+        Material::query()->update($action->handle());
     }
 
     public function deleteMaterial(Material $material)
@@ -94,11 +68,9 @@ class MaterialController extends Controller
         $material->delete();
     }
 
-    public
-    function showAll(): \Inertia\Response|\Inertia\ResponseFactory
+    public function showAll(): \Inertia\Response|\Inertia\ResponseFactory
     {
         $materials = Material::all();
-
         $bushes = Bush::all();
         $characteristics = Characteristic::all();
         $projects = Project::all();
@@ -125,6 +97,11 @@ class MaterialController extends Controller
                 ]
             )
         );
+    }
+
+    public function export(Project $project): \Symfony\Component\HttpFoundation\BinaryFileResponse
+    {
+        return Excel::download(new MaterialsExport($project), 'materials.xlsx');
     }
 }
 

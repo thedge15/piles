@@ -11,7 +11,7 @@ class PaintController extends Controller
 {
     public function index(): \Inertia\Response|\Inertia\ResponseFactory
     {
-        $paints = PaintResource::collection(\App\Models\Paint::all())->resolve();
+        $paints = PaintResource::collection(\App\Models\Paint::all()->sortBy('title'))->resolve();
         return inertia('Paint/Index', compact('paints'));
     }
 

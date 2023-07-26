@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * @property mixed $materials
  * @property mixed $elements
+ * @property mixed $id
  */
 class Project extends Model
 {

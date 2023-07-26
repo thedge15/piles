@@ -2,12 +2,7 @@
     <Link :href="route('metal.index')" class="text-center italic">
         {{ metal.data.title }}
     </Link>
-    <button @click.prevent="this.hideProduct = !hideProduct" type="button"
-            class="w-1/12 mb-2 text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600
-                        hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-teal-300
-                        font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
-        Создать
-    </button>
+    <CreateButton @closeStore="closeStore"></CreateButton>
     <!-- component -->
     <div class="flex-grow overflow-auto">
         <table v-if="metals" class="relative w-full border mb-3 text-xs">
@@ -37,7 +32,8 @@
                     {{ product.ton_area }}
                 </td>
                 <td :class='["px-6 py-2 text-center", index%2 === 0 ? "" : "bg-gray-300"]'>
-                    <svg @click.prevent="showUpdate(product)" xmlns="http://www.w3.org/2000/svg"
+                    <svg @click.prevent="this.hideUpdate = !this.hideUpdate; this.updProduct = product"
+                         xmlns="http://www.w3.org/2000/svg"
                          fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                          stroke="currentColor" class="w-6 h-6 mx-auto cursor-pointer">
                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -48,7 +44,8 @@
                     </svg>
                 </td>
                 <td :class='["px-6 py-2 text-center", index%2 === 0 ? "" : "bg-gray-300"]'>
-                    <svg @click.prevent="showDelete(product)" xmlns="http://www.w3.org/2000/svg"
+                    <svg @click.prevent="this.hideDelete = !this.hideDelete; this.delProduct = product"
+                         xmlns="http://www.w3.org/2000/svg"
                          fill="none" viewBox="0 0 24 24"
                          stroke-width="1.5" stroke="currentColor"
                          class="w-6 h-6 mx-auto cursor-pointer">
@@ -63,31 +60,12 @@
             </tr>
             </tbody>
         </table>
-    </div>
-    <MetalStoreComponent :hide-product="this.hideProduct" :metal="this.metal" @closeStore="closeStore"></MetalStoreComponent>
-    <DeleteComponent :hide-delete="this.hideDelete" :del-element="this.delProduct" :del-title="'characteristic'" @closeDelete="closeDelete"></DeleteComponent>
-    <div v-if="updProduct"
-         :class="['relative bg bg-gray-200 overflow-x-auto shadow-md sm:rounded-lg w-full', this.hideUpdate ? '' : 'hidden']">
-        <p class="p-2">Редактирование "{{ updProduct.title }}"</p>
-        <div class="w-2/5 px-2 mx-2">
-            <label for="updTitle"
-                   class="block mb-2 text-sm font-medium text-gray-900">Наименование</label>
-            <input v-model="updTitle" id="updTitle"
-                   class="bg-gray-50 h-9 mb-3 border border-gray-300 text-gray-900 text-sm rounded-lg
-                                focus:ring-blue-500 focus:border-blue-500 block w-full">
-        </div>
-        <button @click.prevent="updateCharacteristic" type="button"
-                class="ml-2 text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br
-                    focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5
-                    py-2.5 text-center mr-2 mb-2">
-            Отправить
-        </button>
-        <button @click.prevent="closeUpdate" type="button"
-                class="text-white bg-gradient-to-r from-pink-400 via-pink-500 to-pink-600 hover:bg-gradient-to-br
-                    focus:ring-4 focus:outline-none focus:ring-pink-300 font-medium rounded-lg text-sm px-5 py-2.5
-                    text-center mr-2 mb-2">
-            Отмена
-        </button>
+        <MetalStoreComponent :hide-product="this.hideProduct" :metal="this.metal"
+                             @closeStore="closeStore"></MetalStoreComponent>
+        <DeleteComponent :hide-delete="this.hideDelete" :del-element="this.delProduct" :del-title="'characteristic'"
+                         @closeDelete="closeDelete"></DeleteComponent>
+        <UpdateComponent :upd-product="this.updProduct" :hide-update="this.hideUpdate" :element="'characteristic'"
+                         @closeUpdate="closeUpdate"></UpdateComponent>
     </div>
 </template>
 
@@ -97,6 +75,8 @@ import {Link} from "@inertiajs/vue3";
 import UserLayout from "@/Layouts/UserLayout.vue";
 import DeleteComponent from "@/Components/DeleteComponent.vue";
 import MetalStoreComponent from "@/Components/MetalStoreComponent.vue";
+import CreateButton from "@/Components/CreateButton.vue";
+import UpdateComponent from "@/Components/UpdateComponent.vue";
 
 export default {
 
@@ -105,6 +85,8 @@ export default {
     layout: UserLayout,
 
     components: {
+        UpdateComponent,
+        CreateButton,
         DeleteComponent,
         MetalStoreComponent,
         Link
@@ -133,29 +115,8 @@ export default {
             this.hideProduct = !this.hideProduct
         },
 
-        showUpdate(product) {
-            this.hideUpdate = !this.hideUpdate
-            this.updProduct = product
-            this.updTitle = product.title
-        },
-
-        updateCharacteristic() {
-            this.$inertia.patch('/admin/characteristic/' + this.updProduct.id, {
-                title: this.updTitle,
-            });
-            this.updProduct = ''
-            this.hideUpdate = !this.hideUpdate
-        },
-
         closeUpdate() {
-            this.updProduct = ''
             this.hideUpdate = !this.hideUpdate
-        },
-
-        showDelete(product) {
-            this.hideDelete = !this.hideDelete
-            this.delProduct = product
-            this.delProduct.title = product.metal.title + ' ' + product.title
         },
 
         closeDelete() {

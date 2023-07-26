@@ -37,8 +37,8 @@ class ElementController extends Controller
         $element->delete();
     }
 
-    public function export(): \Symfony\Component\HttpFoundation\BinaryFileResponse
+    public function export(Project $project): \Symfony\Component\HttpFoundation\BinaryFileResponse
     {
-        return (new MaterialsExport())->download('materials.xlsx');
+        return Excel::download(new MaterialsExport($project), 'materials.xlsx');
     }
 }

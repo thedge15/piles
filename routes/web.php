@@ -17,7 +17,7 @@ use Inertia\Inertia;
 */
 
 Route::get('/', function () {
-    return Inertia::render('Welcome', [
+    return Inertia::render('openPage', [
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),
         'laravelVersion' => Application::VERSION,
@@ -36,12 +36,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::post('/', [\App\Http\Controllers\MaterialController::class, 'storeMaterials'])->name('store.materials');
         Route::patch('/{material}', [\App\Http\Controllers\MaterialController::class, 'updateMaterial'])->name('update.materials');
         Route::delete('/{material}', [\App\Http\Controllers\MaterialController::class, 'deleteMaterial'])->name('destroy.material');
+        Route::get('/export/{project}', [\App\Http\Controllers\MaterialController::class, 'export'])->name('export');
     });
     Route::prefix('/elements')->group(function () {
         Route::get('/', [\App\Http\Controllers\ElementController::class, 'index'])->name('index.elements');
         Route::post('/', [\App\Http\Controllers\ElementController::class, 'storeElement'])->name('store.element');
         Route::delete('/{element}', [\App\Http\Controllers\ElementController::class, 'deleteElement'])->name('destroy.element');
-        Route::get('/export', [\App\Http\Controllers\ElementController::class, 'export'])->name('export');
+//        Route::get('/export/{project}', [\App\Http\Controllers\ElementController::class, 'export'])->name('export');
     });
 });
 
@@ -75,7 +76,7 @@ Route::prefix('/admin')->middleware(['auth', 'isAdmin'])->group(function () {
     });
     Route::prefix('/characteristic')->group(function () {
         Route::post('/', [\App\Http\Controllers\SpecificationController::class, 'storeCharacteristic'])->name('store.characteristic');
-        Route::patch('/{characteristic}', [\App\Http\Controllers\SpecificationController::class, 'updateCharacteristic'])->name('characteristic.update');
+        Route::patch('/{characteristic}', [\App\Http\Controllers\SpecificationController::class, 'updateCharacteristic'])->name('update.characteristic');
         Route::delete('/{characteristic}', [\App\Http\Controllers\SpecificationController::class, 'destroyCharacteristic'])->name('destroy.characteristic');
     });
     Route::prefix('/standard')->group(function () {

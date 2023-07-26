@@ -198,8 +198,8 @@
 
 <script>
 
-import AdminLayout from "@/Layouts/AdminLayout.vue";
 import {Link} from "@inertiajs/vue3";
+import UserLayout from "@/Layouts/UserLayout.vue";
 
 export default {
 
@@ -228,7 +228,7 @@ export default {
         }
     },
 
-    layout: AdminLayout,
+    layout: UserLayout,
 
     components: {
         Link

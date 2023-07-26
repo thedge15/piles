@@ -28,8 +28,7 @@
                             размеры</label>
                         <select v-model="title" id="characteristic"
                                 class="w-full bg-gray-50 mb-3 border border-gray-300 text-gray-900 text-sm rounded-lg
-                                                focus:ring-blue-500 focus:border-blue-500 block
-                                               ">
+                                                focus:ring-blue-500 focus:border-blue-500 block">
                             <option v-for="item in computedArray">{{ item.title }}</option>
                         </select>
                     </div>

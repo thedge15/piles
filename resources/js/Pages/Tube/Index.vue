@@ -96,14 +96,14 @@
 
 <script>
 
-import AdminLayout from "@/Layouts/AdminLayout.vue";
 import {Link} from "@inertiajs/vue3";
+import UserLayout from "@/Layouts/UserLayout.vue";
 
 export default {
 
     name: "Index",
 
-    layout: AdminLayout,
+    layout: UserLayout,
 
     components: {
         Link

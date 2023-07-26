@@ -34,6 +34,7 @@
             </tr>
             </tbody>
         </table>
+        <button @click='login'>Login</button>
         <StoreComponent :hide-material="this.hidePaint" :element="'paint'" :element-title="'краски'"
                         @closeStore="closeStore"></StoreComponent>
         <DeleteComponent :del-element="this.delPaint" :hide-delete="this.hideDelete" :del-title="'paint'"
@@ -45,6 +46,7 @@
 
 import {Link} from "@inertiajs/vue3";
 import UserLayout from "@/Layouts/UserLayout.vue";
+
 import DeleteComponent from "@/Components/DeleteComponent.vue";
 import StoreComponent from "@/Components/StoreComponent.vue";
 import CreateButton from "@/Components/CreateButton.vue";
@@ -95,7 +97,3 @@ export default {
     }
 }
 </script>
-
-<style scoped>
-
-</style>
