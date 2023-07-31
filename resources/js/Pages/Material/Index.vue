@@ -45,53 +45,36 @@
             </tr>
             </thead>
             <tbody class="divide-y bg-gray-100">
-            <tr v-for="(material, index) in this.selectedPaintArray">
+            <tr v-for="(item, index) in this.selectedPaintArray">
                 <td :class='["px-2 py-1 text-center", index%2 === 0 ? "" : "bg-gray-300"]'>
-                    <input type="checkbox" :value="material.id" v-model="checkedMaterials">
-                    <span class="hidden">{{ material.id }}</span>
+                    <input type="checkbox" :value="item.id" v-model="checkedMaterials">
+                    <span class="hidden">{{ item.id }}</span>
                 </td>
-                <td :class='["px-2 py-1 text-center", index%2 === 0 ? "" : "bg-gray-300"]'>{{ material.numb }}</td>
-                <td :class='["px-3 py-1 text-center", index%2 === 0 ? "" : "bg-gray-300"]'>{{ material.element }}</td>
-                <td :class='["px-6 py-1 text-center", index%2 === 0 ? "" : "bg-gray-300"]'>{{ material.title }}</td>
+                <td :class='["px-2 py-1 text-center", index%2 === 0 ? "" : "bg-gray-300"]'>{{ item.numb }}</td>
+                <td :class='["px-3 py-1 text-center", index%2 === 0 ? "" : "bg-gray-300"]'>{{ item.element }}</td>
+                <td :class='["px-6 py-1 text-center", index%2 === 0 ? "" : "bg-gray-300"]'>{{ item.title }}</td>
                 <td :class='["px-2 py-1 text-center", index%2 === 0 ? "" : "bg-gray-300"]'>
-                    {{ material.weight }} т <span v-if="material.quantity">({{ Math.floor(material.quantity) }}
+                    {{ item.weight }} т <span v-if="item.quantity">({{ Math.floor(item.quantity) }}
                         шт.)</span></td>
                 <td :class='["px-2 py-1 text-center", index%2 === 0 ? "" : "bg-gray-300"]'>
-                    <div v-if="material.paint_color === 'RAL 1021'" class="bg-yellow-400">
-                        {{ material.paint }} - {{ material.paint_quantity }} кг
+                    <div v-if="item.paint_color === 'RAL 1021'" class="bg-yellow-400">
+                        {{ item.paint }} - {{ item.paint_quantity }} кг
                     </div>
-                    <div v-if="material.paint_color === 'RAL 8002'" class="bg-amber-900 text-indigo-100">
-                        {{ material.paint }} - {{ material.paint_quantity }} кг
+                    <div v-if="item.paint_color === 'RAL 8002'" class="bg-amber-900 text-indigo-100">
+                        {{ item.paint }} - {{ item.paint_quantity }} кг
                     </div>
-                    <div v-if="material.paint_color === 'RAL 5015'" class="bg-sky-500 text-indigo-100">
-                        {{ material.paint }} - {{ material.paint_quantity }} кг
+                    <div v-if="item.paint_color === 'RAL 5015'" class="bg-sky-500 text-indigo-100">
+                        {{ item.paint }} - {{ item.paint_quantity }} кг
                     </div>
-                    <div v-if="material.paint_color === 'RAL 7004'" class="bg-gray-500 text-indigo-100">
-                        {{ material.paint }} - {{ material.paint_quantity }} кг
+                    <div v-if="item.paint_color === 'RAL 7004'" class="bg-gray-500 text-indigo-100">
+                        {{ item.paint }} - {{ item.paint_quantity }} кг
                     </div>
                 </td>
                 <td :class='["px-2 py-1 text-center", index%2 === 0 ? "" : "bg-gray-300"]'>
-                    <svg @click.prevent="showUpdate(material)" xmlns="http://www.w3.org/2000/svg"
-                         fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                         stroke="currentColor" class="w-6 h-6 mx-auto cursor-pointer">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                              d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582
-                                          16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0
-                                          011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75
-                                          21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"/>
-                    </svg>
+                    <UpdateButton @showUpdate="showUpdate" :item="item"></UpdateButton>
                 </td>
                 <td :class='["px-2 py-1 text-center", index%2 === 0 ? "" : "bg-gray-300"]'>
-                    <svg @click.prevent="showDelete(material)"
-                         xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                         stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mx-auto cursor-pointer">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788
-                                    0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25
-                                    0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108
-                                    0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0
-                                    013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32
-                                    0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"/>
-                    </svg>
+                    <DeleteButton @showDelete="showDelete" :item="item"></DeleteButton>
                 </td>
             </tr>
             </tbody>
@@ -118,12 +101,16 @@
     <MaterialUpdateComponent :hide-update="this.hideUpdate" :upd-material="this.updMaterial" :elements="this.elements"
         :paints="this.paints" @closeUpdate="closeUpdate"></MaterialUpdateComponent>
         <Link :href="route('export', this.project.data.id)" class="font-bold text-sm ml-2">Экспорт</Link>
-    <!--                <Link :href="route('all')">-->
-    <!--                    Набивка материала-->
-    <!--                </Link>-->
+<!--                    <Link :href="route('all')">-->
+<!--                        Набивка материала-->
+<!--                    </Link>-->
+
+
+
 </template>
 
 <script>
+
 
 import UserLayout from "@/Layouts/UserLayout.vue";
 import {Link} from "@inertiajs/vue3";
@@ -131,6 +118,9 @@ import DeleteComponent from "@/Components/DeleteComponent.vue";
 import MaterialStoreComponent from "@/Components/MaterialStoreComponent.vue";
 import MaterialUpdateComponent from "@/Components/MaterialUpdateComponent.vue";
 import CreateButton from "@/Components/CreateButton.vue";
+import DeleteButton from "@/Components/DeleteButton.vue";
+import UpdateButton from "@/Components/UpdateButton.vue";
+
 
 export default {
 
@@ -152,7 +142,12 @@ export default {
 
     layout: UserLayout,
 
+
+
+
     components: {
+        UpdateButton,
+        DeleteButton,
         MaterialUpdateComponent,
         CreateButton,
         MaterialStoreComponent,
@@ -233,18 +228,23 @@ export default {
     },
 
     methods: {
+
+        hhy() {
+
+        },
+
         closeStore() {
             this.hideMaterial = !this.hideMaterial
         },
 
-        showDelete(material) {
+        showDelete(item) {
             this.hideDelete = !this.hideDelete
-            this.delMaterial = material
+            this.delMaterial = item
         },
 
-        showUpdate(material) {
+        showUpdate(item) {
             this.hideUpdate = !this.hideUpdate
-            this.updMaterial = material
+            this.updMaterial = item
         },
 
         closeUpdate() {
@@ -255,6 +255,8 @@ export default {
             this.delMaterial = ''
             this.hideDelete = !this.hideDelete
         },
+
+
     },
 }
 

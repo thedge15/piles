@@ -2,13 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Exports\MaterialsExport;
 use App\Http\Requests\Element\ElementRequest;
 use App\Http\Resources\Element\ElementResource;
 use App\Http\Resources\Project\ProjectResource;
 use App\Models\Element;
 use App\Models\Project;
-use Maatwebsite\Excel\Facades\Excel;
 
 class ElementController extends Controller
 {
@@ -35,10 +33,5 @@ class ElementController extends Controller
     public function deleteElement(Element $element)
     {
         $element->delete();
-    }
-
-    public function export(Project $project): \Symfony\Component\HttpFoundation\BinaryFileResponse
-    {
-        return Excel::download(new MaterialsExport($project), 'materials.xlsx');
     }
 }

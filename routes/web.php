@@ -17,7 +17,7 @@ use Inertia\Inertia;
 */
 
 Route::get('/', function () {
-    return Inertia::render('openPage', [
+    return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),
         'laravelVersion' => Application::VERSION,
@@ -42,7 +42,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/', [\App\Http\Controllers\ElementController::class, 'index'])->name('index.elements');
         Route::post('/', [\App\Http\Controllers\ElementController::class, 'storeElement'])->name('store.element');
         Route::delete('/{element}', [\App\Http\Controllers\ElementController::class, 'deleteElement'])->name('destroy.element');
-//        Route::get('/export/{project}', [\App\Http\Controllers\ElementController::class, 'export'])->name('export');
     });
 });
 

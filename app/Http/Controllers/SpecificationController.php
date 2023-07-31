@@ -23,7 +23,7 @@ class SpecificationController extends Controller
 {
     public function metal(): \Inertia\Response|\Inertia\ResponseFactory
     {
-        $metals = MetalResource::collection(Metal::all()->sortBy('title'));
+        $metals = MetalResource::collection(Metal::all()->sortBy('title'))->resolve();
         return inertia('Metal/Index', compact('metals'));
     }
     public function storeMetal(StoreMetalRequest $request)
@@ -34,7 +34,7 @@ class SpecificationController extends Controller
 
     public function showMetal(Metal $metal): \Inertia\Response|\Inertia\ResponseFactory
     {
-        $metals = CharacteristicResource::collection($metal->characteristics->sortBy('title', SORT_NATURAL));
+        $metals = CharacteristicResource::collection($metal->characteristics->sortBy('title', SORT_NATURAL))->resolve();
         $metal = new MetalResource($metal);
 
         return inertia('Metal/Show', compact('metals', 'metal'));

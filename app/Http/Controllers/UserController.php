@@ -31,9 +31,4 @@ class UserController extends Controller
 //        $tubes = TubeResource::collection(Tube::all());
 //        return inertia('User/Show', compact('piles', ['project', 'tubes', 'concreteQuantity']));
 //    }
-
-//    public function export(): \Symfony\Component\HttpFoundation\BinaryFileResponse
-//    {
-//        return Excel::download(new PilesExport,  'piles.xlsx');
-//    }
 }

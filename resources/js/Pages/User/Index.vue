@@ -25,13 +25,13 @@
                 </tr>
                 </thead>
                 <tbody class="divide-y bg-gray-100">
-                <tr v-for="(project, index) in projects">
+                <tr v-for="(item, index) in projects">
                     <td :class='["px-6 py-2 text-center", index%2 === 0 ? "" : "bg-gray-300"]'>{{ index + 1 }}</td>
-                    <td :class='["px-6 py-2 text-center", index%2 === 0 ? "" : "bg-gray-300"]'>{{ project.title }},
-                        ИЗМ.{{ project.change }}
+                    <td :class='["px-6 py-2 text-center", index%2 === 0 ? "" : "bg-gray-300"]'>{{ item.title }},
+                        ИЗМ.{{ item.change }}
                     </td>
                     <td :class='["px-6 py-2 text-center", index%2 === 0 ? "" : "bg-gray-300"]'>
-                        <Link :href="route('dashboard.materials', project.id)">
+                        <Link :href="route('dashboard.materials', item.id)">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                  stroke-width="1.5"
                                  stroke="currentColor" class="w-6 h-6 mx-auto cursor-pointer">
@@ -44,7 +44,7 @@
                     </td>
                     <td v-if="$page.props.auth.user.is_admin === 1"
                         :class='["px-6 py-2 text-center", index%2 === 0 ? "" : "bg-gray-300"]'>
-                        <svg @click.prevent="showProject(project.id, project.change)"
+                        <svg @click.prevent="showProject(item.id, item.change)"
                              xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                              stroke="currentColor" class="w-6 h-6 mx-auto cursor-pointer">
                             <path stroke-linecap="round" stroke-linejoin="round"
@@ -53,14 +53,7 @@
                     </td>
                     <td v-if="$page.props.auth.user.is_admin === 1"
                         :class='["px-6 py-2 text-center", index%2 === 0 ? "" : "bg-gray-300"]'>
-                        <svg @click.prevent="showDelete(project)"
-                             xmlns="http://www.w3.org/2000/svg"
-                             fill="none"
-                             viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-                             class="w-6 h-6 mx-auto cursor-pointer">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                  d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"/>
-                        </svg>
+                        <DeleteButton @showDelete="showDelete" :item="item"></DeleteButton>
                     </td>
                 </tr>
                 </tbody>
@@ -96,6 +89,7 @@ import UserLayout from "@/Layouts/UserLayout.vue";
 import DeleteComponent from "@/Components/DeleteComponent.vue";
 import StoreComponent from "@/Components/StoreComponent.vue";
 import CreateButton from "@/Components/CreateButton.vue";
+import DeleteButton from "@/Components/DeleteButton.vue";
 
 export default {
 
@@ -104,6 +98,7 @@ export default {
     layout: UserLayout,
 
     components: {
+        DeleteButton,
         CreateButton,
         StoreComponent,
         DeleteComponent,
@@ -130,17 +125,6 @@ export default {
     ],
 
     methods: {
-        addProject() {
-            this.$inertia.post('/admin/bushes/projects', {
-                bush_id: this.bush.data.id,
-                title: this.title,
-                change: this.change
-            })
-            this.title = ''
-            this.change = null
-            this.hideProject = !this.hideProject
-        },
-
         closeStore() {
             this.hideProject = !this.hideProject
         },
@@ -159,9 +143,9 @@ export default {
             this.updChange = null
         },
 
-        showDelete(project) {
+        showDelete(item) {
             this.hideDelete = !this.hideDelete
-            this.delProject = project
+            this.delProject = item
         },
 
         closeDelete() {
