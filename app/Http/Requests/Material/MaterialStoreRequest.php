@@ -2,20 +2,10 @@
 
 namespace App\Http\Requests\Material;
 
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Requests\BaseRequest;
 
-class MaterialStoreRequest extends FormRequest
+class MaterialStoreRequest extends BaseRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
-    public function authorize(): bool
-    {
-        return true;
-    }
-
     /**
      * Get the validation rules that apply to the request.
      *
@@ -37,6 +27,16 @@ class MaterialStoreRequest extends FormRequest
             'steel' => 'required|string',
             'quantity' => 'required|numeric',
             'measure_units' => 'required|string',
+        ];
+    }
+    public function messages(): array
+    {
+        return [
+            'title.required' => 'Заполните размеры.',
+            'standard.required' => 'Укажите ГОСТ.',
+            'steel.required' => 'Укажите сталь.',
+            'quantity.required' => 'Укажите количество.',
+            'measure_units.required' => 'Укажите единицы измерения.',
         ];
     }
 }

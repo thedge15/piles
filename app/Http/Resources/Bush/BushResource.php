@@ -2,7 +2,6 @@
 
 namespace App\Http\Resources\Bush;
 
-use App\Http\Resources\Project\ProjectResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class BushResource extends JsonResource

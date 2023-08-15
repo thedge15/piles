@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Paint\PaintStoreRequest;
+use App\Http\Requests\Paint\PaintUpdateRequest;
 use App\Http\Resources\Paint\PaintResource;
 use App\Models\Paint;
-use Illuminate\Http\Request;
 
 class PaintController extends Controller
 {
@@ -19,6 +19,12 @@ class PaintController extends Controller
     {
         $data = $request->validated();
         Paint::query()->create($data);
+    }
+
+    public function update(PaintUpdateRequest $request, Paint $paint)
+    {
+        $data = $request->validated();
+        $paint->update($data);
     }
 
     public function destroy(Paint $paint)

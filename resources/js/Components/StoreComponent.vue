@@ -1,98 +1,51 @@
 <template>
     <div :class="['shadow-md sm:rounded-lg ', this.hideMaterial ? '' : 'hidden']">
         <form class="p-4 bg-gray-200 mt-4 w-full">
-            <div class="flex w-full">
-                <div v-if="element !== 'standard' && element !== 'element'" class="grid gap-3 mb-6 md:grid-cols-2">
-                    <div>
-                        <label for="title" class="text-amber=200">Наименование {{ this.elementTitle }}</label>
-                        <input v-model="title" type="text" id="title"
-                               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                               :placeholder="[`Наименование ${ this.elementTitle }`]" required>
-                    </div>
+            <div class="grid grid-cols-4 w-full mb-3">
+                <div v-if="element !== 'standard'">
+                    <label for="title" class="text-amber=200">Наименование {{ this.elementTitle }}</label>
+                    <input v-model="title" type="text" id="title"
+                           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500
+                               focus:border-blue-500 block w-full p-2.5"
+                           :placeholder="[`Наименование ${ this.elementTitle }`]" required>
                 </div>
-                <div v-if="element === 'paint'" class="grid gap-6 mb-6 md:grid-cols-3">
-                    <div>
-                        <label for="consumption" class="text-amber=200">Расход краски</label>
-                        <input v-model="consumption" type="text" id="consumption"
-                               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                               placeholder="Расход краски" required>
-                    </div>
+                <div v-if="element === 'paint'" class="ml-2">
+                    <label for="consumption" class="text-amber=200">Расход краски</label>
+                    <input v-model="consumption" type="text" id="consumption"
+                           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                           placeholder="Расход краски" required>
                 </div>
-                <div v-if="element === 'steel'" class="grid gap-6 mb-6 md:grid-cols-2">
-                    <div>
-                        <label for="steelStandard" class="text-amber=200">ГОСТ марки стали</label>
-                        <input v-model="steelStandard" type="text" id="steelStandard"
-                               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                               placeholder="ГОСТ марки стали" required>
-                    </div>
+                <div v-if="element === 'steel'" class="ml-2">
+                    <label for="steelStandard" class="text-amber=200">ГОСТ марки стали</label>
+                    <input v-model="steelStandard" type="text" id="steelStandard"
+                           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                           placeholder="ГОСТ марки стали" required>
                 </div>
-                <div v-if="element === 'project'" class="grid gap-6 mb-6 md:grid-cols-2">
-                    <div>
-                        <label for="change" class="text-amber=200">Изм. №</label>
-                        <input v-model="change" type="number" id="change"
-                               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                               placeholder="Изм. №" required>
-                    </div>
+                <div v-if="element === 'project'" class="ml-2">
+                    <label for="change" class="text-amber=200">Изм. №</label>
+                    <input v-model="change" type="number" id="change"
+                           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                           placeholder="Изм. №" required>
                 </div>
-                <div v-if="element === 'standard'" class="p-4">
-                    <div class="flex">
-                        <div class="grid gap-2 mb-6 md:grid-cols-3 w-full">
-                            <div>
-                                <label for="metal" class="text-amber=200 mb-2">Металл</label>
-                                <select v-model="metal" id="metal"
-                                        class="bg-gray-50 mb-3 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full">
-                                    <option v-for="item in metals">{{ item.title }}</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="grid gap-2 mb-6 md:grid-cols-3 w-full">
-                            <div>
-                                <label for="standardType" class="text-amber=200 mb-2">Тип стандарта</label>
-                                <select v-model="standardType" id="standardType"
-                                        class="bg-gray-50 mb-3 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full">
-                                    <option>ГОСТ</option>
-                                    <option>ТУ</option>
-                                    <option>СТО</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="grid gap-2 mb-6 md:grid-cols-3 w-full">
-                            <div>
-                                <label for="title" class="text-amber=200 mb-2">Номер стандарта</label>
-                                <input v-model="standardNumber" type="text" id="title"
-                                       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                                       placeholder="Номер стандарта" required>
-                            </div>
-                        </div>
-                    </div>
+                <div v-if="element === 'standard'" class="ml-2">
+                    <label for="metal" class="text-amber=200 mb-2">Металл</label>
+                    <select v-model="metal" id="metal"
+                            class="bg-gray-50 mb-3 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full">
+                        <option v-for="item in metals">{{ item.title }}</option>
+                    </select>
                 </div>
-                <div v-if="element === 'element'" class="p-4 bg-gray-200 mt-4">
-                    <div class="flex w-full">
-                        <div class="w-full">
-                            <label for="project"
-                                   class="block mb-2 mr-2 text-sm font-medium text-gray-900">Выберите
-                                проект</label>
-                            <select v-model="project" id="project"
-                                    class="bg-gray-50 mb-3 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full">
-                                <option v-for="item in projects">{{ item.title }}</option>
-                            </select>
-                        </div>
-                        <div class="w-full px-2 mx-1">
-                            <label for="title"
-                                   class="block mb-2 text-sm font-medium text-gray-900">Введите наименование</label>
-                            <input v-model="title" id="title"
-                                   class="bg-gray-50 h-9 mb-3 border border-gray-300 text-gray-900 text-sm rounded-lg
-                                focus:ring-blue-500 focus:border-blue-500 block w-full">
-                        </div>
-                        <!--                            <div class="w-1/3">-->
-                        <!--                                <label for="quantity"-->
-                        <!--                                       class="block mb-2 text-sm font-medium text-gray-900">Введите количество,-->
-                        <!--                                    шт.</label>-->
-                        <!--                                <input v-model="quantity" id="quantity" type="number"-->
-                        <!--                                       class="bg-gray-50 h-9 mb-3 border border-gray-300 text-gray-900 text-sm rounded-lg-->
-                        <!--                                focus:ring-blue-500 focus:border-blue-500 block w-full">-->
-                        <!--                            </div>-->
-                    </div>
+                <div v-if="element === 'standard'" class="ml-2">
+                    <label for="standardType" class="text-amber=200 mb-2">Тип стандарта</label>
+                    <select v-model="standardType" id="standardType"
+                            class="bg-gray-50 mb-3 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full">
+                        <option v-for="item in standardTypes">{{ item }}</option>
+                    </select>
+                </div>
+                <div v-if="element === 'standard'" class="ml-2">
+                    <label for="title" class="text-amber=200 mb-2">Номер стандарта</label>
+                    <input v-model="standardNumber" type="text" id="title"
+                           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                           placeholder="Номер стандарта" required>
                 </div>
             </div>
             <button @click.prevent="addElement" type="button"
@@ -111,13 +64,24 @@
 </template>
 
 <script>
-import storeData from "@/storeData";
-// import
 
 export default {
     name: "StoreComponent",
 
-    ...storeData,
+    data() {
+        return {
+            title: '',
+            consumption: null,
+            steelStandard: '',
+            change: null,
+            metal: '',
+            standardType: '',
+            standardNumber: '',
+            project: '',
+            quantity: '',
+            standardTypes: ['ГОСТ', 'ТУ', 'СТО'],
+        }
+    },
 
     props: [
         'hideMaterial',

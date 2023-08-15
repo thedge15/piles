@@ -38,8 +38,51 @@ export default {
             hideSidebar: false,
         }
     }
-
-
 }
 
 </script>
+
+<style>
+label {
+    margin-bottom: 2px;
+    color: #2d3748;
+    font-size:.875rem;
+    line-height:1.25rem;
+    font-weight: 500;
+    display:block;
+}
+select {
+    border-radius:.5rem;
+    width: 100%;
+    display:block;
+    background-color: rgb(249 250 251);
+    margin-bottom:.5rem;
+    height:2rem;
+    color: rgb(17 24 39);
+    font-size: 0.875rem; /* 14px */
+    line-height: 1.25rem; /* 20px */
+}
+input {
+    border-radius:.5rem;
+    width: 100%;
+    display:block;
+    background-color: rgb(249 250 251);
+    margin-bottom:.5rem;
+    height:2rem;
+    color: rgb(17 24 39);
+    font-size: 0.875rem; /* 14px */
+    line-height: 1.25rem; /* 20px */
+}
+button {
+    border-radius:.5rem
+}
+th {
+    position: sticky;
+    top:0;
+    padding: .5rem;
+    color: rgb(224 231 255);
+    background-color: rgb(99 102 241);
+}
+
+
+</style>

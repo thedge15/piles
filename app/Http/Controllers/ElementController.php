@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Element\ElementRequest;
+use App\Http\Requests\Element\ElementStoreRequest;
+use App\Http\Requests\Element\ElementUpdateRequest;
 use App\Http\Resources\Element\ElementResource;
 use App\Http\Resources\Project\ProjectResource;
 use App\Models\Element;
@@ -18,7 +19,7 @@ class ElementController extends Controller
         return inertia('Element/Index', compact('elements', 'projects'));
     }
 
-    public function storeElement(ElementRequest $request)
+    public function store(ElementStoreRequest $request)
     {
         $data = $request->validated();
 
@@ -30,7 +31,13 @@ class ElementController extends Controller
         Element::query()->create($data);
     }
 
-    public function deleteElement(Element $element)
+    public function update(ElementUpdateRequest $request, Element $element)
+    {
+        $data = $request->validated();
+        $element->update($data);
+    }
+
+    public function delete(Element $element)
     {
         $element->delete();
     }

@@ -30,16 +30,13 @@ class BushController extends Controller
         collect($bush->projects)->each(function ($item) {
             $this->projectDestroy($item);
         });
-
         $bush->delete();
     }
-
-    public function projectChangeUpdate(ProjectUpdateRequest $request, Project $project)
+    public function projectUpdate(ProjectUpdateRequest $request, Project $project)
     {
         $data = $request->validated();
         $project->update($data);
     }
-
     public function projectDestroy(Project $project)
     {
         $project->materials()->delete();

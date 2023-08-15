@@ -21,14 +21,15 @@ class UpdateMaterialAction
 
         $paint = Paint::query()->where('title', $data['paint'])->get()->toArray();
 
-        if ($data['paint'] && $data['numberOfLayers']) {
-            $data['paint_quantity'] = $paint[0]['consumption'] * $data['numberOfLayers'] * $data['area'];
-        } else if (!$data['paint'] && !$data['numberOfLayers']) {
+        if ($data['paint'] && $data['number_of_layers']) {
+            $data['paint_quantity'] = $paint[0]['consumption'] * $data['number_of_layers'] * $data['area'];
+        } else if (!$data['paint'] && !$data['number_of_layers']) {
             unset($data['paint']);
-            unset($data['numberOfLayers']);
         }
 
-        unset($data['numberOfLayers']);
+        if($data['is_pile']) {
+            $data['paint_quantity'] *= 0.483;
+        }
 
         return $data;
     }

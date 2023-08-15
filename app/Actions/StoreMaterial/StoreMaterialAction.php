@@ -13,8 +13,7 @@ class StoreMaterialAction
 {
     public function __construct(MaterialStoreRequest $request)
     {
-        $this->request = $request;
-    }
+        $this->request = $request;    }
 
     public function handle(): array
     {
@@ -24,8 +23,9 @@ class StoreMaterialAction
 
         $data = $this->request->validated();
 
-        $characteristics = Characteristic::query()->where('metal_id', $data['metal_id'])->get();
 
+        $characteristics = Characteristic::query()->where('metal_id', $data['metal_id'])->get();
+        $data['characteristic_id'] = $characteristics->where('title', $data['title'])->pluck('id')->first();
         if ($data['sheetHeight'] && $data['sheetWidth']) {
             $thickness = $data['title'];
             $data['title'] = $data['title'] . 'X' . $data['sheetHeight'] . 'X' . $data['sheetWidth'];

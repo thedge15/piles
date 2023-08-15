@@ -24,11 +24,10 @@ class ShowAllAction
         $metals = Metal::all();
         $standards = Standard::all();
         $steels = Steel::all();
-        $units = Unit::all();
         $elements = Element::all();
         $paints = Paint::all();
 
         return compact(['materials', 'bushes', 'characteristics', 'metals', 'projects', 'standards', 'steels',
-            'units', 'elements', 'paints']);
+            'elements', 'paints']);
     }
 }

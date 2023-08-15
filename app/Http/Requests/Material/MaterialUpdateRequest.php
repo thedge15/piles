@@ -2,20 +2,10 @@
 
 namespace App\Http\Requests\Material;
 
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Requests\BaseRequest;
 
-class MaterialUpdateRequest extends FormRequest
+class MaterialUpdateRequest extends BaseRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
-    public function authorize(): bool
-    {
-        return true;
-    }
-
     /**
      * Get the validation rules that apply to the request.
      *
@@ -24,14 +14,16 @@ class MaterialUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'numb' => 'nullable|integer',
             'element' => 'nullable|string',
-            'title' => 'required|string',
+            'title' => 'nullable|string',
             'weight' => 'nullable|numeric',
             'length' => 'nullable|numeric',
             'area' => 'nullable|numeric',
             'paint' => 'nullable|string',
-            'numberOfLayers' => 'nullable|integer',
+            'number_of_layers' => 'nullable|integer',
             'paint_color' => 'nullable|string',
+            'is_pile' => 'nullable|boolean',
         ];
     }
 }

@@ -22,19 +22,9 @@ class Project extends Model
     {
         return $this->belongsTo(Bush::class, 'bush_id', 'id');
     }
-//
-//    public function piles(): \Illuminate\Database\Eloquent\Relations\HasMany
-//    {
-//        return $this->hasMany(Pile::class, 'project_id', 'id');
-//    }
 
     public function materials(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Material::class, 'project_id', 'id');
-    }
-
-    public function elements(): \Illuminate\Database\Eloquent\Relations\HasMany
-    {
-        return $this->hasMany(Element::class, 'project_id', 'id');
     }
 }

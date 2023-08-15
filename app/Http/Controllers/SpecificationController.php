@@ -6,8 +6,12 @@ use App\Actions\StoreMetalAction;
 use App\Actions\StoreStandardAction;
 use App\Actions\StoreSteelAction;
 use App\Http\Requests\Characteristic\CharacteristicUpdateRequest;
-use App\Http\Requests\Metal\StoreMetalRequest;
+use App\Http\Requests\Metal\MetalStoreRequest;
+use App\Http\Requests\Metal\MetalUpdateRequest;
+use App\Http\Requests\Standard\StandardUpdateRequest;
+use App\Http\Requests\Steel\SteelUpdateRequest;
 use App\Http\Requests\Unit\UnitStoreRequest;
+use App\Http\Requests\Unit\UnitUpdateRequest;
 use App\Http\Resources\Characteristic\CharacteristicResource;
 use App\Http\Resources\Metal\MetalResource;
 use App\Http\Resources\Standard\StandardResource;
@@ -26,7 +30,7 @@ class SpecificationController extends Controller
         $metals = MetalResource::collection(Metal::all()->sortBy('title'))->resolve();
         return inertia('Metal/Index', compact('metals'));
     }
-    public function storeMetal(StoreMetalRequest $request)
+    public function storeMetal(MetalStoreRequest $request)
     {
         $data = $request->validated();
         Metal::query()->create($data);
@@ -39,7 +43,11 @@ class SpecificationController extends Controller
 
         return inertia('Metal/Show', compact('metals', 'metal'));
     }
-
+    public function metalUpdate(MetalUpdateRequest $request, Metal $metal)
+    {
+        $data = $request->validated();
+        $metal->update($data);
+    }
     public function storeCharacteristic(StoreMetalAction $action)
     {
         Characteristic::query()->create($action->handle());
@@ -69,25 +77,15 @@ class SpecificationController extends Controller
     {
         Standard::query()->create($action->handle());
     }
+
+    public function standardUpdate(StandardUpdateRequest $request, Standard $standard)
+    {
+        $data = $request->validated();
+        $standard->update($data);
+    }
     public function destroyStandard(Standard $standard)
     {
         $standard->delete();
-    }
-
-    public function unit(): \Inertia\Response|\Inertia\ResponseFactory
-    {
-        $units = UnitResource::collection(Unit::all())->resolve();
-        return inertia('Unit/Index', compact('units'));
-    }
-
-    public function storeUnit(UnitStoreRequest $request)
-    {
-        $data = $request->validated();
-        Unit::query()->create($data);
-    }
-    public function destroyUnit(Unit $unit)
-    {
-        $unit->delete();
     }
 
     public function steel(): \Inertia\Response|\Inertia\ResponseFactory
@@ -98,6 +96,12 @@ class SpecificationController extends Controller
     public function storeSteel(StoreSteelAction $action)
     {
         Steel::query()->create($action->handle());
+    }
+
+    public function steelUpdate(SteelUpdateRequest $request, Steel $steel)
+    {
+        $data = $request->validated();
+        $steel->update($data);
     }
     public function destroySteel(Steel $steel)
     {

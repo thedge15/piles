@@ -16,7 +16,6 @@ return new class extends Migration
         Schema::create('elements', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignId('project_id')->index()->constrained('projects');
             $table->string('title');
             $table->integer('quantity')->nullable();
 

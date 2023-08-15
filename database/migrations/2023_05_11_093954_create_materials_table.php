@@ -17,9 +17,11 @@ return new class extends Migration
             $table->id();
 
             $table->foreignId('project_id')->index()->constrained('projects');
+            $table->foreignId('characteristic_id')->index()->constrained('characteristics');
 
             $table->smallInteger('metal_id');
 
+            $table->integer('numb')->nullable();
             $table->string('element')->nullable();
             $table->string('title');
             $table->decimal('weight', 13, 3);
@@ -29,6 +31,8 @@ return new class extends Migration
             $table->string('paint')->nullable();
             $table->decimal('paint_quantity')->nullable();
             $table->string('paint_color')->nullable();
+            $table->integer('number_of_layers')->nullable();
+            $table->boolean('is_pile')->nullable()->default(false);
 
             $table->timestamps();
         });

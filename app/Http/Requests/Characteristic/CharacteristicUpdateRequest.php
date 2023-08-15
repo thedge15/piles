@@ -2,20 +2,10 @@
 
 namespace App\Http\Requests\Characteristic;
 
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Requests\BaseRequest;
 
-class CharacteristicUpdateRequest extends FormRequest
+class CharacteristicUpdateRequest extends BaseRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
-    public function authorize(): bool
-    {
-        return true;
-    }
-
     /**
      * Get the validation rules that apply to the request.
      *
@@ -24,7 +14,9 @@ class CharacteristicUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'required|string',
+            'title' => 'nullable|string',
+            'ton_length' => 'nullable|numeric',
+            'ton_area' => 'nullable|numeric',
         ];
     }
 }

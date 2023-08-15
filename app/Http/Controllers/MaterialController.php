@@ -29,9 +29,9 @@ class MaterialController extends Controller
     {
         Material::query()->create($action->handle());
     }
-    public function updateMaterial(UpdateMaterialAction $action)
+    public function updateMaterial(UpdateMaterialAction $action, Material $material)
     {
-        Material::query()->update($action->handle());
+        $material->update($action->handle());
     }
     public function deleteMaterial(Material $material)
     {
