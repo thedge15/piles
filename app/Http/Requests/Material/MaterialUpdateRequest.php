@@ -14,6 +14,7 @@ class MaterialUpdateRequest extends BaseRequest
     public function rules(): array
     {
         return [
+            'id' => 'required|integer',
             'numb' => 'nullable|integer',
             'element' => 'nullable|string',
             'title' => 'nullable|string',

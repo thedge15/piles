@@ -1,6 +1,6 @@
 <template>
     <div :class="['shadow-md sm:rounded-lg', this.hideMaterial ? '' : 'hidden']">
-        <form class="p-2 bg-gray-200 mt-4">
+        <form :class="['p-2 bg-gray-200 mt-4', this.fadeOut ? '' : 'animate-fade']">
             <div class="grid grid-cols-5 w-full">
                 <div>
                     <label for="metal">Выберите конструктивный элемент</label>
@@ -111,6 +111,7 @@ export default {
             steel: '',
             quantity: null,
             unit: '',
+            fadeOut: true,
         }
     },
 
@@ -169,7 +170,15 @@ export default {
                     if (JSON.stringify(this.errors) !== '{}') {
                         console.log('Заебись');
                     } else {
-                        this.closeStore()
+                        this.fadeOut = !this.fadeOut
+                        setTimeout(() => {
+                            if (JSON.stringify(this.errors) !== '{}') {
+                                console.log('Заебись');
+                            } else {
+                                this.closeStore()
+                                this.fadeOut = !this.fadeOut
+                            }
+                        }, (1000))
                     }
                 }, (1000)
             )
@@ -188,7 +197,7 @@ export default {
             this.unit = ''
 
             this.$emit('closeStore')
-        }
+        },
     }
 }
 </script>

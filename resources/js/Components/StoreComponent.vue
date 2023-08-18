@@ -1,5 +1,5 @@
 <template>
-    <div :class="['shadow-md sm:rounded-lg ', this.hideMaterial ? '' : 'hidden']">
+    <div :class="['shadow-md sm:rounded-lg group-hover:animate-trans-right', this.hideMaterial ? '' : 'hidden']">
         <form class="p-4 bg-gray-200 mt-4 w-full">
             <div class="grid grid-cols-4 w-full mb-3">
                 <div v-if="element !== 'standard'">

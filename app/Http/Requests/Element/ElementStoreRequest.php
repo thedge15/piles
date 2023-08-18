@@ -14,7 +14,6 @@ class ElementStoreRequest extends BaseRequest
     public function rules(): array
     {
         return [
-            'project' => 'required|string',
             'title' => 'required|string',
             'quantity' => 'nullable|integer',
         ];

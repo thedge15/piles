@@ -52,6 +52,7 @@ export default {
 
         updateProduct() {
             this.$inertia.patch(route(`update.material`, this.updProduct.id), {
+                id: this.updProduct.id,
                 numb: this.updNumb,
                 element: this.updElement,
                 title: this.updTitle,
