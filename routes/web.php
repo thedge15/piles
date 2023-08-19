@@ -32,6 +32,8 @@ Route::get('/', function () {
     ]);
 });
 
+Route::get('/', [UserController::class, 'welcome'])->name('welcome');
+
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::prefix('/openPage')->group(function () {
         Route::get('/', [UserController::class, 'openPage'])->name('openPage');

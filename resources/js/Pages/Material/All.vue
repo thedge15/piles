@@ -29,7 +29,7 @@
             <div v-for="material in materials">
                 <p>
                     Material::create([
-                    'numb' => '{{ material.numb }}',
+                    <span v-if="material.numb">'numb' => '{{ material.numb }}',</span>
                     'project_id' => '{{ material.project_id }}',
                     'metal_id' => '{{ material.metal_id }}',
                     'characteristic_id' => '{{ material.characteristic_id }}',
@@ -39,11 +39,11 @@
                     <span v-if="material.length">'length' => '{{ material.length }}',</span>
                     'area' => '{{ material.area }}',
                     <span v-if="material.quantity">'quantity' => '{{ material.quantity }}',</span>
-                    'paint' => '{{ material.paint }}',
-                    'paint_quantity' => '{{ material.paint_quantity }}',
-                    'paint_color' => '{{ material.paint_color }}',
-                    'number_of_layers' => '{{ material.number_of_layers }}',
-                    'is_pile' => '{{ material.is_pile }}',
+                    <span v-if="material.paint">'paint' => '{{ material.paint }}',</span>
+                    <span v-if="material.paint_quantity">'paint_quantity' => '{{ material.paint_quantity }}',</span>
+                    <span v-if="material.paint_color">'paint_color' => '{{ material.paint_color }}',</span>
+                    <span v-if="material.number_of_layers">'number_of_layers' => '{{ material.number_of_layers }}',</span>
+                    <span v-if="material.is_pile">'is_pile' => '{{ material.is_pile }}',</span>
                     ])
                 </p>
             </div>

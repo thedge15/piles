@@ -10,6 +10,10 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class UserController extends Controller
 {
+    public function welcome(): \Inertia\Response|\Inertia\ResponseFactory
+    {
+        return inertia('Welcome');
+    }
     public function openPage(): \Inertia\Response|\Inertia\ResponseFactory
     {
         $bushes = BushResource::collection(Bush::all()->sortBy('title'))->resolve();
