@@ -3,8 +3,10 @@
         <div class="flex flex-col justify-between h-full">
             <div class="flex-grow">
                 <div class="px-4 py-6 text-center border-b">
-                    <h1 class="text-xl font-bold leading-none"><span
-                        class="text-yellow-700">Меню</span></h1>
+                    <a :href="route('welcome')">
+                        <img class="mx-auto h-10 w-auto cursor-pointer"
+                             src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" alt="Your Company"/>
+                    </a>
                 </div>
                 <div class="p-4">
                     <ul class="space-y-1">

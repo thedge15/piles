@@ -1,9 +1,9 @@
 <template>
     <p class="text-center italic">КГС</p>
-    <div v-if="$page.props.auth.user['is_admin'] === 1">
+    <div :class="[$page.props.auth.user['is_admin'] === 1 ? '' : 'hidden']">
         <CreateButton @closeStore="closeStore"></CreateButton>
     </div>
-    <div class="flex-grow overflow-auto">
+    <div :class="['flex-grow overflow-auto', $page.props.auth.user['is_admin'] === 1 ? '' : 'mt-5']">
         <table class="relative w-full border mb-3">
             <thead>
             <tr>
