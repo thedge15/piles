@@ -10,7 +10,7 @@
                         <div class="flex flex-col h-screen pb-5">
                         <div>
                             <svg @click.prevent="this.hideSidebar = !this.hideSidebar" xmlns="http://www.w3.org/2000/svg"
-                                fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                fill="blue" viewBox="0 0 24 24" stroke-width="1.5" stroke="blue" class="w-6 h-6">
                                 <path stroke-linecap="round" stroke-linejoin="round"
                                     :d="[!this.hideSidebar ? 'M21 16.811c0 .864-.933 \n'+
 '                                   1.405-1.683.977l-7.108-4.062a1.125 1.125 0 010-1.953l7.108-4.062A1.125 1.125 0 0121 \n'+
