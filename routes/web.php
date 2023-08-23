@@ -63,6 +63,7 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::prefix('/admin')->middleware(['auth', 'isAdmin'])->group(function () {
+    Route::get('/dashboard');
     Route::prefix('/bushes')->group(function () {
         Route::post('/', [BushController::class, 'storeBush'])->name('store.bush');
         Route::delete('/{bush}', [BushController::class, 'destroy'])->name('destroy.bush');
