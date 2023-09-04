@@ -16,9 +16,6 @@ class BushController extends Controller
         $data = $request->validated();
         Bush::query()->create($data);
     }
-
-
-
     public function projectStore(ProjectStoreRequest $request)
     {
         $data = $request->validated();

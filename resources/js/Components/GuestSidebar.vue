@@ -93,8 +93,8 @@
                                 </Link>
                             </li>
                             <li class="my-10">
-                                <Link :href="route('paint.index')"
-                                      :class="['flex rounded-xl font-bold text-sm py-1 px-4', $page.component === 'Paint/Index' ? 'items-center text-yellow-900 bg-yellow-200' : 'text-gray-900 bg-gray-200 hover:bg-yellow-50']">
+                                <Link :href="route('index.users')"
+                                      :class="['flex rounded-xl font-bold text-sm py-1 px-4', $page.component === 'User/Users' ? 'items-center text-yellow-900 bg-yellow-200' : 'text-gray-900 bg-gray-200 hover:bg-yellow-50']">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor"
                                          class="text-lg mr-4" viewBox="0 0 16 16">
                                         <path
