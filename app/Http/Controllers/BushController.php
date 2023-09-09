@@ -37,7 +37,6 @@ class BushController extends Controller
     public function projectDestroy(Project $project)
     {
         $project->materials()->delete();
-        $project->elements()->delete();
         $project->delete();
     }
 }

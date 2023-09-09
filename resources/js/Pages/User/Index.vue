@@ -89,7 +89,7 @@
 
 <script>
 
-import {Link} from "@inertiajs/vue3";
+import {Link, router} from "@inertiajs/vue3";
 import UserLayout from "@/Layouts/UserLayout.vue";
 import StoreComponent from "@/Components/StoreComponent.vue";
 import DeleteComponent from "@/Components/DeleteComponent.vue";
@@ -125,10 +125,6 @@ export default {
     mixins: [
         mixin
     ],
-
-    methods: {
-
-    }
 
 }
 </script>

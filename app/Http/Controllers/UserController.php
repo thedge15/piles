@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Exports\PilesExport;
 use App\Http\Resources\Bush\BushResource;
+use App\Http\Resources\Material\MaterialResource;
 use App\Http\Resources\Project\ProjectResource;
 use App\Models\Bush;
 use Maatwebsite\Excel\Facades\Excel;
@@ -26,13 +27,4 @@ class UserController extends Controller
         $bush = new BushResource($bush);
         return inertia('User/Index', compact('projects', 'bush'));
     }
-
-//    public function show(Project $project): \Inertia\Response|\Inertia\ResponseFactory
-//    {
-//        $concreteQuantity = 0;
-//        $piles = PileResource::collection($project->piles);
-//        $project = new ProjectResource($project);
-//        $tubes = TubeResource::collection(Tube::all());
-//        return inertia('User/Show', compact('piles', ['project', 'tubes', 'concreteQuantity']));
-//    }
 }

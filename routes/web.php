@@ -4,7 +4,6 @@ use App\Http\Controllers\BushController;
 use App\Http\Controllers\ElementController;
 use App\Http\Controllers\MaterialController;
 use App\Http\Controllers\PaintController;
-use App\Http\Controllers\PileController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SpecificationController;
 use App\Http\Controllers\UserController;
@@ -103,19 +102,6 @@ Route::prefix('/admin')->middleware(['auth', 'isAdmin'])->group(function () {
         Route::post('/', [SpecificationController::class, 'storeSteel'])->name('store.steel');
         Route::patch('/{steel}', [SpecificationController::class, 'steelUpdate'])->name('update.steel');
         Route::delete('/{steel}', [SpecificationController::class, 'destroySteel'])->name('destroy.steel');
-    });
-    Route::prefix('/unit')->group(function () {
-        Route::get('/', [SpecificationController::class, 'unit'])->name('unit.index');
-        Route::post('/', [SpecificationController::class, 'storeUnit'])->name('store.unit');
-        Route::patch('/{unit}', [SpecificationController::class, 'unitUpdate'])->name('update.unit');
-        Route::delete('/{unit}', [SpecificationController::class, 'destroyUnit'])->name('destroy.unit');
-    });
-    Route::prefix('/piles')->group(function () {
-        Route::post('/', [PileController::class, 'store'])->name('pile.store');
-        Route::get('/{project}', [PileController::class, 'show'])->name('pile.show');
-        Route::patch('/{pile}', [PileController::class, 'update'])->name('pile.update');
-        Route::post('/calculate', [PileController::class, 'calculate'])->name('pile.calculate');
-        Route::delete('/{pile}', [PileController::class, 'destroy'])->name('pile.destroy');
     });
 });
 
