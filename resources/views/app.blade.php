@@ -6,7 +6,7 @@
 
         <title>{{ 'Окраска металлопроката' }}</title>
 
-        <link rel="shortcut icon" href="{{ asset('img/favicon.ico') }}">
+        <link rel="shortcut icon" :href="{{ url('img/favicon.ico') }}">
 
         <!-- Fonts -->
         <link

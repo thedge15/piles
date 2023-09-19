@@ -6,13 +6,18 @@ use App\Http\Requests\Paint\PaintStoreRequest;
 use App\Http\Requests\Paint\PaintUpdateRequest;
 use App\Http\Resources\Paint\PaintResource;
 use App\Models\Paint;
+use Inertia\Inertia;
 
 class PaintController extends Controller
 {
     public function index(): \Inertia\Response|\Inertia\ResponseFactory
     {
         $paints = PaintResource::collection(\App\Models\Paint::all()->sortBy('title'))->resolve();
-        return inertia('Paint/Index', compact('paints'));
+        {
+            return Inertia::render('Paint/Index', [
+                'paints' => $paints,
+            ]);
+        }
     }
 
     public function store(PaintStoreRequest $request)

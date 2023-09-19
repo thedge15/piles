@@ -31,9 +31,9 @@ class TestCommand extends Command
      */
     public function handle()
     {
-        User::query()->create(['name' => 'Павел', 'email' => 'user@user.ru', 'password' => Hash::make('123123123'), 'is_admin' => 1]);
-        Bush::query()->create(['title' => '5А14']);
-        Project::query()->create(['bush_id' => 1, 'title' => '1778Р-ВЛ5А14-АС', 'change' => 1]);
+        User::query()->create(['name' => 'Павел22', 'email' => 'user222@user.ru', 'password' => Hash::make('123123123'), 'is_admin' => 1]);
+        Bush::query()->create(['title' => '5А1422']);
+        Project::query()->create(['bush_id' => 5, 'title' => '1778Р-ВЛ5А14-АС', 'change' => 1]);
         return Command::SUCCESS;
     }
 }

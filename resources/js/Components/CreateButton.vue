@@ -11,12 +11,6 @@
 export default {
     name: "CreateButton",
 
-    data() {
-        return {
-            someValue: null
-        }
-    },
-
     methods: {
         closeStore() {
             this.$emit('closeStore')

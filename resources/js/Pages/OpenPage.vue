@@ -62,6 +62,7 @@ export default {
 
     props: [
         'bushes',
+        'user'
     ],
 
     mixins: [

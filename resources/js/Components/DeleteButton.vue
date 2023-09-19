@@ -1,5 +1,5 @@
 <template>
-    <svg @click.prevent="showDelete(item)"
+    <svg @click.prevent="destroy(item)"
          xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
          stroke="currentColor" class="w-6 h-6 mx-auto cursor-pointer">
         <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26
@@ -11,18 +11,21 @@
     </svg>
 </template>
 
-<script>
-export default {
-    name: "DeleteButton",
+<script setup>
 
-    props: [
-        'item'
-    ],
+import {useForm} from "@inertiajs/vue3";
 
-    methods: {
-        showDelete(item) {
-            this.$emit('showDelete', item)
-        },
+const props = defineProps({
+    item: Object,
+    path: String,
+})
+
+const form = useForm({});
+
+function destroy(item) {
+    if (confirm(`Вы уверены, что хотите удалить ${item.title}?`)) {
+        form.delete(route(`destroy.${props.path}`, item.id));
     }
 }
+
 </script>

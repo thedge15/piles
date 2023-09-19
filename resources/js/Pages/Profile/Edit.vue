@@ -6,14 +6,14 @@ import UpdateProfileInformationForm from './Partials/UpdateProfileInformationFor
 import { Head } from '@inertiajs/vue3';
 
 defineProps({
+    user: String,
     mustVerifyEmail: Boolean,
-    status: String,
+    status: Object,
 });
 </script>
 
 <template>
     <Head title="Profile" />
-
     <AuthenticatedLayout>
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">Profile</h2>

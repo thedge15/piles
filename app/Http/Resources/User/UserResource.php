@@ -19,6 +19,7 @@ class UserResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'email' => $this->email,
+            'is_admin' => $this->is_admin,
             'last_seen' => $this->last_seen,
             'status' => Cache::has('user-is-online-' . $this->id) ? 'online' : 'offline',
         ];

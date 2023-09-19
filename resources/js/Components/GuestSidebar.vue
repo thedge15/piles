@@ -11,7 +11,7 @@
                 <div class="p-4">
                     <ul class="space-y-1">
                         <li class="my-2">
-                            <Link :href="route('profile.edit')"
+                            <Link :href="route('profile.edit', $page.props.auth.user.id)"
                                   :class="['flex rounded-xl font-bold text-sm py-1 px-4',
                                   $page.component === 'Profile/Edit' ?
                                   'items-center text-yellow-900 bg-yellow-200' : 'text-gray-900 bg-white hover:bg-yellow-50']">

@@ -149,9 +149,9 @@
     <DeleteComponent :del-element="this.delElement" :hide-delete="this.hideDelete" :del-title="'material'"
                      @closeDelete="closeDelete"></DeleteComponent>
     <!--    <Link :href="route('export', this.project.data.id)" class="font-bold text-sm ml-2">Экспорт</Link>-->
-<!--                                    <Link :href="route('all')">-->
-<!--                                        Набивка материала-->
-<!--                                    </Link>-->
+                                    <Link :href="route('all')">
+                                        Набивка материала
+                                    </Link>
 </template>
 
 <script>
