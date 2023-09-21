@@ -2,41 +2,52 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Bush\BushStoreRequest;
-use App\Http\Requests\Bush\ProjectStoreRequest;
-use App\Http\Requests\Bush\ProjectUpdateRequest;
+use App\Actions\Bush\BushIndexAction;
+use App\Actions\Bush\BushShowAction;
+use App\Actions\Bush\BushStoreAction;
 use App\Models\Bush;
-use App\Models\Project;
+use Inertia\Response;
+use Inertia\ResponseFactory;
 
 class BushController extends Controller
 {
-
-    public function storeBush(BushStoreRequest $request)
+    /**
+     * @param BushIndexAction $action
+     * @return Response|ResponseFactory
+     */
+    public function index(BushIndexAction $action): Response|ResponseFactory
     {
-        $data = $request->validated();
-        Bush::query()->create($data);
-    }
-    public function projectStore(ProjectStoreRequest $request)
-    {
-        $data = $request->validated();
-        Project::query()->create($data);
+        return inertia('Bush/Index', $action->handle());
     }
 
-    public function destroy(Bush $bush)
+    /**
+     * @param BushStoreAction $action
+     * @return void
+     */
+    public function store(BushStoreAction $action): void
+    {
+        Bush::query()->create($action->handle());
+    }
+
+    /**
+     * @param Bush $bush
+     * @param BushShowAction $action
+     * @return Response|ResponseFactory
+     */
+    public function show(Bush $bush, BushShowAction $action): Response|ResponseFactory
+    {
+        return inertia('Bush/Show', $action->handle($bush));
+    }
+
+    /**
+     * @param Bush $bush
+     * @return void
+     */
+    public function destroy(Bush $bush): void
     {
         collect($bush->projects)->each(function ($item) {
-            $this->projectDestroy($item);
+            $this->destroy($item);
         });
         $bush->delete();
-    }
-    public function projectUpdate(ProjectUpdateRequest $request, Project $project)
-    {
-        $data = $request->validated();
-        $project->update($data);
-    }
-    public function projectDestroy(Project $project)
-    {
-        $project->materials()->delete();
-        $project->delete();
     }
 }

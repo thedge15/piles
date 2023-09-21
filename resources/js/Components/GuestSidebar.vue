@@ -1,3 +1,6 @@
+<script setup>
+import {Link} from "@inertiajs/vue3";
+</script>
 <template>
     <aside class="fixed inset-y-0 left-0 shadow-md max-h-screen w-60 bg-gradient-to-r from-gray-500 to-gray-200">
         <div class="flex flex-col justify-between h-full">
@@ -24,9 +27,9 @@
                             </Link>
                         </li>
                         <li class="my-2">
-                            <Link :href="route('openPage')"
+                            <Link :href="route('index.bush')"
                                   :class="['flex rounded-xl font-bold text-sm py-1 px-4',
-                                  $page.component === 'OpenPage' || $page.component === 'User/Index' || $page.component === 'Material/Index' ?
+                                  $page.component === 'Bush/Index' || $page.component === 'Bush/Show' || $page.component === 'Material/Index' ?
                                   'items-center text-yellow-900 bg-yellow-200' : 'text-gray-900 bg-white hover:bg-yellow-50']">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor"
                                      class="text-lg mr-4" viewBox="0 0 16 16">
@@ -49,7 +52,7 @@
                         </li>
                         <div v-if="$page.props.auth.user.is_admin === 1">
                             <li class="my-2">
-                                <Link :href="route('metal.index')"
+                                <Link :href="route('index.metal')"
                                       :class="['flex rounded-xl font-bold text-sm py-1 px-4', $page.component === 'Metal/Index' || $page.component === 'Metal/Show' ? 'items-center text-yellow-900 bg-yellow-200' : 'text-gray-900 bg-gray-200 hover:bg-yellow-50']">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor"
                                          class="text-lg mr-4" viewBox="0 0 16 16">
@@ -122,25 +125,3 @@
     </aside>
 </template>
 
-<script>
-
-import {Link} from "@inertiajs/vue3";
-
-export default {
-
-    name: "Sidebar",
-
-    components: {
-        Link
-    },
-
-    data() {
-        return {}
-    },
-}
-
-</script>
-
-<style scoped>
-
-</style>

@@ -2,35 +2,48 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Element\ElementStoreRequest;
-use App\Http\Requests\Element\ElementUpdateRequest;
-use App\Http\Resources\Element\ElementResource;
-use App\Http\Resources\Project\ProjectResource;
+use App\Actions\Element\ElementIndexAction;
+use App\Actions\Element\ElementStoreAction;
+use App\Actions\Element\ElementUpdateAction;
 use App\Models\Element;
-use App\Models\Project;
+use Inertia\Response;
+use Inertia\ResponseFactory;
 
 class ElementController extends Controller
 {
-    public function index(): \Inertia\Response|\Inertia\ResponseFactory
+    /**
+     * @param ElementIndexAction $action
+     * @return Response|ResponseFactory
+     */
+    public function index(ElementIndexAction $action): Response|ResponseFactory
     {
-        $elements = ElementResource::collection(\App\Models\Element::all()->sortBy('title'))->resolve();
-
-        return inertia('Element/Index', compact('elements'));
+        return inertia('Element/Index', $action->handle());
     }
 
-    public function store(ElementStoreRequest $request)
+    /**
+     * @param ElementStoreAction $action
+     * @return void
+     */
+    public function store(ElementStoreAction $action): void
     {
-        $data = $request->validated();
-        Element::query()->create($data);
+        Element::query()->create($action->handle());
     }
 
-    public function update(ElementUpdateRequest $request, Element $element)
+    /**
+     * @param ElementUpdateAction $action
+     * @param Element $element
+     * @return void
+     */
+    public function update(ElementUpdateAction $action, Element $element): void
     {
-        $data = $request->validated();
-        $element->update($data);
+        $element->update($action->handle());
     }
 
-    public function delete(Element $element)
+    /**
+     * @param Element $element
+     * @return void
+     */
+    public function delete(Element $element): void
     {
         $element->delete();
     }

@@ -15,7 +15,7 @@ const updTonLength = ref();
 const updTonArea = ref();
 
 const props = defineProps({
-    metals: {
+    characteristics: {
         type: Array,
         default: () => ({}),
     },
@@ -49,10 +49,10 @@ const closeUpdate = () => {
 </script>
 <template>
     <UserLayout>
-        <Link :href="route('metal.index')" class="text-center italic">{{ metal.data.title }}</Link>
+        <Link :href="route('index.metal')" class="text-center italic">{{ metal.data.title }}</Link>
         <CreateButton @closeStore="closeStore"></CreateButton>
         <div class="flex-grow overflow-auto">
-            <table v-if="metals" class="relative w-full border mb-3 table-fixed">
+            <table v-if="characteristics" class="relative w-full border mb-3 table-fixed">
                 <thead>
                 <tr>
                     <th class="sticky top-0 px-2 py-3 text-indigo-100 text-left w-6 bg-indigo-500">№</th>
@@ -67,7 +67,7 @@ const closeUpdate = () => {
                 </tr>
                 </thead>
                 <tbody class="divide-y bg-gray-100">
-                <tr v-for="(item, index) in metals">
+                <tr v-for="(item, index) in characteristics">
                     <td :class='["px-2 py-2 text-left", index%2 === 0 ? "" : "bg-gray-300"]'>{{ index + 1 }}</td>
                     <td :class='["px-2 py-2 text-center", index%2 === 0 ? "" : "bg-gray-300"]'>
                         {{ item.metal.data.title }}

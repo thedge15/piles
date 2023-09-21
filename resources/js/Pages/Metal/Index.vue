@@ -72,7 +72,7 @@ const closeUpdate = () => {
                         </div>
                     </td>
                     <td :class='["px-6 py-2 text-center", index%2 === 0 ? "" : "bg-gray-300"]'>
-                        <Link :href="route('metal.show', item.id)">
+                        <Link :href="route('show.metal', item.id)">
                             <ShowButton></ShowButton>
                         </Link>
                     </td>

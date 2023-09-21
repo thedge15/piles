@@ -1,11 +1,15 @@
 <?php
 
 use App\Http\Controllers\BushController;
+use App\Http\Controllers\CharacteristicController;
 use App\Http\Controllers\ElementController;
 use App\Http\Controllers\MaterialController;
+use App\Http\Controllers\MetalController;
 use App\Http\Controllers\PaintController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\SpecificationController;
+use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\StandardController;
+use App\Http\Controllers\SteelController;
 use App\Http\Controllers\UserController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -34,16 +38,23 @@ Route::get('/', function () {
 Route::get('/', [UserController::class, 'welcome'])->name('welcome');
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::prefix('/openPage')->group(function () {
-        Route::get('/', [UserController::class, 'openPage'])->name('openPage');
-        Route::get('/{bush}', [UserController::class, 'index'])->name('user.index');
+    Route::prefix('/bushes')->group(function () {
+        Route::get('/', [BushController::class, 'index'])->name('index.bush');
+        Route::post('/', [BushController::class, 'store'])->name('store.bush');
+        Route::get('/{bush}', [BushController::class, 'show'])->name('show.bush');
+        Route::delete('/{bush}', [BushController::class, 'destroy'])->name('destroy.bush');
+    });
+    Route::prefix('/projects')->group(function () {
+        Route::post('/', [ProjectController::class, 'store'])->name('store.project');
+        Route::put('/{project}', [ProjectController::class, 'update'])->name('update.project');
+        Route::delete('/{project}', [ProjectController::class, 'destroy'])->name('destroy.project');
     });
     Route::prefix('/materials')->group(function () {
         Route::get('/', [MaterialController::class, 'showAll'])->name('all');
-        Route::get('/{project}', [MaterialController::class, 'materials'])->name('dashboard.materials');
-        Route::post('/', [MaterialController::class, 'storeMaterials'])->name('store.material');
-        Route::patch('/{material}', [MaterialController::class, 'updateMaterial'])->name('update.material');
-        Route::delete('/{material}', [MaterialController::class, 'deleteMaterial'])->name('destroy.material');
+        Route::get('/{project}', [MaterialController::class, 'index'])->name('index.material');
+        Route::post('/', [MaterialController::class, 'store'])->name('store.material');
+        Route::put('/{material}', [MaterialController::class, 'update'])->name('update.material');
+        Route::delete('/{material}', [MaterialController::class, 'destroy'])->name('destroy.material');
         Route::get('/export/{project}', [MaterialController::class, 'export'])->name('export');
     });
     Route::prefix('/elements')->group(function () {
@@ -62,17 +73,7 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::prefix('/admin')->middleware(['auth', 'isAdmin'])->group(function () {
-    Route::get('/dashboard');
-    Route::get('/users', [\App\Http\Controllers\AdminController::class, 'index'])->name('index.users');
-    Route::prefix('/bushes')->group(function () {
-        Route::post('/', [BushController::class, 'storeBush'])->name('store.bush');
-        Route::delete('/{bush}', [BushController::class, 'destroy'])->name('destroy.bush');
-        Route::prefix('/projects')->group(function () {
-            Route::post('/', [BushController::class, 'projectStore'])->name('store.project');
-            Route::patch('/{project}', [BushController::class, 'projectUpdate'])->name('update.project');
-            Route::delete('/{project}', [BushController::class, 'projectDestroy'])->name('destroy.project');
-        });
-    });
+    Route::get('/users', [UserController::class, 'index'])->name('index.users');
     Route::prefix('/paint')->group(function () {
         Route::get('/', [PaintController::class, 'index'])->name('paint.index');
         Route::post('/', [PaintController::class, 'store'])->name('store.paint');
@@ -80,28 +81,28 @@ Route::prefix('/admin')->middleware(['auth', 'isAdmin'])->group(function () {
         Route::delete('/{paint}', [PaintController::class, 'destroy'])->name('destroy.paint');
     });
     Route::prefix('/metal')->group(function () {
-        Route::get('/', [SpecificationController::class, 'metal'])->name('metal.index');
-        Route::post('/', [SpecificationController::class, 'storeMetal'])->name('store.metal');
-        Route::get('/{metal}', [SpecificationController::class, 'showMetal'])->name('metal.show');
-        Route::put('/{metal}', [SpecificationController::class, 'metalUpdate'])->name('update.metal');
-        Route::delete('/{metal}', [SpecificationController::class, 'destroyMetal'])->name('destroy.metal');
+        Route::get('/', [MetalController::class, 'index'])->name('index.metal');
+        Route::post('/', [MetalController::class, 'store'])->name('store.metal');
+        Route::get('/{metal}', [MetalController::class, 'show'])->name('show.metal');
+        Route::put('/{metal}', [MetalController::class, 'update'])->name('update.metal');
+        Route::delete('/{metal}', [MetalController::class, 'destroy'])->name('destroy.metal');
     });
     Route::prefix('/characteristic')->group(function () {
-        Route::post('/', [SpecificationController::class, 'storeCharacteristic'])->name('store.characteristic');
-        Route::put('/{characteristic}', [SpecificationController::class, 'updateCharacteristic'])->name('update.characteristic');
-        Route::delete('/{characteristic}', [SpecificationController::class, 'destroyCharacteristic'])->name('destroy.characteristic');
+        Route::post('/', [CharacteristicController::class, 'store'])->name('store.characteristic');
+        Route::put('/{characteristic}', [CharacteristicController::class, 'update'])->name('update.characteristic');
+        Route::delete('/{characteristic}', [CharacteristicController::class, 'destroy'])->name('destroy.characteristic');
     });
     Route::prefix('/standard')->group(function () {
-        Route::get('/', [SpecificationController::class, 'standard'])->name('standard.index');
-        Route::post('/', [SpecificationController::class, 'storeStandard'])->name('store.standard');
-        Route::put('/{standard}', [SpecificationController::class, 'standardUpdate'])->name('update.standard');
-        Route::delete('/{standard}', [SpecificationController::class, 'destroyStandard'])->name('destroy.standard');
+        Route::get('/', [StandardController::class, 'index'])->name('standard.index');
+        Route::post('/', [StandardController::class, 'store'])->name('store.standard');
+        Route::put('/{standard}', [StandardController::class, 'update'])->name('update.standard');
+        Route::delete('/{standard}', [StandardController::class, 'destroy'])->name('destroy.standard');
     });
     Route::prefix('/steel')->group(function () {
-        Route::get('/', [SpecificationController::class, 'steel'])->name('steel.index');
-        Route::post('/', [SpecificationController::class, 'storeSteel'])->name('store.steel');
-        Route::put('/{steel}', [SpecificationController::class, 'steelUpdate'])->name('update.steel');
-        Route::delete('/{steel}', [SpecificationController::class, 'destroySteel'])->name('destroy.steel');
+        Route::get('/', [SteelController::class, 'index'])->name('steel.index');
+        Route::post('/', [SteelController::class, 'store'])->name('store.steel');
+        Route::put('/{steel}', [SteelController::class, 'update'])->name('update.steel');
+        Route::delete('/{steel}', [SteelController::class, 'destroy'])->name('destroy.steel');
     });
 });
 

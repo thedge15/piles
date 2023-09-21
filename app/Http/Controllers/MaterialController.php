@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Actions\IndexMaterialsAction;
 use App\Actions\IndexProjectsAction;
+use App\Actions\Material\IndexMaterialsAction;
+use App\Actions\Material\StoreMaterialAction;
+use App\Actions\Material\UpdateMaterialAction;
 use App\Actions\ShowAllAction;
-use App\Actions\StoreMaterial\StoreMaterialAction;
-use App\Actions\UpdateMaterialAction;
 use App\Exports\MaterialsExport;
-use App\Models\Bush;
 use App\Models\Material;
 use App\Models\Project;
 use Maatwebsite\Excel\Facades\Excel;
@@ -16,24 +15,24 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class MaterialController extends Controller
 {
-    public function index(Bush $bush, IndexProjectsAction $action): \Inertia\Response|\Inertia\ResponseFactory
-    {
-        return inertia('User/Index', $action->handle($bush));
-    }
+//    public function index(Bush $bush, IndexProjectsAction $action): \Inertia\Response|\Inertia\ResponseFactory
+//    {
+//        return inertia('User/Index', $action->handle($bush));
+//    }
 
-    public function materials(Project $project, IndexMaterialsAction $action): \Inertia\Response|\Inertia\ResponseFactory
+    public function index(Project $project, IndexMaterialsAction $action): \Inertia\Response|\Inertia\ResponseFactory
     {
         return inertia('Material/Index', $action->handle($project));
     }
-    public function storeMaterials(StoreMaterialAction $action)
+    public function store(StoreMaterialAction $action)
     {
         Material::query()->create($action->handle());
     }
-    public function updateMaterial(UpdateMaterialAction $action, Material $material)
+    public function update(UpdateMaterialAction $action, Material $material)
     {
         $material->update($action->handle());
     }
-    public function deleteMaterial(Material $material)
+    public function destroy(Material $material)
     {
         $material->delete();
     }

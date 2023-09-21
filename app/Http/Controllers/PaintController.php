@@ -2,37 +2,48 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Paint\PaintStoreRequest;
-use App\Http\Requests\Paint\PaintUpdateRequest;
-use App\Http\Resources\Paint\PaintResource;
+use App\Actions\Paint\PaintIndexAction;
+use App\Actions\Paint\PaintStoreAction;
+use App\Actions\Paint\PaintUpdateAction;
 use App\Models\Paint;
-use Inertia\Inertia;
+use Inertia\Response;
+use Inertia\ResponseFactory;
 
 class PaintController extends Controller
 {
-    public function index(): \Inertia\Response|\Inertia\ResponseFactory
+    /**
+     * @param PaintIndexAction $action
+     * @return Response|ResponseFactory
+     */
+    public function index(PaintIndexAction $action): Response|ResponseFactory
     {
-        $paints = PaintResource::collection(\App\Models\Paint::all()->sortBy('title'))->resolve();
-        {
-            return Inertia::render('Paint/Index', [
-                'paints' => $paints,
-            ]);
-        }
+        return inertia('Paint/Index', $action->handle());
     }
 
-    public function store(PaintStoreRequest $request)
+    /**
+     * @param PaintStoreAction $action
+     * @return void
+     */
+    public function store(PaintStoreAction $action): void
     {
-        $data = $request->validated();
-        Paint::query()->create($data);
+        Paint::query()->create($action->handle());
     }
 
-    public function update(PaintUpdateRequest $request, Paint $paint)
+    /**
+     * @param Paint $paint
+     * @param PaintUpdateAction $action
+     * @return void
+     */
+    public function update(Paint $paint, PaintUpdateAction $action): void
     {
-        $data = $request->validated();
-        $paint->update($data);
+        $paint->update($action->handle());
     }
 
-    public function destroy(Paint $paint)
+    /**
+     * @param Paint $paint
+     * @return void
+     */
+    public function destroy(Paint $paint): void
     {
         $paint->delete();
     }
