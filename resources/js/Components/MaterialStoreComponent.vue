@@ -22,7 +22,6 @@
                     focus:ring-blue-500 focus:border-blue-500">
                         <option v-for="item in computedArray">{{ item.title }}</option>
                     </select>
-                    <p class="text-red-600 mt-2">{{ errors.title }}</p>
                 </div>
                 <div v-if="metal && metal === 'Лист'" class="ml-2">
                     <label for="sheetHeight">Введите ширину листа, мм (при наличии)</label>
@@ -48,7 +47,6 @@
                         focus:border-blue-500">
                         <option v-for="item in selectedStandards">{{ item.title }}</option>
                     </select>
-<!--                    <p class="text-red-600 mt-2">{{ errors.standard }}</p>-->
                 </div>
                 <div class="ml-2">
                     <label for="steel">Выберите сталь</label>
@@ -56,13 +54,11 @@
                     focus:ring-blue-500 focus:border-blue-500">
                         <option v-for="item in steels">{{ item.title }} {{ item.steel_standard }}</option>
                     </select>
-<!--                    <p class="text-red-600 mt-2">{{ errors.steel }}</p>-->
                 </div>
                 <div class="ml-2">
                     <label for="quantity">Введите количество</label>
                     <input v-model="quantity" id="quantity" type="number" step="0.001" class="mb-3
                     border border-gray-300 focus:ring-blue-500 focus:border-blue-500">
-<!--                    <p class="text-red-600 mt-2">{{ errors.quantity }}</p>-->
                 </div>
                 <div class="ml-2">
                     <label for="unit">Выберите единицы измерения</label>
@@ -78,7 +74,6 @@
                             <option> {{ 'шт.' }}</option>
                         </select>
                     </div>
-<!--                    <p class="text-red-600 mt-2">{{ errors.measure_units }}</p>-->
                 </div>
             </div>
             <button @click.prevent="addMaterial" type="button" :disabled="!metal"
@@ -167,22 +162,7 @@ export default {
                 quantity: this.quantity,
                 measure_units: this.unit,
             })
-            setTimeout(() => {
-                    if (JSON.stringify(this.errors) !== '{}') {
-                        console.log('Заебись');
-                    } else {
-                        this.fadeOut = !this.fadeOut
-                        setTimeout(() => {
-                            if (JSON.stringify(this.errors) !== '{}') {
-                                console.log('Заебись');
-                            } else {
-                                this.closeStore()
-                                this.fadeOut = !this.fadeOut
-                            }
-                        }, (1000))
-                    }
-                }, (1000)
-            )
+            this.closeStore()
         },
 
         closeStore() {
