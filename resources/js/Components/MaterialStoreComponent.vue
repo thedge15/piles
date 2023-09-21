@@ -48,7 +48,7 @@
                         focus:border-blue-500">
                         <option v-for="item in selectedStandards">{{ item.title }}</option>
                     </select>
-                    <p class="text-red-600 mt-2">{{ errors.standard }}</p>
+<!--                    <p class="text-red-600 mt-2">{{ errors.standard }}</p>-->
                 </div>
                 <div class="ml-2">
                     <label for="steel">Выберите сталь</label>
@@ -56,7 +56,7 @@
                     focus:ring-blue-500 focus:border-blue-500">
                         <option v-for="item in steels">{{ item.title }} {{ item.steel_standard }}</option>
                     </select>
-                    <p class="text-red-600 mt-2">{{ errors.steel }}</p>
+<!--                    <p class="text-red-600 mt-2">{{ errors.steel }}</p>-->
                 </div>
                 <div class="ml-2">
                     <label for="quantity">Введите количество</label>
@@ -124,7 +124,7 @@ export default {
         'standards',
         'steels',
         'units',
-        'errors',
+        // 'errors',
     ],
 
     computed: {
