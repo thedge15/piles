@@ -32,12 +32,12 @@ class IndexMaterialsAction
         $units = ['т', 'м', 'шт.', 'м2'];
         $paints = PaintResource::collection(Paint::all()->sortBy('title'))->resolve();
 
-        $colors = [
+        $colors = collect([
             'RAL 7004' => 'bg-gray-400',
             'RAL 1021' => 'bg-yellow-500',
             'RAL 5015' => 'bg-sky-400',
             'RAL 8002' => 'bg-amber-800',
-        ];
+        ]);
 
         return compact([
             'materials', 'project', 'metals', 'characteristics', 'standards', 'units', 'steels', 'elements', 'paints', 'colors']);

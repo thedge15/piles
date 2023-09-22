@@ -27,6 +27,8 @@ const updNumberOfLayers = ref('Слои');
 const updIsPile = ref();
 const layers = ref([1, 2, 3]);
 
+
+
 const props = defineProps({
     project: Object,
     metals: {
@@ -83,7 +85,7 @@ const showUpdate = (item) => {
     form.id = item.id
     form.numb = item.numb
     form.element = item.element
-    form.title = item.title
+    form.title = item.title.required
     form.weight = item.weight
     form.area = item.area
     form.paint = item.paint
@@ -150,11 +152,9 @@ const selectedPaintArray = computed(() => {
 })
 
 const selectAll = computed({
-
     get() {
         return selectedPaintArray ? checkedMaterials.value.length === selectedPaintArray.value.length : false;
     },
-
     set(value) {
         const selected = [];
         if (value) {
@@ -201,7 +201,7 @@ const selectAll = computed({
                     </td>
                     <td :class='["px-2 py-1.5 text-center", index%2 === 0 ? "" : "bg-gray-300"]'>
                         <div v-if="hideUpdate || !hideUpdate && item.id !== updId">
-                            {{ item['numb'] }}`
+                            {{ item['numb'] }}
                         </div>
                         <div v-if="!hideUpdate && item.id === updId">
                             <input v-model="form.numb" id="updPosition" class="h-8 bg-gray-50 border border-gray-600

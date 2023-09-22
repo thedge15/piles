@@ -6,6 +6,7 @@ use App\Actions\StoreUpdateAction;
 use App\Actions\TYPE_NAME;
 use App\Http\Requests\Material\MaterialStoreRequest;
 use App\Models\Characteristic;
+use App\Models\Metal;
 
 /**
  * @property MaterialStoreRequest $request
@@ -21,7 +22,6 @@ class StoreMaterialAction extends StoreUpdateAction
 
         $data = $this->getRequest()->validate([
             'project_id' => 'required|integer',
-            'metal_id' => 'required|integer',
             'numb' => 'nullable|integer',
             'element' => 'nullable|string',
             'metal' => 'required|string',
@@ -33,9 +33,18 @@ class StoreMaterialAction extends StoreUpdateAction
             'steel' => 'required|string',
             'quantity' => 'required|numeric',
             'measure_units' => 'required|string',
+        ],
+        [
+            'metal.required' => 'Заполните поле!',
+            'title.required' => 'Заполните поле!',
+            'standard.required' => 'Заполните поле!',
+            'steel.required' => 'Заполните поле!',
+            'quantity.required' => 'Заполните поле!',
+            'measure_units.required' => 'Заполните поле!',
         ]);
 
-
+        $metal = Metal::query()->where('title',$data['metal'])->get();
+        $data['metal_id'] = $metal[0]->id;
         $characteristics = Characteristic::query()->where('metal_id', $data['metal_id'])->get();
         $data['characteristic_id'] = $characteristics->where('title', $data['title'])->pluck('id')->first();
         if ($data['sheetHeight'] && $data['sheetWidth']) {
