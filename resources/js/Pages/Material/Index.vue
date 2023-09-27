@@ -27,8 +27,6 @@ const updNumberOfLayers = ref('Слои');
 const updIsPile = ref();
 const layers = ref([1, 2, 3]);
 
-
-
 const props = defineProps({
     project: Object,
     metals: {
@@ -64,7 +62,7 @@ const props = defineProps({
         default: () => ({})
     },
     colors: {
-        type: Array,
+        type: Object,
         default: () => ({})
     },
 })
@@ -85,7 +83,7 @@ const showUpdate = (item) => {
     form.id = item.id
     form.numb = item.numb
     form.element = item.element
-    form.title = item.title.required
+    form.title = item.title
     form.weight = item.weight
     form.area = item.area
     form.paint = item.paint
@@ -108,15 +106,21 @@ const form = useForm({
 })
 const submit = () => {
     form.put(route('update.material', updId.value))
-    closeUpdate()
+    setTimeout(() => {
+            if (JSON.stringify(form.errors) === '{}') {
+                closeStore();
+            } else {
+                console.log('Validation error');
+            }
+        }, (1000)
+    )
 }
 const closeUpdate = () => {
     hideUpdate.value = !hideUpdate.value
     updId.value = ''
     updId.value = ''
-    form.reset()
+    form.clearErrors()
 }
-
 
 const allSelectedMaterials = computed(() => {
     return props.materials.filter(material => checkedMaterials.value.includes(material.id));
@@ -174,7 +178,7 @@ const selectAll = computed({
                 {{ project.data.title }}
             </Link>
         </div>
-        <CreateButton @closeStore="closeStore"></CreateButton>
+        <CreateButton @closeStore="closeStore" :disabled="hideMaterial"></CreateButton>
         <!-- component -->
         <div class="flex-grow overflow-auto">
             <table class="relative w-full border mb-3 text-xs table-fixed">
@@ -207,6 +211,7 @@ const selectAll = computed({
                             <input v-model="form.numb" id="updPosition" class="h-8 bg-gray-50 border border-gray-600
                             text-gray-900 text-sm italic text-center rounded-lg focus:ring-blue-500 focus:border-blue-500
                             block w-full text-xs">
+                            <p v-if="form.errors.numb" class="text-red-600 mb-2 italic">{{ form.errors.numb }}</p>
                         </div>
                     </td>
                     <td :class='["px-3 py-1.5 text-center", index%2 === 0 ? "" : "bg-gray-300"]'>
@@ -243,13 +248,12 @@ const selectAll = computed({
                     </td>
                     <td :class='["px-2 py-1.5 text-center", index%2 === 0 ? "" : "bg-gray-300"]'>
                         <div class="ml-2">
-                            <div v-if="hideUpdate || !hideUpdate && item.id !== updId"
-                                 :class="[colors[item.paint_color]]">
-                                <div class="text-black">{{ item.paint }} {{ item.paint_color }}<span
-                                    v-if="item.paint_quantity"> - {{ item.paint_quantity }} кг</span></div>
+                            <div v-if="hideUpdate || !hideUpdate && item.id !== updId" :class="[colors[item.paint_color]]">
+                                <div :class="[item.paint_color === 'RAL 8002' ? 'text-white' : 'text-black']">{{ item.paint }} {{ item.paint_color }}
+                                    <span v-if="item.paint_quantity"> - {{ item.paint_quantity }} кг</span>
+                                </div>
                             </div>
-                            <div v-if="!hideUpdate && item.id === updId"
-                                 class="flex flex flex-wrap justify-center">
+                            <div v-if="!hideUpdate && item.id === updId" class="flex flex flex-wrap justify-center">
                                 <select v-model="form.paint" id="updPosition" class="bg-gray-50 border border-gray-600
                             text-gray-900 text-sm italic text-center rounded-lg focus:ring-blue-500 focus:border-blue-500
                             block w-48 h-8 text-xs">
@@ -275,12 +279,10 @@ const selectAll = computed({
                     </td>
                     <td :class='["px-2 py-1.5 text-center", index%2 === 0 ? "" : "bg-gray-300"]'>
                         <div v-if="hideUpdate && item.id !== updId || !hideUpdate && item.id !== updId">
-                            <button v-if="!hideUpdate && item.id !== updId"
-                                    @click.prevent="showUpdate(item)" disabled>
+                            <button v-if="!hideUpdate && item.id !== updId" @click.prevent="showUpdate(item)" disabled>
                                 <UpdateButton :hide-update="hideUpdate"></UpdateButton>
                             </button>
-                            <button v-if="hideUpdate && item.id !== updId"
-                                    @click.prevent="showUpdate(item)">
+                            <button v-if="hideUpdate && item.id !== updId" @click.prevent="showUpdate(item)">
                                 <UpdateButton :hide-update="hideUpdate"></UpdateButton>
                             </button>
                         </div>

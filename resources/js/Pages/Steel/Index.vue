@@ -1,7 +1,52 @@
+<script setup>
+import UserLayout from "@/Layouts/UserLayout.vue";
+import CreateButton from "@/Components/CreateButton.vue";
+import UpdateButton from "@/Components/UpdateButton.vue";
+import DeleteButton from "@/Components/DeleteButton.vue";
+import StoreComponent from "@/Components/StoreComponent.vue";
+import {ref} from "vue";
+import {useForm} from "@inertiajs/vue3";
+
+const hideMaterial = ref(false)
+const hideUpdate = ref(true);
+const updId = ref();
+const updTitle = ref();
+
+const columnHeaders = ['Наименование стали', 'Редактирование', 'Удаление']
+
+const props = defineProps({
+    steels: {
+        type: Array,
+        default: () => ({}),
+    },
+})
+const closeStore = () => {
+    hideMaterial.value = !hideMaterial.value
+}
+const showUpdate = (item) => {
+    hideUpdate.value = !hideUpdate.value
+    updId.value = item.id;
+    form.title = item.title;
+}
+
+const form = useForm({
+    title: updTitle.value,
+})
+
+const submit = () => {
+    form.put(route('update.steel', updId.value))
+    closeUpdate()
+}
+const closeUpdate = () => {
+    hideUpdate.value = !hideUpdate.value
+    updId.value = null
+    form.reset()
+}
+</script>
 <template>
     <UserLayout>
         <p class="text-center italic">Сталь</p>
-        <CreateButton @closeStore="closeStore"></CreateButton>
+        <CreateButton @closeStore="closeStore" :disabled="hideMaterial"></CreateButton>
         <!-- component -->
         <div class="flex-grow overflow-auto">
             <table class="relative w-full border mb-3 table-fixed">
@@ -60,48 +105,3 @@
     </UserLayout>
 </template>
 
-<script setup>
-import UserLayout from "@/Layouts/UserLayout.vue";
-import CreateButton from "@/Components/CreateButton.vue";
-import UpdateButton from "@/Components/UpdateButton.vue";
-import DeleteButton from "@/Components/DeleteButton.vue";
-import StoreComponent from "@/Components/StoreComponent.vue";
-import {ref} from "vue";
-import {useForm} from "@inertiajs/vue3";
-
-const hideMaterial = ref(false)
-const hideUpdate = ref(true);
-const updId = ref();
-const updTitle = ref();
-
-const columnHeaders = ['Наименование стали', 'Редактирование', 'Удаление']
-
-const props = defineProps({
-    steels: {
-        type: Array,
-        default: () => ({}),
-    },
-})
-const closeStore = () => {
-    hideMaterial.value = !hideMaterial.value
-}
-const showUpdate = (item) => {
-    hideUpdate.value = !hideUpdate.value
-    updId.value = item.id;
-    form.title = item.title;
-}
-
-const form = useForm({
-    title: updTitle.value,
-})
-
-const submit = () => {
-    form.put(route('update.steel', updId.value))
-    closeUpdate()
-}
-const closeUpdate = () => {
-    hideUpdate.value = !hideUpdate.value
-    updId.value = null
-    form.reset()
-}
-</script>

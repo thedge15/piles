@@ -1,8 +1,37 @@
+<script setup>
+import UserLayout from "@/Layouts/UserLayout.vue";
+import CreateButton from "@/Components/CreateButton.vue";
+import ShowButton from "@/Components/ShowButton.vue";
+import DeleteButton from "@/Components/DeleteButton.vue";
+import StoreComponent from "@/Components/StoreComponent.vue";
+import {ref} from "vue";
+import {Link, useForm} from "@inertiajs/vue3";
+
+const hideMaterial = ref(false)
+const hideUpdate = ref(true);
+const updId = ref();
+const updTitle = ref();
+const closeStore = () => {
+    hideMaterial.value = !hideMaterial.value
+}
+
+const props = defineProps({
+    bushes: {
+        type: Array,
+        default: () => ({}),
+    },
+})
+
+const form = useForm({
+    title: updTitle.value,
+})
+</script>
+
 <template>
     <UserLayout>
         <p class="text-center italic">КГС</p>
         <div :class="[$page.props.auth.user['is_admin'] === 1 ? '' : 'hidden']">
-            <CreateButton @closeStore="closeStore"></CreateButton>
+            <CreateButton @closeStore="closeStore" :disabled="hideMaterial"></CreateButton>
         </div>
         <div :class="['flex-grow overflow-auto', $page.props.auth.user['is_admin'] === 1 ? '' : 'mt-5']">
             <table class="relative w-full border mb-3">
@@ -38,32 +67,4 @@
     </UserLayout>
 </template>
 
-<script setup>
-import UserLayout from "@/Layouts/UserLayout.vue";
-import CreateButton from "@/Components/CreateButton.vue";
-import ShowButton from "@/Components/ShowButton.vue";
-import DeleteButton from "@/Components/DeleteButton.vue";
-import StoreComponent from "@/Components/StoreComponent.vue";
-import {ref} from "vue";
-import {Link, useForm} from "@inertiajs/vue3";
-
-const hideMaterial = ref(false)
-const hideUpdate = ref(true);
-const updId = ref();
-const updTitle = ref();
-const closeStore = () => {
-    hideMaterial.value = !hideMaterial.value
-}
-
-const props = defineProps({
-    bushes: {
-        type: Array,
-        default: () => ({}),
-    },
-})
-
-const form = useForm({
-    title: updTitle.value,
-})
-</script>
 

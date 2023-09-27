@@ -8,7 +8,7 @@ import DeleteButton from "@/Components/DeleteButton.vue";
 import StoreComponent from "@/Components/StoreComponent.vue";
 import {ref} from "vue";
 
-const hideMaterial = ref(false)
+const hideMaterial = ref(false);
 const hideUpdate = ref(true);
 const updId = ref();
 const updTitle = ref();
@@ -25,12 +25,12 @@ const props = defineProps({
 const closeStore = () => {
     hideMaterial.value = !hideMaterial.value
 }
+
 const showUpdate = (item) => {
     hideUpdate.value = !hideUpdate.value;
     updId.value = item.id;
     form.title = item.title;
     form.change = item.change;
-
 }
 
 const form = useForm({
@@ -46,7 +46,6 @@ const closeUpdate = () => {
     updId.value = null
     form.reset()
 }
-
 </script>
 <template>
     <UserLayout>
@@ -57,7 +56,7 @@ const closeUpdate = () => {
         </div>
         <div class="flex flex-col h-screen">
             <div :class="[$page.props.auth.user['is_admin'] === 1 ? '' : 'hidden']">
-                <CreateButton @closeStore="closeStore"></CreateButton>
+                <CreateButton @closeStore="closeStore" :disabled="hideMaterial"></CreateButton>
             </div>
             <div :class="['flex-grow overflow-auto', $page.props.auth.user['is_admin'] === 1 ? '' : 'mt-5']">
                 <table class="relative w-full border mb-3 text-xs table-fixed">

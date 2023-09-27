@@ -50,7 +50,7 @@ const closeUpdate = () => {
 <template>
     <UserLayout>
         <Link :href="route('index.metal')" class="text-center italic">{{ metal.data.title }}</Link>
-        <CreateButton @closeStore="closeStore"></CreateButton>
+        <CreateButton @closeStore="closeStore" :disabled="hideMaterial"></CreateButton>
         <div class="flex-grow overflow-auto">
             <table v-if="characteristics" class="relative w-full border mb-3 table-fixed">
                 <thead>

@@ -24,7 +24,8 @@ class UpdateMaterialAction extends StoreUpdateAction
             'number_of_layers' => 'nullable|integer',
             'paint_color' => 'nullable|string',
             'is_pile' => 'nullable|boolean',
-        ]);
+        ], ['numb.integer' => 'Число!',
+            ]);
 
         $paint = Paint::query()->where('title', $data['paint'])->get()->toArray();
 

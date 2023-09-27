@@ -45,7 +45,7 @@ const closeUpdate = () => {
 <template>
     <UserLayout>
         <p class="text-center italic">Конструктивные элементы</p>
-        <CreateButton @closeStore="closeStore"></CreateButton>
+        <CreateButton @closeStore="closeStore" :disabled="hideMaterial"></CreateButton>
         <!-- component -->
         <div class="flex-grow overflow-auto">
             <table class="relative w-full border mb-3 text-xs table-fixed">

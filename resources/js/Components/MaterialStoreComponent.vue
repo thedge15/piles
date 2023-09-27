@@ -1,6 +1,7 @@
 <script setup>
-import {computed, ref} from "vue";
+import {computed} from "vue";
 import {useForm} from "@inertiajs/vue3";
+import InputError from "@/Components/InputError.vue";
 
 const props = defineProps({
     hideMaterial: Boolean,
@@ -76,13 +77,14 @@ const closeStore = () => {
     form.steel = ''
     form.quantity = ''
     form.measure_units = ''
+    form.clearErrors()
     emit('closeStore')
 }
 </script>
 
 <template>
     <div :class="['shadow-md sm:rounded-lg', hideMaterial ? '' : 'hidden']">
-        <form @submit.prevent="submit">
+        <form @submit.prevent="submit" class="p-2 bg-gray-200">
             <div class="grid grid-cols-5 w-full">
                 <div>
                     <label for="metal">Выберите конструктивный элемент</label>
@@ -100,19 +102,19 @@ const closeStore = () => {
                 </div>
                 <div v-if="form.metal" class="ml-2">
                     <label for="characteristic">Выберите размеры</label>
-                    <select v-model="form.title" id="characteristic" class="border border-gray-300
-                    focus:ring-blue-500 focus:border-blue-500 h-9">
+                    <select v-model="form.title" id="characteristic" class="border border-gray-300 focus:ring-blue-500
+                        focus:border-blue-500 h-9">
                         <option v-for="item in metalCharacteristics">{{ item.title }}</option>
                     </select>
-                    <p v-if="form.errors.title" class="text-red-600 mb-2 italic">{{ form.errors.title }}</p>
+                    <InputError :message="form.errors.title"></InputError>
                 </div>
                 <div v-if="form.metal && form.metal === 'Лист'" class="ml-2">
-                    <label for="sheetHeight">Введите ширину листа, мм (при наличии)</label>
+                    <label for="sheetHeight">Введите ширину листа, мм</label>
                     <input v-model="form.sheetHeight" id="sheetHeight" type="number" class="border
                     border-gray-300 focus:ring-blue-500 focus:border-blue-500  h-9">
                 </div>
                 <div v-if="form.metal && form.metal === 'Лист'" class="ml-2">
-                    <label for="sheetWidth">Введите высоту листа, мм (при наличии)</label>
+                    <label for="sheetWidth">Введите высоту листа, мм</label>
                     <input v-model="form.sheetWidth" id="sheetWidth" type="number" class="border
                     border-gray-300 focus:ring-blue-500 focus:border-blue-500 h-9">
                 </div>
@@ -131,7 +133,7 @@ const closeStore = () => {
                         focus:border-blue-500 h-9">
                         <option v-for="item in selectedStandards">{{ item.title }}</option>
                     </select>
-                    <p v-if="form.errors.standard" class="text-red-600 mb-2 italic">{{ form.errors.standard }}</p>
+                    <InputError :message="form.errors.standard"></InputError>
                 </div>
                 <div class="ml-2">
                     <label for="steel">Выберите сталь</label>
@@ -139,31 +141,29 @@ const closeStore = () => {
                     focus:ring-blue-500 focus:border-blue-500 h-9">
                         <option v-for="item in steels">{{ item.title }} {{ item.steel_standard }}</option>
                     </select>
-                    <p v-if="form.errors.steel" class="text-red-600 mb-2 italic">{{ form.errors.steel }}</p>
+                    <InputError :message="form.errors.steel"></InputError>
                 </div>
                 <div class="ml-2">
                     <label for="quantity">Введите количество</label>
                     <input v-model="form.quantity" id="quantity" type="number" step="0.001" class="
                     border border-gray-300 focus:ring-blue-500 focus:border-blue-500">
-                    <p v-if="form.errors.quantity" class="text-red-600 mb-2 italic">{{ form.errors.quantity }}</p>
+                    <InputError :message="form.errors.quantity"></InputError>
                 </div>
                 <div class="ml-2">
                     <label for="unit">Выберите единицы измерения</label>
                     <div v-if="!form.metalLength && !form.sheetHeight">
                         <select v-model="form.measure_units" id="unit"
-                                class="border border-gray-300 focus:ring-blue-500 focus:border-blue-500 block h-9">
+                                class="border border-gray-300 focus:ring-blue-500 focus:border-blue-500 block">
                             <option class="italic" v-for="item in units">{{ item }}</option>
                         </select>
                     </div>
                     <div v-if="form.metalLength || form.sheetHeight">
                         <select v-model="form.measure_units" id="unit"
-                                class="border border-gray-300 focus:ring-blue-500 focus:border-blue-500 block h-9">
+                                class="border border-gray-300 focus:ring-blue-500 focus:border-blue-500 block">
                             <option> {{ 'шт.' }}</option>
                         </select>
                     </div>
-                    <p v-if="form.errors.measure_units" class="text-red-600 mb-2 italic">{{
-                            form.errors.measure_units
-                        }}</p>
+                    <InputError :message="form.errors.measure_units"></InputError>
                 </div>
             </div>
             <button type="submit" :disabled="!form.metal"
@@ -172,7 +172,7 @@ const closeStore = () => {
                 Создать
             </button>
             <button @click.prevent="closeStore" type="button"
-                    class="text-white bg-gradient-to-r from-pink-400 via-pink-500 to-pink-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-pink-300 font-medium text-sm px-5 py-2.5 text-center mr-2 mb-2">
+                    class="text-white bg-gradient-to-r from-pink-400 via-pink-500 to-pink-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-pink-300 font-medium text-sm px-5 py-2.5 text-center mr-2 my-2">
                 Отмена
             </button>
         </form>
