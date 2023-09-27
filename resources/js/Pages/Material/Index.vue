@@ -108,7 +108,7 @@ const submit = () => {
     form.put(route('update.material', updId.value))
     setTimeout(() => {
             if (JSON.stringify(form.errors) === '{}') {
-                closeStore();
+                closeUpdate();
             } else {
                 console.log('Validation error');
             }
