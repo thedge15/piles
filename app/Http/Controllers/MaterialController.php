@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Actions\IndexProjectsAction;
 use App\Actions\Material\IndexMaterialsAction;
 use App\Actions\Material\StoreMaterialAction;
 use App\Actions\Material\UpdateMaterialAction;
@@ -10,40 +9,67 @@ use App\Actions\ShowAllAction;
 use App\Exports\MaterialsExport;
 use App\Models\Material;
 use App\Models\Project;
+use Inertia\Response;
+use Inertia\ResponseFactory;
 use Maatwebsite\Excel\Facades\Excel;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 
 class MaterialController extends Controller
 {
-//    public function index(Bush $bush, IndexProjectsAction $action): \Inertia\Response|\Inertia\ResponseFactory
-//    {
-//        return inertia('User/Index', $action->handle($bush));
-//    }
-
-    public function index(Project $project, IndexMaterialsAction $action): \Inertia\Response|\Inertia\ResponseFactory
+    /**
+     * @param Project $project
+     * @param IndexMaterialsAction $action
+     * @return Response|ResponseFactory
+     */
+    public function index(Project $project, IndexMaterialsAction $action): Response|ResponseFactory
     {
         return inertia('Material/Index', $action->handle($project));
     }
-    public function store(StoreMaterialAction $action)
+
+    /**
+     * @param StoreMaterialAction $action
+     * @return void
+     */
+    public function store(StoreMaterialAction $action): void
     {
         Material::query()->create($action->handle());
     }
-    public function update(UpdateMaterialAction $action, Material $material)
+
+    /**
+     * @param UpdateMaterialAction $action
+     * @param Material $material
+     * @return void
+     */
+    public function update(UpdateMaterialAction $action, Material $material): void
     {
         $material->update($action->handle());
     }
-    public function destroy(Material $material)
+
+    /**
+     * @param Material $material
+     * @return void
+     */
+    public function destroy(Material $material): void
     {
         $material->delete();
     }
-    public function showAll(ShowAllAction $action): \Inertia\Response|\Inertia\ResponseFactory
+
+    /**
+     * @param ShowAllAction $action
+     * @return Response|ResponseFactory
+     */
+    public function showAll(ShowAllAction $action): Response|ResponseFactory
     {
         return inertia('Material/All', $action->handle());
     }
 
-    public function export(Project $project): \Symfony\Component\HttpFoundation\BinaryFileResponse
+    /**
+     * @param Project $project
+     */
+    public function export(Project $project): void
     {
-        return Excel::download(new MaterialsExport($project), 'materials.xlsx');
+        Excel::store(new MaterialsExport($project), 'materials.xlsx');
     }
 }
 

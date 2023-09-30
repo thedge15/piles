@@ -4,16 +4,15 @@ namespace App\Actions\Material;
 
 use App\Actions\StoreUpdateAction;
 use App\Actions\TYPE_NAME;
-use App\Http\Requests\Material\MaterialStoreRequest;
 use App\Models\Characteristic;
 use App\Models\Metal;
 
-/**
- * @property MaterialStoreRequest $request
- */
 class StoreMaterialAction extends StoreUpdateAction
 {
 
+    /**
+     * @return array
+     */
     public function handle(): array
     {
         /** @var TYPE_NAME $weight */

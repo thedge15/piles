@@ -6,8 +6,6 @@ use App\Actions\StoreUpdateAction;
 use App\Models\Characteristic;
 use App\Models\Material;
 use App\Models\Paint;
-
-
 class UpdateMaterialAction extends StoreUpdateAction
 {
     public function handle(): array

@@ -19,12 +19,16 @@ use App\Models\Steel;
 
 class IndexMaterialsAction
 {
+    /**
+     * @param $project
+     * @return array
+     */
     public function handle($project): array
     {
 
         $elements = ElementResource::collection(Element::all()->sortBy('title'))->resolve();
-        $project = new ProjectResource($project);
         $materials = MaterialResource::collection($project->materials)->resolve();
+        $project = ProjectResource::make($project)->resolve();
         $metals = MetalResource::collection(Metal::all()->sortBy('title'))->resolve();
         $characteristics = CharacteristicResource::collection(Characteristic::all()->sortBy('title', SORT_NATURAL))->resolve();
         $standards = StandardResource::collection(Standard::all()->sortBy('title'))->resolve();

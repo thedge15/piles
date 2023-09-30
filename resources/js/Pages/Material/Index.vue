@@ -8,6 +8,7 @@ import CreateButton from "@/Components/CreateButton.vue";
 import UpdateButton from "@/Components/UpdateButton.vue";
 import DeleteButton from "@/Components/DeleteButton.vue";
 import PaintFilter from "@/Components/PaintFilter.vue";
+import ExportButton from "@/Components/ExportButton.vue";
 
 const checkedMaterials = ref([]);
 const hideMaterial = ref(false);
@@ -174,11 +175,14 @@ const selectAll = computed({
 <template>
     <UserLayout>
         <div v-if="project" class="text-center italic">
-            <Link :href="route('show.bush', project.data.bush_id)">
-                {{ project.data.title }}
+            <Link :href="route('show.bush', project.bush_id)">
+                {{ project.title }}
             </Link>
         </div>
-        <CreateButton @closeStore="closeStore" :disabled="hideMaterial"></CreateButton>
+        <div class="flex justify-between">
+            <CreateButton @closeStore="closeStore" :disabled="hideMaterial"></CreateButton>
+            <ExportButton :project="project"></ExportButton>
+        </div>
         <!-- component -->
         <div class="flex-grow overflow-auto">
             <table class="relative w-full border mb-3 text-xs table-fixed">
@@ -248,8 +252,10 @@ const selectAll = computed({
                     </td>
                     <td :class='["px-2 py-1.5 text-center", index%2 === 0 ? "" : "bg-gray-300"]'>
                         <div class="ml-2">
-                            <div v-if="hideUpdate || !hideUpdate && item.id !== updId" :class="[colors[item.paint_color]]">
-                                <div :class="[item.paint_color === 'RAL 8002' ? 'text-white' : 'text-black']">{{ item.paint }} {{ item.paint_color }}
+                            <div v-if="hideUpdate || !hideUpdate && item.id !== updId"
+                                 :class="[colors[item.paint_color]]">
+                                <div :class="[item.paint_color === 'RAL 8002' ? 'text-white' : 'text-black']">
+                                    {{ item.paint }} {{ item.paint_color }}
                                     <span v-if="item.paint_quantity"> - {{ item.paint_quantity }} кг</span>
                                 </div>
                             </div>
@@ -315,11 +321,10 @@ const selectAll = computed({
             </table>
         </div>
         <MaterialStoreComponent
-            :hide-material="hideMaterial" :project_id="project.data.id" :elements="elements"
+            :hide-material="hideMaterial" :project_id="project.id" :elements="elements"
             :metals="metals" :characteristics="characteristics" :standards="standards" :steels="steels"
             :units="units" @closeStore="closeStore">
         </MaterialStoreComponent>
-        <!--    <Link :href="route('export', this.project.data.id)" class="font-bold text-sm ml-2">Экспорт</Link>-->
         <!--    <Link :href="route('all')">-->
         <!--        Набивка материала-->
         <!--    </Link>-->
