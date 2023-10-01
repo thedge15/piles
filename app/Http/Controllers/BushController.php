@@ -5,10 +5,12 @@ namespace App\Http\Controllers;
 use App\Actions\Bush\BushIndexAction;
 use App\Actions\Bush\BushShowAction;
 use App\Actions\Bush\BushStoreAction;
+use App\Exports\BushExport;
 use App\Models\Bush;
 use Inertia\Response;
 use Inertia\ResponseFactory;
-
+use Maatwebsite\Excel\Facades\Excel;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 class BushController extends Controller
 {
     /**
@@ -19,7 +21,6 @@ class BushController extends Controller
     {
         return inertia('Bush/Index', $action->handle());
     }
-
     /**
      * @param BushStoreAction $action
      * @return void
@@ -28,7 +29,6 @@ class BushController extends Controller
     {
         Bush::query()->create($action->handle());
     }
-
     /**
      * @param Bush $bush
      * @param BushShowAction $action
@@ -38,7 +38,6 @@ class BushController extends Controller
     {
         return inertia('Bush/Show', $action->handle($bush));
     }
-
     /**
      * @param Bush $bush
      * @return void
@@ -49,5 +48,13 @@ class BushController extends Controller
             $this->destroy($item);
         });
         $bush->delete();
+    }
+    /**
+     * @param Bush $bush
+     * @return BinaryFileResponse
+     */
+    public function export(Bush $bush): BinaryFileResponse
+    {
+        return Excel::download(new BushExport($bush), $bush->title . '.xlsx');
     }
 }

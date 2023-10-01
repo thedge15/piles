@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Material;
 
+use App\Models\Project;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -19,6 +20,7 @@ class MaterialExportResource extends JsonResource
     {
         return [
             'numb' => $this->numb,
+            'project' => Project::query()->find($this->project_id)->title,
             'element' => $this->element,
             'title' => $this->title,
             'weight' => $this->weight,

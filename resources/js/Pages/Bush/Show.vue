@@ -57,10 +57,10 @@ const closeUpdate = () => {
         </div>
         <div class="flex flex-col h-screen">
             <div :class="[$page.props.auth.user['is_admin'] === 1 ? '' : 'hidden']">
-                <CreateButton @closeStore="closeStore" :disabled="hideMaterial"></CreateButton>
-<!--                <div class="flex justify-between">`-->
-                    <!--                    <ExportButton :export-element="bush"></ExportButton>-->
-<!--                </div>-->
+                <div class="flex justify-between">
+                    <CreateButton @closeStore="closeStore" :disabled="hideMaterial"></CreateButton>
+                    <ExportButton :export-route="'export.bush'" :export-element="bush"></ExportButton>
+                </div>
             </div>
             <div :class="['flex-grow overflow-auto', $page.props.auth.user['is_admin'] === 1 ? '' : 'mt-5']">
                 <table class="relative w-full border mb-3 text-xs table-fixed">

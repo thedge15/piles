@@ -43,6 +43,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::post('/', [BushController::class, 'store'])->name('store.bush');
         Route::get('/{bush}', [BushController::class, 'show'])->name('show.bush');
         Route::delete('/{bush}', [BushController::class, 'destroy'])->name('destroy.bush');
+        Route::get('/export/{bush}', [BushController::class, 'export'])->name('export.bush');
     });
     Route::prefix('/projects')->group(function () {
         Route::post('/', [ProjectController::class, 'store'])->name('store.project');
@@ -55,7 +56,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::post('/', [MaterialController::class, 'store'])->name('store.material');
         Route::put('/{material}', [MaterialController::class, 'update'])->name('update.material');
         Route::delete('/{material}', [MaterialController::class, 'destroy'])->name('destroy.material');
-        Route::get('/export/{project}', [MaterialController::class, 'export'])->name('export');
+        Route::get('/export/{project}', [MaterialController::class, 'export'])->name('export.project');
     });
     Route::prefix('/elements')->group(function () {
         Route::get('/', [ElementController::class, 'index'])->name('index.elements');

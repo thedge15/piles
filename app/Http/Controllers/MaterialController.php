@@ -13,8 +13,6 @@ use Inertia\Response;
 use Inertia\ResponseFactory;
 use Maatwebsite\Excel\Facades\Excel;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
-
-
 /**
  *
  */
@@ -29,7 +27,6 @@ class MaterialController extends Controller
     {
         return inertia('Material/Index', $action->handle($project));
     }
-
     /**
      * @param StoreMaterialAction $action
      * @return void
@@ -38,7 +35,6 @@ class MaterialController extends Controller
     {
         Material::query()->create($action->handle());
     }
-
     /**
      * @param UpdateMaterialAction $action
      * @param Material $material
@@ -48,7 +44,6 @@ class MaterialController extends Controller
     {
         $material->update($action->handle());
     }
-
     /**
      * @param Material $material
      * @return void
@@ -57,7 +52,6 @@ class MaterialController extends Controller
     {
         $material->delete();
     }
-
     /**
      * @param ShowAllAction $action
      * @return Response|ResponseFactory
@@ -66,14 +60,13 @@ class MaterialController extends Controller
     {
         return inertia('Material/All', $action->handle());
     }
-
     /**
      * @param Project $project
      * @return BinaryFileResponse
      */
     public function export(Project $project): BinaryFileResponse
     {
-        return Excel::download(new MaterialsExport($project), 'materials.xlsx');
+        return Excel::download(new MaterialsExport($project), $project->title . '.xlsx');
     }
 }
 

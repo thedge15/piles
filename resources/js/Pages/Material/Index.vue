@@ -181,7 +181,7 @@ const selectAll = computed({
         </div>
         <div class="flex justify-between">
             <CreateButton @closeStore="closeStore" :disabled="hideMaterial"></CreateButton>
-            <ExportButton :export-element="project"></ExportButton>
+            <ExportButton :export-route="'export.project'" :export-element="project"></ExportButton>
         </div>
         <!-- component -->
         <div class="flex-grow overflow-auto">
