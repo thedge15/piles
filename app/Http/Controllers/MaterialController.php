@@ -15,6 +15,9 @@ use Maatwebsite\Excel\Facades\Excel;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 
+/**
+ *
+ */
 class MaterialController extends Controller
 {
     /**
@@ -66,10 +69,11 @@ class MaterialController extends Controller
 
     /**
      * @param Project $project
+     * @return BinaryFileResponse
      */
-    public function export(Project $project): void
+    public function export(Project $project): BinaryFileResponse
     {
-        Excel::store(new MaterialsExport($project), 'materials.xlsx');
+        return Excel::download(new MaterialsExport($project), 'materials.xlsx');
     }
 }
 

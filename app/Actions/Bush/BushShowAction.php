@@ -15,7 +15,7 @@ class BushShowAction
     public function handle($bush): array
     {
         $projects = ProjectResource::collection($bush->projects)->resolve();
-        $bush = new BushResource($bush);
+        $bush = BushResource::make($bush)->resolve();
         $user = new UserResource(User::query()->find(auth()->id()));
         return compact(['projects', 'bush', 'user']);
     }

@@ -7,6 +7,7 @@ import UpdateButton from "@/Components/UpdateButton.vue";
 import DeleteButton from "@/Components/DeleteButton.vue";
 import StoreComponent from "@/Components/StoreComponent.vue";
 import {ref} from "vue";
+import ExportButton from "@/Components/ExportButton.vue";
 
 const hideMaterial = ref(false);
 const hideUpdate = ref(true);
@@ -51,12 +52,15 @@ const closeUpdate = () => {
     <UserLayout>
         <div v-if="bush" class="text-center italic">
             <Link :href="route('index.bush')">
-                КГС {{ bush.data.title }}
+                КГС {{ bush.title }}
             </Link>
         </div>
         <div class="flex flex-col h-screen">
             <div :class="[$page.props.auth.user['is_admin'] === 1 ? '' : 'hidden']">
                 <CreateButton @closeStore="closeStore" :disabled="hideMaterial"></CreateButton>
+<!--                <div class="flex justify-between">`-->
+                    <!--                    <ExportButton :export-element="bush"></ExportButton>-->
+<!--                </div>-->
             </div>
             <div :class="['flex-grow overflow-auto', $page.props.auth.user['is_admin'] === 1 ? '' : 'mt-5']">
                 <table class="relative w-full border mb-3 text-xs table-fixed">
@@ -136,7 +140,7 @@ const closeUpdate = () => {
                     </tbody>
                 </table>
                 <StoreComponent :hide-material="hideMaterial" :element="'project'" :element-title="'раздела'"
-                                :bush_id="bush.data.id" @closeStore="closeStore"></StoreComponent>
+                                :bush_id="bush.id" @closeStore="closeStore"></StoreComponent>
             </div>
         </div>
     </UserLayout>
