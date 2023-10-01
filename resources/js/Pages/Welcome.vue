@@ -30,14 +30,14 @@ import {Link} from "@inertiajs/vue3";
             <div class="flex-1 pt-7">
                 <div class="absolute">
                     <h1 class="text-3xl leading-normal py-6">
-                        Сount the paint <br/>
-                        on the gas<br/>
-                        bushes
+                        Приложение для расчёта<br/>
+                        окраски металлоконструкций<br/>
+                        газовых кустов
                     </h1>
                     <Link :href="route('index.bush')">
                         <button
                             class="bg-teal-600 px-7 rounded-full tracking-wide py-3 text-xs hover:scale-110 duration-300">
-                            TO BUSHES
+                            К КУСТАМ
                         </button>
                     </Link>
                 </div>
