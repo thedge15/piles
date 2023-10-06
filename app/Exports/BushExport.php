@@ -2,6 +2,7 @@
 
 namespace App\Exports;
 
+use AllowDynamicProperties;
 use App\Http\Resources\Material\MaterialExportResource;
 use App\Models\Bush;
 use Maatwebsite\Excel\Concerns\FromCollection;
@@ -9,13 +10,11 @@ use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Maatwebsite\Excel\Concerns\WithEvents;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Events\AfterSheet;
-use PhpOffice\PhpSpreadsheet\Style\Alignment;
-use PhpOffice\PhpSpreadsheet\Style\Border;
 
 /**
  * @property Bush $bush
  */
-class BushExport implements FromCollection, ShouldAutoSize, WithHeadings, WithEvents
+#[AllowDynamicProperties] class BushExport implements FromCollection, ShouldAutoSize, WithHeadings, WithEvents
 {
     use HasHeadings;
 
@@ -47,14 +46,17 @@ class BushExport implements FromCollection, ShouldAutoSize, WithHeadings, WithEv
 
     public function registerEvents(): array
     {
-
         return [
             AfterSheet::class => function (AfterSheet $event) {
                 $cells = 'A1:I' . $this->bushCollection->count() + 1;
                 $cellRange = 'A1:I1';
                 $workCellRange = 'A2:I' . $this->bushCollection->count() + 1;
                 $event->sheet->getDelegate()->getStyle($cells)->applyFromArray(getStyleArray());
-                $event->sheet->getDelegate()->getStyle($cellRange)->applyFromArray(getHeaderStyleArray());
+                $event->sheet->getDelegate()->getStyle($cellRange)->applyFromArray(getHeaderStyleArray())->
+                getFill()->applyFromArray([
+                    'fillType' => 'solid',
+                    'color' => ['rgb' => '33FFFF'],
+                ]);
                 $event->sheet->getDelegate()->getStyle($workCellRange)->applyFromArray(getWorkspaceStyleArray());
             },
         ];

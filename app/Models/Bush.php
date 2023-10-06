@@ -13,6 +13,7 @@ class Bush extends Model
     use HasFactory;
 
 //    public mixed $projects;
+    public mixed $title;
     protected $guarded = false;
     protected $table = 'bushes';
 

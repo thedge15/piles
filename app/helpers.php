@@ -94,6 +94,7 @@ if (!function_exists('getWorkspaceStyleArray')) {
                     ]
                 ],
             ],
+
         ];
     }
 };
