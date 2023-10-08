@@ -325,9 +325,7 @@ const selectAll = computed({
             :metals="metals" :characteristics="characteristics" :standards="standards" :steels="steels"
             :units="units" @closeStore="closeStore">
         </MaterialStoreComponent>
-        <!--    <Link :href="route('all')">-->
-        <!--        Набивка материала-->
-        <!--    </Link>-->
+        <Link :href="route('all')">Набивка материала</Link>
     </UserLayout>
 </template>
 
